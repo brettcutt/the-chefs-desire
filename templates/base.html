@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+    <title>The Meal Ponderer</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{url_for('index')}}">Home</a></li>
+                <li><a href="{{url_for('get_recipes')}}">Recipes</a></li>
+                <li><a href="{{url_for('add_recipe')}}">Add Recipes</a></li>
+                <li><a href="{{url_for('get_recipes')}}">Edit Recipes</a></li>
+                <li><a href="{{url_for('get_recipes')}}">Delete Recipes</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+</body>
+</html>

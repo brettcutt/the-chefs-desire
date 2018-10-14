@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="row">
+    <div class="col-xs-12">
+        <ul>
+            {% for recipe in recipes %}
+
+            <li>{{recipe.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %}
