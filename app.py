@@ -25,9 +25,24 @@ def get_recipes():
 def add_recipe():
     return render_template("add_recipe.html")
 
-@app.route("/insert_recipe")
+@app.route("/insert_recipe", methods=['POST'])
 def insert_recipe():
-    return redirect(url_for("/"))
+    doc = {
+        "recipe_name":request.form.get('recipe_name'),
+        "cuisine":request.form.get('cuisine'),
+        "allergen":[request.form.get('special_diet')],
+        "recipe_description":request.form.get('recipe_description'),
+        "ingredients":[request.form.get('ingredients')],
+        "instructions":[request.form.get('instructions')],
+        "prep_time":request.form.get('prep_time'),
+        "cook_time":request.form.get('cook_time'),
+        "serving":request.form.get('serving'),
+        "author":request.form.get('author'),
+        "recipe_image":request.form.get('recipe_image')
+    }
+    
+    mongo.db.recipe.insert_one(doc)
+    return redirect(url_for("index"))
 
 if __name__ == '__main__':
     app.run(host=os.environ.get("IP"), port=int(os.environ.get('PORT')), debug=True)

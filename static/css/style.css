@@ -21,6 +21,22 @@ nav ul li a {
     text-decoration: none;
 }
 
-input {
+input, textarea {
     display: block;
+}
+
+form fieldset {
+    margin-bottom: 20px;
+}
+
+form legend {
+    margin-bottom: 5px;
+}
+
+#duplicate, #duplicate2, #duplicate3 {
+    cursor: pointer;
+}
+
+.special_diet, .instructions, .ingredients {
+    display: inline-block;
 }

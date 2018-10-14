@@ -3,24 +3,69 @@
     <div class="col-xs-12">
         <h1>Add a Recipe</h1>
     </div>
-    
-        <form action="{{url_for('insert_recipe')}}" methods="POST" class="col-xs-12">
-            <input type="text" name="recipe_name" id = "recipe_name" placeholder="Recipe Name" class=""/>
-            <input type="text" name="cuisine" id = "cuisine" placeholder="cuisine" class=""/>
-            <input type="text" name="recipe_description" id = "recipe_description" placeholder="Recipe Description" class=""/>
-            <input type="text" name="author" id = "author" placeholder="author"/>
-            <input type="text" name="prep_time" id = "prep_time" placeholder="Prep Time"/>
-            <input type="text" name="cook_time" id = "cook_time" placeholder="Cook Time"/>
-            <input type="text" name="recipe_image" id = "recipe_image" placeholder="Image"/>
-            <input type="text" name="ingredients" id = "ingredients" placeholder="Ingredient"/>
-            <input type="text" name="instructions" id = "instructions" placeholder="Recipe Instructions"/>
-            <input type="number" name="serving" id = "serving" placeholder="Servings"/>
-            <input type="text" name="" id = "" placeholder=""/>
-            
-            
-            <input type="submit" value="Submit"/>
-        </form>
-    
+
+    <form action="{{url_for('insert_recipe')}}" method="POST" class="col-xs-12">
+        <fieldset>
+            <legend>Recipe Name</legend>
+            <input type="text" name="recipe_name" id="recipe_name" placeholder="Recipe Name" class="" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Cuisine</legend>
+            <input type="text" name="cuisine" id="cuisine" placeholder="cuisine" class="" />
+        </fieldset>
+
+        <fieldset id="special_diet_fieldset">
+            <legend>Special Diet</legend>
+            <input type="text" name="special_diet" class="special_diet" id="special_diet" placeholder="special diet" />
+            <i id="duplicate" class="fas fa-plus-circle">Add Another</i>
+        </fieldset>
+
+        <fieldset>
+            <legend>Recipe Description</legend>
+            <textarea type="text" name="recipe_description"  id="recipe_description" placeholder="Recipe Description" class=""></textarea>
+        </fieldset>
+
+        <fieldset>
+            <legend>Ingredients</legend>
+            <input type="text" name="ingredients" class="ingredients" id="ingredients" placeholder="Ingredient" />
+            <i id="duplicate2" class="fas fa-plus-circle">Add Ingredient</i>
+        </fieldset>
+
+        <fieldset>
+            <legend>Instructions</legend>
+            <input type="text" name="instructions" class="ingredients" id="instructions" placeholder="Recipe Instructions" />
+            <i id="duplicate3" class="fas fa-plus-circle">Add Another Step</i>
+        </fieldset>
+
+        <fieldset>
+            <legend>Prep Time</legend>
+            <input type="text" name="prep_time" id="prep_time" placeholder="Prep Time" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Cook Time</legend>
+            <input type="text" name="cook_time" id="cook_time" placeholder="Cook Time" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Servings</legend>
+            <input type="number" name="serving" id="serving" placeholder="Servings" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Author</legend>
+            <input type="text" name="author" id="author" placeholder="author" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Image</legend>
+            <input type="text" name="recipe_image" id="recipe_image" placeholder="Image" />
+        </fieldset>
+
+        <input type="submit" value="Submit" />
+    </form>
+
 </div>
 
 
