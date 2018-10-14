@@ -1,0 +1,26 @@
+nav {
+    display: block;
+}
+
+nav ul {
+    text-align: center;
+    display: block;
+}
+
+nav ul li {
+    float: left;
+    list-style: none;
+    width: 100px;
+    color: #000;
+    padding: 6px ;
+    background-color: red;
+    margin-left: 5px;
+}
+
+nav ul li a {
+    text-decoration: none;
+}
+
+input {
+    display: block;
+}
