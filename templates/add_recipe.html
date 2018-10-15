@@ -7,7 +7,7 @@
     <form action="{{url_for('insert_recipe')}}" method="POST" class="col-xs-12">
         <fieldset>
             <legend>Recipe Name</legend>
-            <input type="text" name="recipe_name" id="recipe_name" placeholder="Recipe Name" class="" />
+            <input type="text" name="name" id="name" placeholder="Name" class="" />
         </fieldset>
 
         <fieldset>
@@ -15,27 +15,27 @@
             <input type="text" name="cuisine" id="cuisine" placeholder="cuisine" class="" />
         </fieldset>
 
-        <fieldset id="special_diet_fieldset">
+        <fieldset id="allergen_fieldset">
             <legend>Special Diet</legend>
-            <input type="text" name="special_diet" class="special_diet" id="special_diet" placeholder="special diet" />
-            <i id="duplicate" class="fas fa-plus-circle">Add Another</i>
+            <input type="text" name="allergens" class="allergens" id="allergens" placeholder="special diet" />
+            <i class="fas fa-plus-circle duplicate pointer">Add Another</i>
         </fieldset>
 
         <fieldset>
             <legend>Recipe Description</legend>
-            <textarea type="text" name="recipe_description"  id="recipe_description" placeholder="Recipe Description" class=""></textarea>
+            <textarea type="text" name="description"  id="description" placeholder="Recipe Description" class=""></textarea>
         </fieldset>
 
-        <fieldset>
+        <fieldset id="ingredients_fieldset">
             <legend>Ingredients</legend>
             <input type="text" name="ingredients" class="ingredients" id="ingredients" placeholder="Ingredient" />
-            <i id="duplicate2" class="fas fa-plus-circle">Add Ingredient</i>
+            <i class="fas fa-plus-circle duplicate pointer">Add Ingredient</i>
         </fieldset>
 
-        <fieldset>
+        <fieldset id="instructions_fieldset">
             <legend>Instructions</legend>
-            <input type="text" name="instructions" class="ingredients" id="instructions" placeholder="Recipe Instructions" />
-            <i id="duplicate3" class="fas fa-plus-circle">Add Another Step</i>
+            <input type="text" name="instructions" class="instructions" id="instructions" placeholder="Recipe Instructions" />
+            <i class="fas fa-plus-circle duplicate pointer">Add Instruction</i>
         </fieldset>
 
         <fieldset>
@@ -50,7 +50,7 @@
 
         <fieldset>
             <legend>Servings</legend>
-            <input type="number" name="serving" id="serving" placeholder="Servings" />
+            <input type="number" name="recipe_yield" id="recipe_yield" placeholder="recipe_yield" />
         </fieldset>
 
         <fieldset>
@@ -60,7 +60,7 @@
 
         <fieldset>
             <legend>Image</legend>
-            <input type="text" name="recipe_image" id="recipe_image" placeholder="Image" />
+            <input type="text" name="image" id="image" placeholder="Image" />
         </fieldset>
 
         <input type="submit" value="Submit" />

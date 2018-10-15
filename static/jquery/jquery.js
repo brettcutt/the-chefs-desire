@@ -1,20 +1,20 @@
 $(document).ready( function() {
-    var count = 1
-    $('#duplicate').click(function(){
-        $('#duplicate').append().before(
-            '<br><input type="text" name="special_diet" id = "special_diet_' + count + '" class="special_diet" placeholder="special diet"/>');
-            count +=1;
+    
+    
+    
+    $("body").on('click','.duplicate', function(){
+        var id_name = $(this).parent().children('input').attr("name");
+        
+        $(this).parent().children().last().append().after(
+            '<br><input type="text" name="' + id_name +'" class="allergens" placeholder="Add"/> <i class="fas fa-plus-circle duplicate pointer">Add</i>' +
+            ' <i class="fas fa-plus-circle remove_duplicate pointer">Remove</i>');
     });
     
-    $('#duplicate2').click(function(){
-        $('#duplicate2').append().before(
-            '<br><input type="text" name="ingredients" id = "ingredients'+ count +'" class="ingredients" placeholder="ingredient"/>');
-        count += 1;
+    $("body").on('click','.remove_duplicate', function(){
+        $(this).prev().remove();
+        $(this).prev().remove();
+        $(this).prev().remove();
+        $(this).remove();
     });
     
-    $('#duplicate3').click(function(){
-        $('#duplicate3').append().before(
-            '<br><input type="text" name="instructions" id = "instructions'+ count +'" class="instructions" placeholder="Recipe Instructions"/>');
-        count += 1;
-    });
 });
