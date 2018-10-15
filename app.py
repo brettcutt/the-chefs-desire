@@ -17,7 +17,7 @@ def index():
     
     
 @app.route("/recipes")
-def get_recipes():
+def recipes():
     
     return render_template('recipes.html', recipes=mongo.db.recipe.find())
     
@@ -28,21 +28,49 @@ def add_recipe():
 @app.route("/insert_recipe", methods=['POST'])
 def insert_recipe():
     doc = {
-        "recipe_name":request.form.get('recipe_name'),
+        "name":request.form.get('name'),
         "cuisine":request.form.get('cuisine'),
-        "allergen":[request.form.get('special_diet')],
-        "recipe_description":request.form.get('recipe_description'),
-        "ingredients":[request.form.get('ingredients')],
-        "instructions":[request.form.get('instructions')],
+        "allergens":(request.form.getlist('allergens')),
+        "description":request.form.get('description'),
+        "ingredients":(request.form.getlist('ingredients')
+        ),
+        "instructions":(request.form.getlist('instructions')),
         "prep_time":request.form.get('prep_time'),
         "cook_time":request.form.get('cook_time'),
-        "serving":request.form.get('serving'),
+        "recipe_yield":request.form.get('recipe_yield'),
         "author":request.form.get('author'),
-        "recipe_image":request.form.get('recipe_image')
+        "image":request.form.get('image')
     }
     
     mongo.db.recipe.insert_one(doc)
     return redirect(url_for("index"))
+    
+@app.route('/edit_recipe/<recipe_id>')
+def edit_recipe(recipe_id):
+    the_recipe = mongo.db.recipe.find_one({"_id": ObjectId(recipe_id)})
+    return render_template('edit_recipe.html', recipe=the_recipe)
+    
+@app.route("/update_recipe/<recipe_id>", methods=['POST'])
+def update_recipe(recipe_id):
+    
+    if request.form('ingredients') != "":
+        ingredients = request.form.getlist('ingredients')
+        mongo.db.recipe.update({'_id':ObjectId(recipe_id)},
+        {
+            "name":request.form.get('name'),
+            "cuisine":request.form.get('cuisine'),
+            "allergens":request.form.getlist('allergens'),
+            "description":request.form.get('description'),
+            "ingredients":ingredients,
+            "instructions":request.form.getlist('instructions'),
+            "prep_time":request.form.get('prep_time'),
+            "cook_time":request.form.get('cook_time'),
+            "recipe_yield":request.form.get('recipe_yield'),
+            "author":request.form.get('author'),
+            "image":request.form.get('image')
+        })
+        
+        return redirect(url_for('recipes'))
 
 if __name__ == '__main__':
     app.run(host=os.environ.get("IP"), port=int(os.environ.get('PORT')), debug=True)
