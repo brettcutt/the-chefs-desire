@@ -33,10 +33,14 @@ form legend {
     margin-bottom: 5px;
 }
 
-#duplicate, #duplicate2, #duplicate3 {
+.pointer {
     cursor: pointer;
 }
 
-.special_diet, .instructions, .ingredients {
+.allergens, .instructions, .ingredients {
     display: inline-block;
+}
+
+table {
+    margin-bottom: 50px;
 }
