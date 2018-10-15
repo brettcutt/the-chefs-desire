@@ -1,0 +1,87 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row">
+    <div class="col-xs-12">
+        <h1>Edit Recipe</h1>
+    </div>
+
+    <form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" class="col-xs-12">
+        <fieldset>
+            <legend>Recipe Name</legend>
+            <input type="text" name="name" id="name" value="{{ recipe.name }}" class="" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Cuisine</legend>
+            <input type="text" name="cuisine" id="cuisine" value="{{ recipe.cuisine }}" class="" />
+        </fieldset>
+
+        <fieldset id="allergen_fieldset">
+            <legend>Special Diet</legend>
+            {% for diet in recipe.allergens %}
+            <div class="col-xs-12">
+                <input type="text" name="allergens" class="allergens" id="allergens" value="{{ diet }}" />
+                <i class="fas fa-plus-circle duplicate pointer">Add</i>
+                <i class="fas fa-plus-circle remove_duplicate pointer">Remove</i>
+            </div>
+            {% endfor %}
+        </fieldset>
+
+        <fieldset>
+            <legend>Recipe Description</legend>
+            <textarea type="text" name="description" id="description" class="">{{ recipe.description }}</textarea>
+        </fieldset>
+
+        <fieldset id="duplicate_ingredient">
+            <legend>Ingredients</legend>
+            {% for ingredient in recipe.ingredients %}
+            <div class="col-xs-12">
+                <input type="text" name="ingredients" class="ingredients" id="ingredients" value="{{ ingredient }}" />
+                <i class="fas fa-plus-circle duplicate pointer">Add</i>
+                <i class="fas fa-plus-circle remove_duplicate pointer">Remove</i>
+            </div>
+            {% endfor %}
+        </fieldset>
+
+        <fieldset id="instructions_fieldset">
+            <legend>Instructions</legend>
+            {% for instruction in recipe.instructions %}
+            <div class="col-xs-12">
+                <input type="text" name="instructions" class="instructions" id="instructions" value="{{ instruction }}" />
+                <i class="fas fa-plus-circle duplicate pointer">Add</i>
+                <i class="fas fa-plus-circle remove_duplicate pointer">Remove</i>
+            </div>
+            {% endfor %}
+        </fieldset>
+
+        <fieldset>
+            <legend>Prep Time</legend>
+            <input type="text" name="prep_time" id="prep_time" value="{{ recipe.prep_time }}" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Cook Time</legend>
+            <input type="text" name="cook_time" id="cook_time" value="{{ recipe.cook_time }}" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Servings</legend>
+            <input type="number" name="recipe_yield" id="recipe_yield" value="{{ recipe.yield }}" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Author</legend>
+            <input type="text" name="author" id="author" value="{{ recipe.author }}" />
+        </fieldset>
+
+        <fieldset>
+            <legend>Image</legend>
+            <input type="text" name="image" id="image" value="{{ recipe.image }}" />
+        </fieldset>
+
+        <input type="submit" value="Submit" />
+    </form>
+
+</div>
+
+
+{% endblock %}
