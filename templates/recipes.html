@@ -22,7 +22,9 @@
                 <div class="col-xs-12">
                     <ul>
                         {% for ingredient in recipe.ingredients %}
+                        {% if ingredient != ""%}
                         <li>{{ ingredient }}</li>
+                        {% endif %}
                         {% endfor %}
                     </ul>
                 </div>

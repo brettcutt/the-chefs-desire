@@ -5,63 +5,113 @@
     </div>
 
     <form action="{{url_for('insert_recipe')}}" method="POST" class="col-xs-12">
+        
+<!--recipe name-->
+
         <fieldset>
             <legend>Recipe Name</legend>
             <input type="text" name="name" id="name" placeholder="Name" class="" />
         </fieldset>
+        
+<!--cuisine-->
 
-        <fieldset>
+        <fieldset id="cuisine_fieldset">
             <legend>Cuisine</legend>
-            <input type="text" name="cuisine" id="cuisine" placeholder="cuisine" class="" />
+            <div class="cuisine_container">
+            <select name="cuisine" class="cuisine" id="cuisine">
+                <option disabled selected>Choose your option</option>
+                {% for cuisine in cuisines %}
+                {% for item in cuisine.cuisine %}
+                <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
+                {% endfor %}
+                
+            </select><br>
+            </div>
+            <i id="add_cuisine" class="fas fa-plus-circle duplicate_select pointer">Add</i>
         </fieldset>
+        
+<!--Allergens-->
 
         <fieldset id="allergen_fieldset">
-            <legend>Special Diet</legend>
-            <input type="text" name="allergens" class="allergens" id="allergens" placeholder="special diet" />
-            <i class="fas fa-plus-circle duplicate pointer">Add Another</i>
+            
+            <legend>Allergens</legend>
+            <div class="allergens_container">
+                
+                <select name="allergens" class="allergens" id="allergens">
+                    <option disabled selected>Choose your option</option>
+                    
+                    {% for allergen in allergens %}
+                    {% for item in allergen.allergy %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                    {% endfor %}
+                </select><br>
+                
+            </div>
+            
+            <i id="add_allergen" class="fas fa-plus-circle duplicate_select pointer">Add</i>
         </fieldset>
+        
+<!--Description-->
 
         <fieldset>
             <legend>Recipe Description</legend>
             <textarea type="text" name="description"  id="description" placeholder="Recipe Description" class=""></textarea>
         </fieldset>
+        
+<!--Ingredients-->
 
         <fieldset id="ingredients_fieldset">
             <legend>Ingredients</legend>
             <input type="text" name="ingredients" class="ingredients" id="ingredients" placeholder="Ingredient" />
-            <i class="fas fa-plus-circle duplicate pointer">Add Ingredient</i>
+            <i id="first" class="fas fa-plus-circle duplicate pointer">Add</i>
         </fieldset>
+        
+<!--Instructions-->
 
         <fieldset id="instructions_fieldset">
             <legend>Instructions</legend>
             <input type="text" name="instructions" class="instructions" id="instructions" placeholder="Recipe Instructions" />
-            <i class="fas fa-plus-circle duplicate pointer">Add Instruction</i>
+            <i id="first" class="fas fa-plus-circle duplicate pointer">Add</i>
         </fieldset>
+        
+<!--Prep time-->       
 
         <fieldset>
             <legend>Prep Time</legend>
             <input type="text" name="prep_time" id="prep_time" placeholder="Prep Time" />
         </fieldset>
+        
+<!--Cook time--> 
 
         <fieldset>
             <legend>Cook Time</legend>
             <input type="text" name="cook_time" id="cook_time" placeholder="Cook Time" />
         </fieldset>
+        
+<!--recipe yield-->
 
         <fieldset>
-            <legend>Servings</legend>
+            <legend>Recipe Yield</legend>
             <input type="number" name="recipe_yield" id="recipe_yield" placeholder="recipe_yield" />
         </fieldset>
+        
+<!--Author-->
 
         <fieldset>
             <legend>Author</legend>
             <input type="text" name="author" id="author" placeholder="author" />
         </fieldset>
+        
+<!--Image-->
 
         <fieldset>
             <legend>Image</legend>
             <input type="text" name="image" id="image" placeholder="Image" />
         </fieldset>
+        
+<!--Submit-->
 
         <input type="submit" value="Submit" />
     </form>

@@ -5,82 +5,148 @@
     </div>
 
     <form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" class="col-xs-12">
+        
+<!--Recipe name-->
         <fieldset>
             <legend>Recipe Name</legend>
             <input type="text" name="name" id="name" value="{{ recipe.name }}" class="" />
         </fieldset>
+        
+<!--Cuisine-->        
 
-        <fieldset>
+        <fieldset id="cuisine_fieldset">
             <legend>Cuisine</legend>
-            <input type="text" name="cuisine" id="cuisine" value="{{ recipe.cuisine }}" class="" />
+            <div class="cuisine_container">
+            
+            {% for cuisines in recipe.cuisine %}
+                
+            <select name="cuisine" class="cuisine" id="cuisine">
+                <option selected>{{cuisines}}</option>
+                
+                {% for other_cuisine in other_cuisines.cuisine %}
+                <option>{{ other_cuisine }}</option>
+                {% endfor %}
+                
+            </select>
+            {% if loop.index == 1 %}
+            <br>
+            {% endif%}
+            {% if loop.index > 1 %}
+            <i class="fas fa-plus-circle remove_select pointer">Remove</i><br>
+            {% endif%}
+            {% endfor %}
+            </div>
+            <i id="add_cuisine" class="fas fa-plus-circle duplicate_select pointer">Add</i>
+                
         </fieldset>
+        
+<!--Allergen-->        
 
         <fieldset id="allergen_fieldset">
-            <legend>Special Diet</legend>
-            {% for diet in recipe.allergens %}
-            <div class="col-xs-12">
-                <input type="text" name="allergens" class="allergens" id="allergens" value="{{ diet }}" />
-                <i class="fas fa-plus-circle duplicate pointer">Add</i>
-                <i class="fas fa-plus-circle remove_duplicate pointer">Remove</i>
-            </div>
+            <legend>Allergens</legend>
+            <div class="allergens_container">
+            {% for allergen in recipe.allergens %}
+            <select name="allergens" class="allergens" id="allergens">
+                <option selected>{{allergen}}</option>
+                
+                {% for item in allergens_json.allergen %}
+                <option>{{ item }}</option>
+                {% endfor %}
+                
+            </select>
+            {% if loop.index == 1 %}
+            <br>
+            {% endif %}
+            {% if loop.index > 1 %}
+            <i class="fas fa-plus-circle remove_select pointer">Remove</i><br>
+            {% endif %}
             {% endfor %}
-        </fieldset>
+            </div>
+            <i id="add_allergen" class="fas fa-plus-circle duplicate_select pointer">Add</i>
+         </fieldset>
+
+<!--Recipe Description-->
 
         <fieldset>
             <legend>Recipe Description</legend>
             <textarea type="text" name="description" id="description" class="">{{ recipe.description }}</textarea>
         </fieldset>
+        
+<!--Ingredients-->
 
         <fieldset id="duplicate_ingredient">
             <legend>Ingredients</legend>
             {% for ingredient in recipe.ingredients %}
-            <div class="col-xs-12">
-                <input type="text" name="ingredients" class="ingredients" id="ingredients" value="{{ ingredient }}" />
+            {% if ingredient != ""%}
+                <br><input type="text" name="ingredients" class="ingredients" id="ingredients" value="{{ ingredient }}" />
+                {% if loop.index == 1%}
+                <i id="first" class="fas fa-plus-circle duplicate pointer">Add</i>
+                {% endif %}
+                {% if loop.index > 1%}
                 <i class="fas fa-plus-circle duplicate pointer">Add</i>
                 <i class="fas fa-plus-circle remove_duplicate pointer">Remove</i>
-            </div>
+                {% endif %}
+            {% endif%}
             {% endfor %}
         </fieldset>
+        
+<!--Instructions-->
 
         <fieldset id="instructions_fieldset">
             <legend>Instructions</legend>
             {% for instruction in recipe.instructions %}
-            <div class="col-xs-12">
-                <input type="text" name="instructions" class="instructions" id="instructions" value="{{ instruction }}" />
+                <br><input type="text" name="instructions" class="instructions" id="instructions" value="{{ instruction }}" />
+                {% if loop.index == 1%}
+                <i id="first" class="fas fa-plus-circle duplicate pointer">Add</i>
+                {% endif %}
+                {% if loop.index > 1%}
                 <i class="fas fa-plus-circle duplicate pointer">Add</i>
                 <i class="fas fa-plus-circle remove_duplicate pointer">Remove</i>
-            </div>
+                {% endif %}
             {% endfor %}
         </fieldset>
+        
+<!--Prep time-->
 
         <fieldset>
             <legend>Prep Time</legend>
             <input type="text" name="prep_time" id="prep_time" value="{{ recipe.prep_time }}" />
         </fieldset>
+        
+<!--Cook time-->
 
         <fieldset>
             <legend>Cook Time</legend>
             <input type="text" name="cook_time" id="cook_time" value="{{ recipe.cook_time }}" />
         </fieldset>
+        
+<!--Serving-->
 
         <fieldset>
             <legend>Servings</legend>
             <input type="number" name="recipe_yield" id="recipe_yield" value="{{ recipe.yield }}" />
         </fieldset>
+        
+<!--Author-->
 
         <fieldset>
             <legend>Author</legend>
             <input type="text" name="author" id="author" value="{{ recipe.author }}" />
         </fieldset>
+        
+<!--Image-->
 
         <fieldset>
             <legend>Image</legend>
             <input type="text" name="image" id="image" value="{{ recipe.image }}" />
         </fieldset>
+        
+<!--Submit-->
 
         <input type="submit" value="Submit" />
+        
+        
     </form>
-
 </div>
 
 
