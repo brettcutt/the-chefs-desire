@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = "meal-ponderer"
-app.config["MONGO_URI"] = "mongodb://admin:Mealponderer1@ds131763.mlab.com:31763/meal-ponderer"
+app.config["MONGO_URI"] = "mongodb://admin:Mealponderer1@ds131763.mlab.com:31763/meal-ponderer" 
 
 mongo = PyMongo(app)
 
@@ -21,22 +21,30 @@ allergens_json = []
 with open ("data/allergen_category.json", "r") as file:
     allergens_json = json.load(file)
     
-
+# //////////////// Index (render)
 @app.route("/")
 def index():
     
     return render_template('index.html')
-    
-    
+
+# //////////////// Recipes (render)  
 @app.route("/recipes")
 def recipes():
     
     return render_template('recipes.html', recipes=mongo.db.recipe.find())
+
+@app.route("/found_recipe", methods=['POST'])
+def found_recipe():
+    found_cuisine = mongo.db.recipe.find({"cuisine":request.form.get("find_cuisine")})
+    return render_template('found_recipes.html', found_cuisine=found_cuisine)
     
+# //////////////// add recipe(render) and insert recipe(redirect)
+# Add (render)
 @app.route("/add_recipe")
 def add_recipe():
     return render_template("add_recipe.html", cuisines=mongo.db.cuisines.find(), allergens=mongo.db.allergens.find())
 
+#Insert (redirect)
 @app.route("/insert_recipe", methods=['POST'])
 def insert_recipe():
     doc = {
@@ -54,13 +62,17 @@ def insert_recipe():
     }
     
     mongo.db.recipe.insert_one(doc)
-    return redirect(url_for("index"))
-    
+    return redirect(url_for("recipes"))
+
+# //////////////// Edit recipe and Update recipe
+# Edit (render)
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
+    
     the_recipe = mongo.db.recipe.find_one({"_id": ObjectId(recipe_id)})
     return render_template('edit_recipe.html', recipe=the_recipe, other_cuisines=cuisines_json, allergens_json=allergens_json)
-    
+
+# Update (redirect)
 @app.route("/update_recipe/<recipe_id>", methods=['POST'])
 def update_recipe(recipe_id):
     
@@ -80,6 +92,17 @@ def update_recipe(recipe_id):
     })
 
     return redirect(url_for('recipes'))
+    
+    
+# //////////////// Delete recipe
+# Delete (redirect)
+@app.route("/delete_recipe/<recipe_id>")
+def delete_recipe(recipe_id):
+    
+    mongo.db.recipe.remove({'_id':ObjectId(recipe_id)})
+    return redirect(url_for('recipes'))
+
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get("IP"), port=int(os.environ.get('PORT')), debug=True)
