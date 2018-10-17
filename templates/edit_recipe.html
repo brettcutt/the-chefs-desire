@@ -17,24 +17,26 @@
         <fieldset id="cuisine_fieldset">
             <legend>Cuisine</legend>
             <div class="cuisine_container">
-            
-            {% for cuisines in recipe.cuisine %}
                 
-            <select name="cuisine" class="cuisine" id="cuisine">
-                <option selected>{{cuisines}}</option>
+                {% for cuisines in recipe.cuisine %}
+                    
+                <select name="cuisine" class="cuisine" id="cuisine">
+                    <option selected>{{cuisines}}</option>
+                    
+                    {% for other_cuisine in other_cuisines.cuisine %}
+                    <option>{{ other_cuisine }}</option>
+                    {% endfor %}
+                    
+                </select>
                 
-                {% for other_cuisine in other_cuisines.cuisine %}
-                <option>{{ other_cuisine }}</option>
+                {% if loop.index == 1 %}
+                <br>
+                {% endif%}
+                {% if loop.index > 1 %}
+                <i class="fas fa-plus-circle remove_select pointer">Remove</i><br>
+                {% endif%}
+                
                 {% endfor %}
-                
-            </select>
-            {% if loop.index == 1 %}
-            <br>
-            {% endif%}
-            {% if loop.index > 1 %}
-            <i class="fas fa-plus-circle remove_select pointer">Remove</i><br>
-            {% endif%}
-            {% endfor %}
             </div>
             <i id="add_cuisine" class="fas fa-plus-circle duplicate_select pointer">Add</i>
                 
@@ -45,22 +47,24 @@
         <fieldset id="allergen_fieldset">
             <legend>Allergens</legend>
             <div class="allergens_container">
-            {% for allergen in recipe.allergens %}
-            <select name="allergens" class="allergens" id="allergens">
-                <option selected>{{allergen}}</option>
+                {% for allergen in recipe.allergens %}
+                <select name="allergens" class="allergens" id="allergens">
+                    <option selected>{{allergen}}</option>
+                    
+                    {% for item in allergens_json.allergen %}
+                    <option>{{ item }}</option>
+                    {% endfor %}
+                    
+                </select>
                 
-                {% for item in allergens_json.allergen %}
-                <option>{{ item }}</option>
+                {% if loop.index == 1 %}
+                <br>
+                {% endif %}
+                {% if loop.index > 1 %}
+                <i class="fas fa-plus-circle remove_select pointer">Remove</i><br>
+                {% endif %}
+                
                 {% endfor %}
-                
-            </select>
-            {% if loop.index == 1 %}
-            <br>
-            {% endif %}
-            {% if loop.index > 1 %}
-            <i class="fas fa-plus-circle remove_select pointer">Remove</i><br>
-            {% endif %}
-            {% endfor %}
             </div>
             <i id="add_allergen" class="fas fa-plus-circle duplicate_select pointer">Add</i>
          </fieldset>

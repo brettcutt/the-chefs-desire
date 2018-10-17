@@ -42,5 +42,5 @@ form legend {
 }
 
 table {
-    margin-bottom: 50px;
+    display: inline-block;
 }
