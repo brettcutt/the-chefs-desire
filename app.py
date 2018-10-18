@@ -11,73 +11,23 @@ app.config["MONGO_URI"] = "mongodb://admin:Mealponderer1@ds131763.mlab.com:31763
 
 mongo = PyMongo(app)
 
+# Data for listing the cuisine categories 
 cuisines_json = []
 
 with open ("data/cuisine_category.json", "r") as file:
     cuisines_json = json.load(file)
 
+# Data for listing the allergen categories 
+
 allergens_json = []    
     
 with open ("data/allergen_category.json", "r") as file:
     allergens_json = json.load(file)
-    
-# //////////////// Index (render)
-@app.route("/")
-def index():
-    
-    return render_template('index.html')
 
-# //////////////// Recipes (render)  
-@app.route("/recipes")
-def recipes():
-    
-    return render_template('recipes.html', recipes=mongo.db.recipe.find())
 
-@app.route("/found_recipe", methods=['POST'])
-def found_recipe():
-    found_cuisine = mongo.db.recipe.find({"cuisine":request.form.get("find_cuisine")})
-    return render_template('found_recipes.html', found_cuisine=found_cuisine)
-    
-# //////////////// add recipe(render) and insert recipe(redirect)
-# Add (render)
-@app.route("/add_recipe")
-def add_recipe():
-    return render_template("add_recipe.html", cuisines=mongo.db.cuisines.find(), allergens=mongo.db.allergens.find())
-
-#Insert (redirect)
-@app.route("/insert_recipe", methods=['POST'])
-def insert_recipe():
-    doc = {
-        "name":request.form.get('name'),
-        "cuisine":(request.form.getlist('cuisine')),
-        "allergens":(request.form.getlist('allergens')),
-        "description":request.form.get('description'),
-        "ingredients":(request.form.getlist('ingredients')),
-        "instructions":(request.form.getlist('instructions')),
-        "prep_time":request.form.get('prep_time'),
-        "cook_time":request.form.get('cook_time'),
-        "recipe_yield":request.form.get('recipe_yield'),
-        "author":request.form.get('author'),
-        "image":request.form.get('image')
-    }
-    
-    mongo.db.recipe.insert_one(doc)
-    return redirect(url_for("recipes"))
-
-# //////////////// Edit recipe and Update recipe
-# Edit (render)
-@app.route('/edit_recipe/<recipe_id>')
-def edit_recipe(recipe_id):
-    
-    the_recipe = mongo.db.recipe.find_one({"_id": ObjectId(recipe_id)})
-    return render_template('edit_recipe.html', recipe=the_recipe, other_cuisines=cuisines_json, allergens_json=allergens_json)
-
-# Update (redirect)
-@app.route("/update_recipe/<recipe_id>", methods=['POST'])
-def update_recipe(recipe_id):
-    
-    mongo.db.recipe.update({'_id':ObjectId(recipe_id)},
-    {
+# Data added and edited in mlabs
+def recipe_database():
+    data = {
         "name":request.form.get('name'),
         "cuisine":request.form.getlist('cuisine'),
         "allergens":request.form.getlist('allergens'),
@@ -89,7 +39,74 @@ def update_recipe(recipe_id):
         "recipe_yield":request.form.get('recipe_yield'),
         "author":request.form.get('author'),
         "image":request.form.get('image')
-    })
+    }
+    return data
+    
+# //////////////// Index (render)
+@app.route("/")
+def index():
+    
+    return render_template('index.html')
+
+# //////////////// Recipes (render)  
+@app.route("/recipes")
+def recipes():
+    
+    return render_template('recipes.html', recipes=mongo.db.recipe.find(), cuisines_json=cuisines_json, allergens_json=allergens_json)
+
+
+# //////////////// Found_recipes (render)
+@app.route("/find_ingredient", methods=['POST'])
+def find_ingredient():
+    recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":request.form.get("ingredient_category")}})
+    return render_template('found_recipes.html', recipe_category=recipe_category)
+
+@app.route("/find_cuisine", methods=['POST'])
+def find_cuisine():
+    recipe_category = mongo.db.recipe.find({"cuisine":request.form.get("cuisine_category")})
+    return render_template('found_recipes.html', recipe_category=recipe_category)
+    
+    
+@app.route("/find_allergen", methods=['POST'])
+def find_allergen():
+    recipe_category = mongo.db.recipe.find({"allergens":{"$nin": request.form.getlist("allergen_category")}})
+    return render_template('found_recipes.html', recipe_category=recipe_category)    
+    
+    
+@app.route("/find_cuisine_and_allergen", methods=['POST'])
+def find_cuisine_and_allergen():
+    
+    recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":request.form.get("find_and_cuisine")},{"allergens":{"$nin": request.form.getlist("find_and_allergen")}}]})
+    return render_template('found_recipes.html', recipe_category=recipe_category)
+  
+    
+# //////////////// add recipe(render) and insert recipe(redirect)
+# Add (render)
+@app.route("/add_recipe")
+def add_recipe():
+    return render_template("add_recipe.html", cuisines=mongo.db.cuisines.find(), allergens=mongo.db.allergens.find())
+
+#Insert (redirect)
+@app.route("/insert_recipe", methods=['POST'])
+def insert_recipe():
+    doc = recipe_database()
+    
+    mongo.db.recipe.insert_one(doc)
+    return redirect(url_for("recipes"))
+
+# //////////////// Edit recipe and Update recipe
+# Edit (render)
+@app.route('/edit_recipe/<recipe_id>')
+def edit_recipe(recipe_id):
+    
+    the_recipe = mongo.db.recipe.find_one({"_id": ObjectId(recipe_id)})
+    return render_template('edit_recipe.html', recipe=the_recipe, cuisines_json=cuisines_json, allergens_json=allergens_json)
+
+# Update (redirect)
+@app.route("/update_recipe/<recipe_id>", methods=['POST'])
+def update_recipe(recipe_id):
+    
+    mongo.db.recipe.update({'_id':ObjectId(recipe_id)}, recipe_database())
 
     return redirect(url_for('recipes'))
     
