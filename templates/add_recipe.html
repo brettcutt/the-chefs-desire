@@ -38,7 +38,7 @@
             <legend>Allergens</legend>
             <div class="allergens_container">
                 
-                <select name="allergens" class="allergens" id="allergens">
+                <select name="allergens" class="allergens inline" id="allergens">
                     <option disabled selected>Choose your option</option>
                     
                     {% for allergen in allergens %}
@@ -64,7 +64,7 @@
 
         <fieldset id="ingredients_fieldset">
             <legend>Ingredients</legend>
-            <input type="text" name="ingredients" class="ingredients" id="ingredients" placeholder="Ingredient" />
+            <input type="text" name="ingredients" class="ingredients inline" id="ingredients" placeholder="Ingredient" />
             <i id="first" class="fas fa-plus-circle duplicate pointer">Add</i>
         </fieldset>
         
@@ -72,7 +72,7 @@
 
         <fieldset id="instructions_fieldset">
             <legend>Instructions</legend>
-            <input type="text" name="instructions" class="instructions" id="instructions" placeholder="Recipe Instructions" />
+            <input type="text" name="instructions" class="instructions inline" id="instructions" placeholder="Recipe Instructions" />
             <i id="first" class="fas fa-plus-circle duplicate pointer">Add</i>
         </fieldset>
         
