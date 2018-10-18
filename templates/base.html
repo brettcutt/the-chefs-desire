@@ -1,33 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css" />
     <title>The Meal Ponderer</title>
 </head>
+
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="{{url_for('index')}}">Home</a></li>
-                <li><a href="{{url_for('recipes')}}">Recipes</a></li>
-                <li><a href="{{url_for('add_recipe')}}">Add Recipe</a></li>
-                <li><a href="{{url_for('recipes')}}">Edit Recipe</a></li>
-                <li><a href="{{url_for('recipes')}}">Delete Recipe</a></li>
-            </ul>
-        </nav>
+        <div class="row header-row">
+        <div class="col-xs-12">
+            <h1>The Meal Ponderer</h1>
+        </div>
+        <div class="col-xs-12">
+            <nav>
+                <ul>
+                    <li><a href="{{url_for('index')}}">Home</a></li>
+                    <li><a href="{{url_for('recipes')}}">Recipes</a></li>
+                    <li><a href="{{url_for('add_recipe')}}">Add Recipe</a></li>
+                </ul>
+            </nav>
+        </div>
+        </div>
     </header>
-    
+
     <main class="container">
-        {% block content %}
-        {% endblock %}
+        {% block content %} {% endblock %}
     </main>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery-3.3.1.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery-ui.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery.js')}}"></script>
 </body>
+
 </html>
