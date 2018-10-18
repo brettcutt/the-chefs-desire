@@ -23,8 +23,8 @@
                 <select name="cuisine" class="cuisine" id="cuisine">
                     <option selected>{{cuisines}}</option>
                     
-                    {% for other_cuisine in other_cuisines.cuisine %}
-                    <option>{{ other_cuisine }}</option>
+                    {% for item in cuisines_json.cuisine %}
+                    <option>{{ item }}</option>
                     {% endfor %}
                     
                 </select>
