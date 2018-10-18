@@ -1,29 +1,26 @@
-nav {
-    display: block;
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
 }
 
-nav ul {
+/*default settings*/
+
+.inline {
+    display: inline-block;
+}
+
+.center {
     text-align: center;
-    display: block;
 }
 
-nav ul li {
-    float: left;
-    list-style: none;
-    width: 100px;
-    color: #000;
-    padding: 6px ;
-    background-color: red;
-    margin-left: 5px;
+/*Headings*/
+h1 {
+    text-align: center;
 }
 
-nav ul li a {
-    text-decoration: none;
-}
 
-input, textarea {
-    display: block;
-}
+/*Forms, Inputs and buttons*/
 
 form fieldset {
     margin-bottom: 20px;
@@ -31,6 +28,34 @@ form fieldset {
 
 form legend {
     margin-bottom: 5px;
+}
+
+input, textarea {
+    display: block;
+}
+
+input[type=checkbox] {
+    float: left;
+}
+select {
+    width: 165px;
+}
+.allergen_checkbox {
+    width: 100px;
+    display: inline-block;
+}
+
+.close-btn, input[type=submit] {
+    width: 80px;
+    height: 30px;
+    background-color: #fff;
+    color: gray;
+    font-weight: bold;
+    border: 2px solid orange;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 26px;
+    cursor: pointer;
 }
 
 .pointer {
@@ -44,3 +69,96 @@ form legend {
 table {
     display: inline-block;
 }
+
+
+
+/*Base.html*/
+.header-row {
+    padding: 5px 0 10px 0;
+}
+
+nav {
+    text-align: center;
+    
+}
+
+nav ul {
+    padding: 0;
+    display: inline-block;
+    text-align: center;
+}
+
+nav ul li {
+    float: left;
+    list-style: none;
+    width: 100px;
+    color: #000;
+    padding: 6px ;
+    background-color: orange;
+    margin: 0 2px;
+    
+}
+
+nav ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #000;
+}
+
+.container {
+    background-color: orange;
+    padding: 20px;
+}
+
+/* recipes.html*/
+.search-box {
+    display: inline-block;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.search_btn {
+     display: inline-block;   
+}
+
+.search-item {
+    display:inline-block;
+}
+
+.search_category_box {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.inner-box {
+    margin: 0 auto;
+    background-color: rgba(255,255,255,.95);
+    padding: 20px;
+    text-align: left;
+    border-radius: 10px;
+    box-shadow: -5px -5px 5px 0px rgba(0,0,0,0.75);
+}
+
+.search-btn {
+    text-align: center;
+    display: inline-block;
+    width: 150px;
+    border: 2px solid orange;
+    border-radius: 10px;
+    padding: 2px 3px;
+    cursor: pointer;
+    font-weight: bold;
+    color: gray;
+}
+
+
+
+.choice {
+    background-color: gray;
+    color: #fff;
+} 
