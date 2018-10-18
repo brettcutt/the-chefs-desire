@@ -92,11 +92,11 @@
             <!--########################## ALLERGEN AND CUISINE FROM-->
             <div id="allergen_and_cuisine_search" class="search_category_box">
                 <div class="inner-box inline">
-                <form action="{{url_for('find_cuisine_and_allergen')}}" , method="POST">
+                <form action="{{url_for('find_multiple_categories')}}" , method="POST">
                     <p><b>Select Cuisine</b></p>
                     <div>
-                        <select class="search-item" name="find_and_cuisine" id="find_and_cuisine" required>
-                            <option value="" disabled selected>None Selected</option>
+                        <select class="search-item" name="find_cuisine" id="find_cuisine">
+                            <option value="" selected>None</option>
                             {% for item in cuisines_json.cuisine|sort %}
                             <option value="{{ item }}">{{ item }}</option>
                             
@@ -104,12 +104,18 @@
                             {% endfor %}
                         </select>
                     </div>
+                    
+                    <p><b>Search by Ingredient</b></p>
+                    <div class="inline">
+                        <input type="text" name="find_ingredient" id="find_ingredient" placeholder='e.g. chicken'>
+                    </div>
+                    
                     <br>
                     
                     <p><b>Select allergen free</b></p>
                         {% for item in allergens_json.allergen|sort %}
                     <div class='allergen_checkbox'>
-                        <input value="{{ item }}" name="find_and_allergen" id="find_and_allergen" type="checkbox"> {{ item }}</input>
+                        <input value="{{ item }}" name="find_allergen" id="find_allergen" type="checkbox"> {{ item }}</input>
                     </div>
                     
                     {% if loop.index % 3 == 0 %}
@@ -123,6 +129,8 @@
                         <input class="inline" type="submit" value="Select" />
                         <p class="inline close-btn">Close</p>
                     </div>
+                    
+                    
                     
                 </form>
             </div>
