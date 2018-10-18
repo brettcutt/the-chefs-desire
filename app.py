@@ -73,10 +73,37 @@ def find_allergen():
     return render_template('found_recipes.html', recipe_category=recipe_category)    
     
     
-@app.route("/find_cuisine_and_allergen", methods=['POST'])
-def find_cuisine_and_allergen():
+@app.route("/find_multiple_categories", methods=['POST'])
+def find_multiple_categories():
     
-    recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":request.form.get("find_and_cuisine")},{"allergens":{"$nin": request.form.getlist("find_and_allergen")}}]})
+    
+    if request.form.get("find_cuisine") == "" and request.form.get("find_ingredient") == "":
+        recipe_category = mongo.db.recipe.find({"allergens":{"$nin": request.form.getlist("find_allergen")}})
+    
+    elif request.form.get("find_cuisine") == "" and not request.form.getlist("find_allergen"):
+        recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":request.form.get("find_ingredient")}})
+        
+    elif not request.form.get("find_ingredient") and not request.form.getlist("find_allergen"):
+        recipe_category = mongo.db.recipe.find({"cuisine":request.form.get("find_cuisine")})
+                                                         
+    elif not request.form.get("find_ingredient") and request.form.get("find_cuisine") and request.form.getlist("find_allergen"):
+        recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":request.form.get("find_cuisine")},
+                                                         {"allergens":{"$nin": request.form.getlist("find_allergen")}}  ]})
+        
+    elif request.form.get("find_ingredient") and request.form.get("find_cuisine") == "" and request.form.getlist("find_allergen"):
+        recipe_category = mongo.db.recipe.find({"$and": [{"allergens":{"$nin": request.form.getlist("find_allergen")}},
+                                                         {"ingredients":{"$regex":request.form.get("find_ingredient")}}  ]})
+                                                         
+    elif request.form.get("find_ingredient") and request.form.get("find_cuisine") and not request.form.getlist("find_allergen"):
+        recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":request.form.get("find_cuisine")},
+                                                         {"ingredients":{"$regex":request.form.get("find_ingredient")}}  ]})
+                                                         
+    elif request.form.get("find_ingredient") and request.form.get("find_cuisine") and request.form.getlist("find_allergen"):
+        recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":request.form.get("find_cuisine")},
+                                                         {"allergens":{"$nin": request.form.getlist("find_allergen")}},
+                                                         {"ingredients":{"$regex":request.form.get("find_ingredient")}}  ]})
+   
+   
     return render_template('found_recipes.html', recipe_category=recipe_category)
   
     
