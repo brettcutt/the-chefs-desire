@@ -1,5 +1,61 @@
 $(document).ready( function() {
     
+    $("#ingredient_btn").click(function() {
+        $("#ingredient_search").show()
+        $("#cuisine_search").hide()
+        $("#allergen_search").hide()
+        $("#allergen_and_cuisine_search").hide()
+        $(this).addClass("choice")
+        $("#cuisine_btn").removeClass("choice")
+        $("#allergen_btn").removeClass("choice")
+        $("#allergen_and_cuisine_btn").removeClass("choice")
+    })
+    
+    $("#cuisine_btn").click(function() {
+        $("#ingredient_search").hide()
+        $("#cuisine_search").show()
+        $("#allergen_search").hide()
+        $("#allergen_and_cuisine_search").hide()
+        $("#ingredient_btn").removeClass("choice")
+        $(this).addClass("choice")
+        $("#allergen_btn").removeClass("choice")
+        $("#allergen_and_cuisine_btn").removeClass("choice")
+    })
+    
+    $("#allergen_btn").click(function() {
+        $("#ingredient_search").hide()
+        $("#cuisine_search").hide()
+        $("#allergen_search").show()
+        $("#allergen_and_cuisine_search").hide()
+        $("#ingredient_btn").removeClass("choice")
+        $("#cuisine_btn").removeClass("choice")
+        $(this).addClass("choice")
+        $("#allergen_and_cuisine_btn").removeClass("choice")
+    })
+    
+    $("#allergen_and_cuisine_btn").click(function() {
+        $("#ingredient_search").hide()
+        $("#allergen_search").hide()
+        $("#cuisine_search").hide()
+        $("#allergen_and_cuisine_search").show()
+        $("#ingredient_btn").removeClass("choice")
+        $("#cuisine_btn").removeClass("choice")
+        $("#allergen_btn").removeClass("choice")
+        $(this).addClass("choice")
+    })
+    $(".close-btn").on('click', function() {
+        $("#allergen_search").hide()
+        $("#cuisine_search").hide()
+        $("#allergen_and_cuisine_search").hide()
+        $("#ingredient_search").hide()
+        $("#ingredient_btn").removeClass("choice")
+        $("#cuisine_btn").removeClass("choice")
+        $("#allergen_btn").removeClass("choice")
+        $("#allergen_and_cuisine_btn").removeClass("choice")
+        
+    })
+    
+    
 /*Add input field for instruction and ingredients, also adds the add and remove buttons*/    
    
     $("body").on('click','.duplicate', function(){
