@@ -162,3 +162,39 @@ nav ul li a {
     background-color: gray;
     color: #fff;
 } 
+
+/*found_recipe.html*/
+
+.found_recipe_row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.single_recipe_result {
+    padding: 10px;
+    display: flex;
+}
+
+.inner_recipe_box {
+    flex: 1;
+    width:  100%;
+    background-color: rgba(255,255,255,.9);
+    padding: 15px;
+}
+
+.name_box {
+    height: 50px; 
+}
+
+.allergen_box {
+    height: 50px; 
+}
+
+.cuisine_box {
+    height: 50px; 
+}
+
+.found_image {
+    height: auto;
+    width: 100%;
+} 
