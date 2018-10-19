@@ -42,19 +42,40 @@ def recipe_database():
     }
     return data
     
-# //////////////// Index (render)
+# //////////////// INDEX (render)
+
 @app.route("/")
 def index():
     
     return render_template('index.html')
 
-# //////////////// Recipes (render)  
+
+# //////////////// RECIPES (render) 
+
 @app.route("/recipes")
 def recipes():
     
     return render_template('recipes.html', recipes=mongo.db.recipe.find(), cuisines_json=cuisines_json, allergens_json=allergens_json)
 
-# //////////////// Single_recipes (render)
+
+# //////////////// SINGLE SEARCHED RECIPE (render)
+
+@app.route('/update_view_count/<recipe_id>')
+def update_view_count(recipe_id):
+    recipe_views = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"views"})
+    
+    count = []       
+    
+    for key, value in recipe_views.items():
+        if key !="_id":
+            count = value
+    if not count:
+        mongo.db.recipe.update_one({'_id':ObjectId(recipe_id)},{"$set":{"views": 1 }}, upsert = True)
+    elif count >= 0:
+        mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"views": count + 1 }})
+    
+    
+    return redirect(url_for('single_recipe', recipe_id=recipe_id ))
 
 @app.route('/single_recipe/<recipe_id>')
 def single_recipe(recipe_id):
@@ -62,7 +83,9 @@ def single_recipe(recipe_id):
 
     return render_template("single_recipe.html", recipe=the_recipe, cuisines_json=cuisines_json, allergens_json=allergens_json)
 
-# //////////////// Found_recipes (render)
+
+# //////////////// SEARCHING RESULT (render)
+
 @app.route("/find_ingredient", methods=['POST'])
 def find_ingredient():
     recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":request.form.get("ingredient_category")}})
@@ -117,7 +140,7 @@ def find_multiple_categories():
     return render_template('search_results.html', recipe_category=recipe_category, recipe_count=recipe_count, cuisines_json=cuisines_json, allergens_json=allergens_json)
   
     
-# //////////////// add recipe(render) and insert recipe(redirect)
+# //////////////// ADD RECIPE(render) AND INSERT RECIPE(redirect)
 # Add (render)
 @app.route("/add_recipe")
 def add_recipe():
@@ -131,7 +154,7 @@ def insert_recipe():
     mongo.db.recipe.insert_one(doc)
     return redirect(url_for("recipes"))
 
-# //////////////// Edit recipe and Update recipe
+# //////////////// EDIT RECIPE AND UPDATE RECIPE
 # Edit (render)
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
@@ -143,12 +166,12 @@ def edit_recipe(recipe_id):
 @app.route("/update_recipe/<recipe_id>", methods=['POST'])
 def update_recipe(recipe_id):
     
-    mongo.db.recipe.update({'_id':ObjectId(recipe_id)}, recipe_database())
+    mongo.db.recipe.update_many({'_id':ObjectId(recipe_id)},{"$set": recipe_database()})
 
     return redirect(url_for('recipes'))
     
     
-# //////////////// Delete recipe
+# //////////////// DELETE RECIPE
 # Delete (redirect)
 @app.route("/delete_recipe/<recipe_id>")
 def delete_recipe(recipe_id):
