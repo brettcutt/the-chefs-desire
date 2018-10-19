@@ -54,57 +54,67 @@ def recipes():
     
     return render_template('recipes.html', recipes=mongo.db.recipe.find(), cuisines_json=cuisines_json, allergens_json=allergens_json)
 
+# //////////////// Single_recipes (render)
+
+@app.route('/single_recipe/<recipe_id>')
+def single_recipe(recipe_id):
+    the_recipe = mongo.db.recipe.find_one({"_id": ObjectId(recipe_id)})
+
+    return render_template("single_recipe.html", recipe=the_recipe, cuisines_json=cuisines_json, allergens_json=allergens_json)
 
 # //////////////// Found_recipes (render)
 @app.route("/find_ingredient", methods=['POST'])
 def find_ingredient():
     recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":request.form.get("ingredient_category")}})
-    return render_template('found_recipes.html', recipe_category=recipe_category)
+    return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json)
 
 @app.route("/find_cuisine", methods=['POST'])
 def find_cuisine():
     recipe_category = mongo.db.recipe.find({"cuisine":request.form.get("cuisine_category")})
-    return render_template('found_recipes.html', recipe_category=recipe_category)
+    return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json)
     
     
 @app.route("/find_allergen", methods=['POST'])
 def find_allergen():
     recipe_category = mongo.db.recipe.find({"allergens":{"$nin": request.form.getlist("allergen_category")}})
-    return render_template('found_recipes.html', recipe_category=recipe_category)    
+    return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json)    
     
     
 @app.route("/find_multiple_categories", methods=['POST'])
 def find_multiple_categories():
     
+    ingredient = request.form.get("find_ingredient")
+    cuisine = request.form.get("find_cuisine")
+    allergens = request.form.getlist("find_allergen")
     
-    if request.form.get("find_cuisine") == "" and request.form.get("find_ingredient") == "":
-        recipe_category = mongo.db.recipe.find({"allergens":{"$nin": request.form.getlist("find_allergen")}})
+    if cuisine == "" and not ingredient:
+        recipe_category = mongo.db.recipe.find({"allergens":{"$nin": allergens}})
     
-    elif request.form.get("find_cuisine") == "" and not request.form.getlist("find_allergen"):
-        recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":request.form.get("find_ingredient")}})
+    elif cuisine == "" and not allergens:
+        recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":ingredient}})
         
-    elif not request.form.get("find_ingredient") and not request.form.getlist("find_allergen"):
-        recipe_category = mongo.db.recipe.find({"cuisine":request.form.get("find_cuisine")})
+    elif not ingredient and not allergens:
+        recipe_category = mongo.db.recipe.find({"cuisine":cuisine})
                                                          
-    elif not request.form.get("find_ingredient") and request.form.get("find_cuisine") and request.form.getlist("find_allergen"):
-        recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":request.form.get("find_cuisine")},
-                                                         {"allergens":{"$nin": request.form.getlist("find_allergen")}}  ]})
+    elif not ingredient and cuisine and allergens:
+        recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":cuisine},
+                                                         {"allergens":{"$nin": allergens}}  ]})
         
-    elif request.form.get("find_ingredient") and request.form.get("find_cuisine") == "" and request.form.getlist("find_allergen"):
-        recipe_category = mongo.db.recipe.find({"$and": [{"allergens":{"$nin": request.form.getlist("find_allergen")}},
-                                                         {"ingredients":{"$regex":request.form.get("find_ingredient")}}  ]})
+    elif ingredient and cuisine == "" and allergens:
+        recipe_category = mongo.db.recipe.find({"$and": [{"allergens":{"$nin": allergens}},
+                                                         {"ingredients":{"$regex":ingredient}}  ]})
                                                          
-    elif request.form.get("find_ingredient") and request.form.get("find_cuisine") and not request.form.getlist("find_allergen"):
-        recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":request.form.get("find_cuisine")},
-                                                         {"ingredients":{"$regex":request.form.get("find_ingredient")}}  ]})
+    elif ingredient and cuisine and not allergens:
+        recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":cuisine},
+                                                         {"ingredients":{"$regex":ingredient}}  ]})
                                                          
-    elif request.form.get("find_ingredient") and request.form.get("find_cuisine") and request.form.getlist("find_allergen"):
-        recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":request.form.get("find_cuisine")},
-                                                         {"allergens":{"$nin": request.form.getlist("find_allergen")}},
-                                                         {"ingredients":{"$regex":request.form.get("find_ingredient")}}  ]})
-   
-   
-    return render_template('found_recipes.html', recipe_category=recipe_category)
+    elif ingredient and cuisine and allergens:
+        recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":cuisine},
+                                                         {"allergens":{"$nin": allergens}},
+                                                         {"ingredients":{"$regex":ingredient}}  ]})
+    print(recipe_category.count())
+    recipe_count = recipe_category.count()
+    return render_template('search_results.html', recipe_category=recipe_category, recipe_count=recipe_count, cuisines_json=cuisines_json, allergens_json=allergens_json)
   
     
 # //////////////// add recipe(render) and insert recipe(redirect)
