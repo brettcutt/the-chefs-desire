@@ -1,0 +1,224 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<!--SEARCH BAR-->
+<div class="row">
+
+    <div class="col-xs-12">
+        
+        <div class="search-box">
+            <p><b>Refine Search by:</b></p>
+            <div class="search_btn">
+                <P id='ingredient_btn' class='search-btn'>Ingredient</P>
+            </div>
+            <div class="search_btn">
+                <P id='cuisine_btn' class='search-btn'>Cuisine</P>
+            </div>
+            <div class="search_btn">
+                <P id='allergen_btn' class='search-btn'>Allergen</P>
+            </div>
+            <div class="search_btn">
+                <P id='allergen_and_cuisine_btn' class='search-btn'>Cuisine and Allergen</P>
+            </div>
+        </div>    
+            <!--########################## INGREDIENT FORM-->
+            <div id="ingredient_search" class="search_category_box">
+                <div class="inner-box inline">
+                    <form action="{{url_for('find_ingredient')}}" , method="POST">
+                        <p><b>Search by Ingredient</b></p>
+                        <div class="inline">
+                            <input type="text" name="ingredient_category" id="ingredient_category" placeholder='e.g. chicken'>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="center">
+                            <input class="inline" type="submit" value="Select" />
+                            <p class="close-btn inline">Close</p>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+            <!--########################## CUISINE FORM-->
+            
+            <div id="cuisine_search" class="search_category_box">
+                <div class="inner-box inline">
+                    <form action="{{url_for('find_cuisine')}}" , method="POST">
+                        <p><b>Select Cuisine</b></p>
+                        <div class="inline">
+                            <select  name="cuisine_category" id="cuisine_category">
+                            <option disabled value="" selected>None Selected</option>
+                            {% for item in cuisines_json.cuisine|sort %}
+                            <option value="{{ item }}">{{ item }}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="center">
+                            <input class="inline" type="submit" value="Select" />
+                            <p class="close-btn inline">Close</p>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+            
+            <!--########################## END FORM-->
+            <!--########################## ALLERGEN FORM-->
+            
+            <div id="allergen_search" class="search_category_box">
+                <div class="inner-box inline">
+                    <form action="{{url_for('find_allergen')}}" , method="POST">
+                    <p><b>Select allergen free</b></p>
+                        
+                        {% for item in allergens_json.allergen|sort %}
+                        <div class='allergen_checkbox'>
+                            <input value="{{ item }}" name="allergen_category" type="checkbox"> {{ item }}</input>
+                        </div>
+                        {% if loop.index % 3 == 0 %}
+                        <br>
+                        {% endif%}
+                        {% endfor %}
+                        <br>
+                        <br>
+                        <div class="center">
+                            <input class="inline" type="submit" value="Select" />
+                            <p class="close-btn inline">Close</p>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+            
+            <!--########################## END FORM-->
+            <!--########################## ALLERGEN AND CUISINE FROM-->
+            <div id="allergen_and_cuisine_search" class="search_category_box">
+                <div class="inner-box inline">
+                    <form action="{{url_for('find_multiple_categories')}}" , method="POST">
+                        <p><b>Select Cuisine</b></p>
+                        <div>
+                            <select class="search-item" name="find_cuisine" id="find_cuisine">
+                                <option value="" selected>None</option>
+                                {% for item in cuisines_json.cuisine|sort %}
+                                <option value="{{ item }}">{{ item }}</option>
+                                
+                                
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <p><b>Search by Ingredient</b></p>
+                        <div class="inline">
+                            <input type="text" name="find_ingredient" id="find_ingredient" placeholder='e.g. chicken'>
+                        </div>
+                        
+                        <br>
+                        
+                        <p><b>Select allergen free</b></p>
+                            {% for item in allergens_json.allergen|sort %}
+                        <div class='allergen_checkbox'>
+                            <input value="{{ item }}" name="find_allergen" id="find_allergen" type="checkbox"> {{ item }}</input>
+                        </div>
+                        
+                        {% if loop.index % 3 == 0 %}
+                        <br>
+                        {% endif%}
+                        
+                        {% endfor %}
+                        <br>
+                        <br>
+                        <div class="center">
+                            <input class="inline" type="submit" value="Select" />
+                            <p class="inline close-btn">Close</p>
+                        </div>
+                        
+                        
+                        
+                    </form>
+                </div>
+            </div>
+            <!--########################## END FORM-->
+        
+    </div>
+</div>
+<div class="row">
+{% if recipe_count == 0 %}
+    <div>
+        <p><b>No results found!</b></p>
+    </div>
+
+
+{% else %}
+
+    {% if recipe_count == 1 %}
+        <div>
+            <p><b>{{ recipe_count}} result found!</b></p>
+        </div>
+    {% else %}
+        <div>
+            <p><b>{{ recipe_count}} results found!</b></p>
+        </div>
+    {% endif %}
+</div>
+
+    
+
+<div class="row found_recipe_row">
+
+{% for recipe in recipe_category %}
+
+
+
+    <div class="single_recipe_result col-xs-12 col-sm-4 col-md-3">
+        <div class="inner_recipe_box">
+        <div class="row">
+            <div class="col-xs-12 found_image_box">
+                <a href="{{ url_for('single_recipe', recipe_id=recipe._id)}}">
+                <img class="found_image" src="{{ recipe.image }}" alt=" {{ recipe.name }}">
+                </a>
+            </div>
+            
+            <div class=" name_box col-xs-12 center">
+                <h4><b>{{ recipe.name }}</b></h4>
+            </div>
+            
+            <div class=" allergen_box col-xs-12">
+                <div><b>Allergens</b></div>
+                
+            {% for item in recipe.allergens %}
+            {% if loop.index == 0 or item == "" %}
+            <p>None</p>
+            {% else %}
+                <span>{{ item }}</span>
+            {% endif %}
+            {% endfor %}
+            
+            </div>
+            
+            <div class="cuisine_box col-xs-12">
+                <div><b>Cuisine</b></div>
+            {% for item in recipe.cuisine %}
+            {% if loop.index == 0 or item == "" %}
+            <p>None</p>
+            {% else %}
+                <span>{{ item }}</span>
+            {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+    
+{% endfor %}
+</div>
+
+{% endif %}
+</div>
+
+
+
+
+{% endblock %}
