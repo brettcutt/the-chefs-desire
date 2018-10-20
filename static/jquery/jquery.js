@@ -64,15 +64,17 @@ $(document).ready( function() {
         
         if ($(this).attr('id') == 'first') {
             $(this).append().after(
-            '<br><input type="text" name="' + id_name +'" class="' + id_name +'" placeholder="Add"/> <i class="fas fa-plus-circle duplicate pointer">Add</i>' +
-            ' <i class="fas fa-plus-circle remove_duplicate pointer">Remove</i>');
+            '<br><input type="text" name="' + id_name +'" class="' + id_name +'" placeholder="Add"/>'+
+            ' <i class="material-icons duplicate pointer">add</i>' +
+            ' <i class="material-icons remove_duplicate pointer">remove</i>');
         } 
         
         else 
         {
-            $(this).next().append().after(
-            '<br><input type="text" name="' + id_name +'" class="' + id_name +'" placeholder="Add"/> <i class="fas fa-plus-circle duplicate pointer">Add</i>' +
-            ' <i class="fas fa-plus-circle remove_duplicate pointer">Remove</i>');
+            $(this).prev().prev().prev().append().after(
+            '<br><input type="text" name="' + id_name +'" class="' + id_name +'" placeholder="Add"/>'+
+            ' <i class="material-icons duplicate pointer">add</i>' +
+            ' <i class="material-icons remove_duplicate pointer">remove</i>');
         }
         
     });
@@ -85,25 +87,40 @@ $(document).ready( function() {
     });
     
     
-/*Select cuisine and allergens, also addds the remove*/
+/*Select cuisine on add and edit html*/
     
     $("body").on('click','.duplicate_select', function(){
         
-    var select_remove_button = ' <i class="fas fa-plus-circle remove_select pointer">Remove</i><br>';
+    var select_remove_button = ' <i class="material-icons remove_select pointer">remove</i><br>';
     
         if ($(this).attr('id') == 'add_cuisine') {
-            $("#cuisine").clone().appendTo(".cuisine_container").after(select_remove_button)
-        }
-        else if ($(this).attr('id') == 'add_allergen') {
-            $("#allergens").clone().appendTo(".allergens_container").after(select_remove_button)
+            $("#cuisine").clone().appendTo(".cuisine_container").before(select_remove_button)
+            $(this).appendTo(".cuisine_container")
+            $('.duplicate_select').addClass("add-fourpx")
         }
     });
     
     $("body").on('click','.remove_select', function(){
         $(this).prev().remove();
-        $(this).prev().remove();
+        $(this).next().remove();
         $(this).remove();
     });
     
+/*Select allergen on add and edit html*/
+
+    $(".nuts:not(:first)").parent().remove();
+    $(".dairy:not(:first)").parent().remove();
+    $(".penuts:not(:first)").parent().remove();
+    $(".eggs:not(:first)").parent().remove();
+    $(".crustacean:not(:first)").parent().remove();
+    $(".wheat:not(:first)").parent().remove();
+    $(".soybeans:not(:first)").parent().remove();
+    
+    
+    if ($('.duplicate_select').prev().prev().hasClass('remove_select')) {
+                $('.duplicate_select').prev().remove()
+                $('.duplicate_select').prev().remove()
+                
+            }
     
 });

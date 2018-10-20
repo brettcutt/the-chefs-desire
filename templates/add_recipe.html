@@ -19,16 +19,14 @@
             <legend>Cuisine</legend>
             <div class="cuisine_container">
             <select name="cuisine" class="cuisine" id="cuisine">
-                <option disabled selected>Choose your option</option>
-                {% for cuisine in cuisines %}
-                {% for item in cuisine.cuisine %}
+                <option disabled selected value="">Choose your option</option>
+                {% for item in cuisines_json.cuisine %}
                 <option value="{{ item }}">{{ item }}</option>
                 {% endfor %}
-                {% endfor %}
                 
-            </select><br>
+            </select>
+            <i id="add_cuisine" class="material-icons duplicate_select pointer">add</i>
             </div>
-            <i id="add_cuisine" class="fas fa-plus-circle duplicate_select pointer">Add</i>
         </fieldset>
         
 <!--Allergens-->
@@ -38,19 +36,15 @@
             <legend>Allergens</legend>
             <div class="allergens_container">
                 
-                <select name="allergens" class="allergens inline" id="allergens">
-                    <option disabled selected>Choose your option</option>
-                    
-                    {% for allergen in allergens %}
-                    {% for item in allergen.allergy %}
-                    <option value="{{ item }}">{{ item }}</option>
-                    {% endfor %}
-                    {% endfor %}
-                </select><br>
+                    {% for item in allergens_json.allergen %}
+                <div class='allergen_checkbox'>
+                    <input class="{{ item }}" id="allergen" name="allergens" type="checkbox" value="{{ item }}">
+                    <label class="{{ item }}1" for="allergen">{{ item }}</label>
+                </div>
+                {% endfor%}
                 
             </div>
             
-            <i id="add_allergen" class="fas fa-plus-circle duplicate_select pointer">Add</i>
         </fieldset>
         
 <!--Description-->
@@ -65,7 +59,7 @@
         <fieldset id="ingredients_fieldset">
             <legend>Ingredients</legend>
             <input type="text" name="ingredients" class="ingredients inline" id="ingredients" placeholder="Ingredient" />
-            <i id="first" class="fas fa-plus-circle duplicate pointer">Add</i>
+            <i id="first" class="material-icons duplicate pointer">add</i>
         </fieldset>
         
 <!--Instructions-->
@@ -73,7 +67,7 @@
         <fieldset id="instructions_fieldset">
             <legend>Instructions</legend>
             <input type="text" name="instructions" class="instructions inline" id="instructions" placeholder="Recipe Instructions" />
-            <i id="first" class="fas fa-plus-circle duplicate pointer">Add</i>
+            <i id="first" class="material-icons duplicate pointer">add</i>
         </fieldset>
         
 <!--Prep time-->       

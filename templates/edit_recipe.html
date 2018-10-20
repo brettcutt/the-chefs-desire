@@ -18,9 +18,20 @@
             <legend>Cuisine</legend>
             <div class="cuisine_container">
                 
-                {% for cuisines in recipe.cuisine %}
+                {% if recipe.cuisine == [] %}
+                    <select name="cuisine" class="cuisine" id="cuisine">
+                    <option value="" selected>Choose a Cuisine</option>
                     
+                    {% for item in cuisines_json.cuisine %}
+                    <option >{{item}}</option>
+                    {% endfor %}
+                    </select>
+                {% endif%}
+                
+                {% if recipe.cuisine != [] %}
+                {% for cuisines in recipe.cuisine %}
                 <select name="cuisine" class="cuisine" id="cuisine">
+                    
                     <option selected>{{cuisines}}</option>
                     
                     {% for item in cuisines_json.cuisine %}
@@ -28,18 +39,13 @@
                     {% endfor %}
                     
                 </select>
-                
-                {% if loop.index == 1 %}
-                <br>
-                {% endif%}
-                {% if loop.index > 1 %}
-                <i class="fas fa-plus-circle remove_select pointer">Remove</i><br>
-                {% endif%}
-                
+                <i class="material-icons remove_select pointer">remove</i><br>
                 {% endfor %}
-            </div>
-            <i id="add_cuisine" class="fas fa-plus-circle duplicate_select pointer">Add</i>
+                {% endif%}
+                <i id="add_cuisine" class="material-icons duplicate_select pointer">add</i>
+                    
                 
+            </div>
         </fieldset>
         
 <!--Allergen-->        
@@ -47,26 +53,22 @@
         <fieldset id="allergen_fieldset">
             <legend>Allergens</legend>
             <div class="allergens_container">
-                {% for allergen in recipe.allergens %}
-                <select name="allergens" class="allergens" id="allergens">
-                    <option selected>{{allergen}}</option>
-                    
-                    {% for item in allergens_json.allergen %}
-                    <option>{{ item }}</option>
-                    {% endfor %}
-                    
-                </select>
                 
-                {% if loop.index == 1 %}
-                <br>
-                {% endif %}
-                {% if loop.index > 1 %}
-                <i class="fas fa-plus-circle remove_select pointer">Remove</i><br>
-                {% endif %}
+                {% for allergen in recipe.allergens %}
+                <div class='allergen_checkbox'>
+                    <input checked id="allergen" class="{{ allergen }}" name="allergens" type="checkbox" value="{{ allergen }}">
+                    <label class="{{ allergen }}1" for="allergen">{{ allergen }}</label>
+                </div>
                 
                 {% endfor %}
+                    {% for item in allergens_json.allergen %}
+                <div class='allergen_checkbox'>
+                    <input class="{{ item }}" id="allergen" name="allergens" type="checkbox" value="{{ item }}">
+                    <label class="{{ item }}1" for="allergen">{{ item }}</label>
+                </div>
+                {% endfor%}
+                
             </div>
-            <i id="add_allergen" class="fas fa-plus-circle duplicate_select pointer">Add</i>
          </fieldset>
 
 <!--Recipe Description-->
@@ -81,16 +83,16 @@
         <fieldset id="duplicate_ingredient">
             <legend>Ingredients</legend>
             {% for ingredient in recipe.ingredients %}
-            {% if ingredient != ""%}
-                <br><input type="text" name="ingredients" class="ingredients" id="ingredients" value="{{ ingredient }}" />
+                <br><input type="text" name="ingredients" class="ingredients inline" id="ingredients" value="{{ ingredient }}" />
+            
                 {% if loop.index == 1%}
-                <i id="first" class="fas fa-plus-circle duplicate pointer">Add</i>
+                <i id="first" class="material-icons duplicate pointer">add</i>
                 {% endif %}
                 {% if loop.index > 1%}
-                <i class="fas fa-plus-circle duplicate pointer">Add</i>
-                <i class="fas fa-plus-circle remove_duplicate pointer">Remove</i>
+                <i class="material-icons duplicate pointer">add</i>
+                <i class="material-icons remove_duplicate pointer">remove</i>
                 {% endif %}
-            {% endif%}
+            
             {% endfor %}
         </fieldset>
         
@@ -99,13 +101,14 @@
         <fieldset id="instructions_fieldset">
             <legend>Instructions</legend>
             {% for instruction in recipe.instructions %}
-                <br><input type="text" name="instructions" class="instructions" id="instructions" value="{{ instruction }}" />
+                <br><input type="text" name="instructions" class="instructions inline" id="instructions" value="{{ instruction }}" />
                 {% if loop.index == 1%}
-                <i id="first" class="fas fa-plus-circle duplicate pointer">Add</i>
+                
+                <i id="first" class="material-icons duplicate pointer">add</i>
                 {% endif %}
                 {% if loop.index > 1%}
-                <i class="fas fa-plus-circle duplicate pointer">Add</i>
-                <i class="fas fa-plus-circle remove_duplicate pointer">Remove</i>
+                <i class="material-icons duplicate pointer">add</i>
+                <i class="material-icons remove_duplicate pointer">remove</i>
                 {% endif %}
             {% endfor %}
         </fieldset>
@@ -127,8 +130,8 @@
 <!--Serving-->
 
         <fieldset>
-            <legend>Servings</legend>
-            <input type="number" name="recipe_yield" id="recipe_yield" value="{{ recipe.yield }}" />
+            <legend>Recipe Yield</legend>
+            <input type="number" name="recipe_yield" id="recipe_yield" value="{{ recipe.recipe_yield }}"/>
         </fieldset>
         
 <!--Author-->
