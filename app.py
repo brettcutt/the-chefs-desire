@@ -89,18 +89,21 @@ def single_recipe(recipe_id):
 @app.route("/find_ingredient", methods=['POST'])
 def find_ingredient():
     recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":request.form.get("ingredient_category")}})
-    return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json)
+    recipe_count = recipe_category.count()
+    return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
 
 @app.route("/find_cuisine", methods=['POST'])
 def find_cuisine():
     recipe_category = mongo.db.recipe.find({"cuisine":request.form.get("cuisine_category")})
-    return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json)
+    recipe_count = recipe_category.count()
+    return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
     
     
 @app.route("/find_allergen", methods=['POST'])
 def find_allergen():
     recipe_category = mongo.db.recipe.find({"allergens":{"$nin": request.form.getlist("allergen_category")}})
-    return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json)    
+    recipe_count = recipe_category.count()
+    return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)    
     
     
 @app.route("/find_multiple_categories", methods=['POST'])
@@ -144,7 +147,7 @@ def find_multiple_categories():
 # Add (render)
 @app.route("/add_recipe")
 def add_recipe():
-    return render_template("add_recipe.html", cuisines=mongo.db.cuisines.find(), allergens=mongo.db.allergens.find())
+    return render_template("add_recipe.html", cuisines_json=cuisines_json, allergens_json=allergens_json)
 
 #Insert (redirect)
 @app.route("/insert_recipe", methods=['POST'])
