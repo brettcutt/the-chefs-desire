@@ -2,7 +2,7 @@
 {% block content %}
 
 <!--SEARCH BAR-->
-<div class="row">
+<div class="row center">
 
     <div class="col-xs-12">
         
@@ -18,7 +18,7 @@
                 <P id='allergen_btn' class='search-btn'>Allergen</P>
             </div>
             <div class="search_btn">
-                <P id='allergen_and_cuisine_btn' class='search-btn'>Cuisine and Allergen</P>
+                <P id='allergen_and_cuisine_btn' class='search-btn'>Advanced</P>
             </div>
         </div>    
             <!--########################## INGREDIENT FORM-->
@@ -73,7 +73,7 @@
                     <p><b>Select allergen free</b></p>
                         
                         {% for item in allergens_json.allergen|sort %}
-                        <div class='allergen_checkbox'>
+                        <div class='allergen_search_checkbox'>
                             <input value="{{ item }}" name="allergen_category" type="checkbox"> {{ item }}</input>
                         </div>
                         {% if loop.index % 3 == 0 %}
@@ -117,7 +117,7 @@
                         
                         <p><b>Select allergen free</b></p>
                             {% for item in allergens_json.allergen|sort %}
-                        <div class='allergen_checkbox'>
+                        <div class='allergen_search_checkbox'>
                             <input value="{{ item }}" name="find_allergen" id="find_allergen" type="checkbox"> {{ item }}</input>
                         </div>
                         
@@ -143,13 +143,13 @@
     </div>
 </div>
 <div class="row">
-{% if recipe_count == 0 %}
+    <div class="col-xs-12 center">
+    {% if recipe_count == 0 %}
     <div>
         <p><b>No results found!</b></p>
     </div>
 
-
-{% else %}
+    {% else %}
 
     {% if recipe_count == 1 %}
         <div>
@@ -160,6 +160,7 @@
             <p><b>{{ recipe_count}} results found!</b></p>
         </div>
     {% endif %}
+    </div>
 </div>
 
     

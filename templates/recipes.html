@@ -71,7 +71,7 @@
                     <p><b>Select allergen free</b></p>
                         
                         {% for item in allergens_json.allergen|sort %}
-                        <div class='allergen_checkbox'>
+                        <div class='allergen_search_checkbox'>
                             <input value="{{ item }}" name="allergen_category" type="checkbox"> {{ item }}</input>
                         </div>
                         {% if loop.index % 3 == 0 %}
@@ -115,7 +115,7 @@
                         
                         <p><b>Select allergen free</b></p>
                             {% for item in allergens_json.allergen|sort %}
-                        <div class='allergen_checkbox'>
+                        <div class='allergen_search_checkbox'>
                             <input value="{{ item }}" name="find_allergen" id="find_allergen" type="checkbox"> {{ item }}</input>
                         </div>
                         
@@ -145,13 +145,11 @@
 
 {% for recipe in recipes %}
 
-
-
     <div class="single_recipe_result col-xs-12 col-sm-4 col-md-3">
         <div class="inner_recipe_box">
         <div class="row">
             <div class="col-xs-12 found_image_box">
-                <a href="{{ url_for('single_recipe', recipe_id=recipe._id)}}">
+                <a href="{{ url_for('update_view_count', recipe_id=recipe._id)}}">
                 <img class="found_image" src="{{ recipe.image }}" alt=" {{ recipe.name }}">
                 </a>
             </div>
