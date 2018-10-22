@@ -60,6 +60,7 @@ def recipes():
 
 # //////////////// SINGLE SEARCHED RECIPE (render)
 
+# UPDATE THE RECIPE VIEWS
 @app.route('/update_view_count/<recipe_id>')
 def update_view_count(recipe_id):
     recipe_views = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"views"})
@@ -76,13 +77,32 @@ def update_view_count(recipe_id):
     
     
     return redirect(url_for('single_recipe', recipe_id=recipe_id ))
-
+    
+# SINGLE RECIPE
 @app.route('/single_recipe/<recipe_id>')
 def single_recipe(recipe_id):
     the_recipe = mongo.db.recipe.find_one({"_id": ObjectId(recipe_id)})
 
     return render_template("single_recipe.html", recipe=the_recipe, cuisines_json=cuisines_json, allergens_json=allergens_json)
-
+    
+    
+# UPDATE LIKES
+@app.route('/update_like/<recipe_id>')
+def update_like(recipe_id):
+    
+    recipe_likes = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"likes"})
+    
+    count = []       
+    
+    for key, value in recipe_likes.items():
+        if key !="_id":
+            count = value
+    if not count:
+        mongo.db.recipe.update_one({'_id':ObjectId(recipe_id)},{"$set":{"likes": 1 }}, upsert = True)
+    elif count >= 0:
+        mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"likes": count + 1 }})
+        
+    return redirect(url_for('single_recipe', recipe_id=recipe_id ))
 
 # //////////////// SEARCHING RESULT (render)
 
