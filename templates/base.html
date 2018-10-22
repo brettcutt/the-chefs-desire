@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet">
     <title>The Meal Ponderer</title>
 </head>
 
@@ -17,16 +19,37 @@
         <header>
             <div class="header-row">
                 <div class="col-xs-12">
-                    <h1>The Meal Ponderer</h1>
+                    <h1 class="hidden-xs">The Meal Ponderer</h1>
+                    <h1 class="hidden-sm hidden-md hidden-lg">The Meal<br> Ponderer</h1>
                 </div>
+                
+                
+                <nav class="mobile-nav hidden-sm hidden-md hidden-lg">
+                    <div class="mobile-bars">
+                        <i id="fa-bars" class="fas fa-bars"></i>
+                    </div>
+                    <div class=" ">
+                        <ul class=" mobile-ul">
+                            <li class="mobile-li"><a href="{{url_for('index')}}">Home</a></li>
+                            <li class="mobile-li"><a href="{{url_for('recipes')}}">Recipes</a></li>
+                            <li class="mobile-li"><a href="{{url_for('add_recipe')}}">Add Recipe</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                
                 <div class="col-xs-12">
                     <nav>
-                        <ul>
-                            <li><a href="{{url_for('index')}}">Home</a></li>
-                            <li><a href="{{url_for('recipes')}}">Recipes</a></li>
-                            <li><a href="{{url_for('add_recipe')}}">Add Recipe</a></li>
-                        </ul>
+                        <div class="hidden-xs">
+                            <ul>
+                                <li><a href="{{url_for('index')}}">Home</a></li>
+                                <li><a href="{{url_for('recipes')}}">Recipes</a></li>
+                                <li><a href="{{url_for('add_recipe')}}">Add Recipe</a></li>
+                            </ul>
+                        </div>
+                        
+                        
                     </nav>
+                    
                 </div>
             </div>
         </header>
