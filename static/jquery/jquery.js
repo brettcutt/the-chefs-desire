@@ -1,57 +1,39 @@
 $(document).ready( function() {
     
-    $("#ingredient_btn").click(function() {
-        $("#ingredient_search").show()
-        $("#cuisine_search").hide()
-        $("#allergen_search").hide()
-        $("#allergen_and_cuisine_search").hide()
-        $(this).addClass("choice")
-        $("#cuisine_btn").removeClass("choice")
-        $("#allergen_btn").removeClass("choice")
-        $("#allergen_and_cuisine_btn").removeClass("choice")
+    /* LIKE HEART*/
+    $('#fa-heart').click(function() {
+        $('#fa-heart').hide()
+        $('#heart-2').show()
     })
     
-    $("#cuisine_btn").click(function() {
-        $("#ingredient_search").hide()
-        $("#cuisine_search").show()
-        $("#allergen_search").hide()
-        $("#allergen_and_cuisine_search").hide()
-        $("#ingredient_btn").removeClass("choice")
-        $(this).addClass("choice")
-        $("#allergen_btn").removeClass("choice")
-        $("#allergen_and_cuisine_btn").removeClass("choice")
+    /*MOBILE MENU*/
+    $('#fa-bars').click(function() {
+        $('.mobile-ul').toggle('fade', 500)
+    })
+    $('#fa-bars').click(function() {
+        $('.mobile-li').toggle('clip', 1000).delay(500)
     })
     
-    $("#allergen_btn").click(function() {
-        $("#ingredient_search").hide()
-        $("#cuisine_search").hide()
-        $("#allergen_search").show()
-        $("#allergen_and_cuisine_search").hide()
-        $("#ingredient_btn").removeClass("choice")
-        $("#cuisine_btn").removeClass("choice")
-        $(this).addClass("choice")
-        $("#allergen_and_cuisine_btn").removeClass("choice")
-    })
     
-    $("#allergen_and_cuisine_btn").click(function() {
-        $("#ingredient_search").hide()
-        $("#allergen_search").hide()
-        $("#cuisine_search").hide()
+    $("#mobile-search-btn").click(function() {
         $("#allergen_and_cuisine_search").show()
-        $("#ingredient_btn").removeClass("choice")
-        $("#cuisine_btn").removeClass("choice")
-        $("#allergen_btn").removeClass("choice")
+    })
+    
+    /* SEARCH BAR THAT OPENS DIFFERENT SEARCH CATEGORIES*/
+    
+    $(".search-btn").click(function() {
+        $(this).parent().next().next().next().next().show('fade', 500)
+        $('.chosen').hide('fade', 500)
+        $('.chosen').removeClass('chosen')
+        $(this).parent().next().next().next().next().addClass('chosen')
+        $('.search-btn').removeClass("choice")
         $(this).addClass("choice")
     })
+    
     $(".close-btn").on('click', function() {
-        $("#allergen_search").hide()
-        $("#cuisine_search").hide()
-        $("#allergen_and_cuisine_search").hide()
-        $("#ingredient_search").hide()
-        $("#ingredient_btn").removeClass("choice")
-        $("#cuisine_btn").removeClass("choice")
-        $("#allergen_btn").removeClass("choice")
-        $("#allergen_and_cuisine_btn").removeClass("choice")
+        $('.chosen').hide('fade', 500)
+        $('.chosen').removeClass('chosen')
+        $('.choice').removeClass("choice")
         
     })
     
@@ -85,8 +67,6 @@ $(document).ready( function() {
         $(this).prev().remove();
         $(this).remove();
     });
-    
-    
 /*Select cuisine on add and edit html*/
     
     $("body").on('click','.duplicate_select', function(){
