@@ -1,3 +1,4 @@
+
 body {
     margin: 0;
     padding: 0;
@@ -94,6 +95,7 @@ select {
 }
 
 
+
 .close-btn,
 input[type=submit] {
     width: 80px;
@@ -127,6 +129,77 @@ table {
 
 /*BASE.HTML*/
 
+.signin-create {
+position: absolute;
+top: 15px;
+right: 15px;
+color: white;
+}
+
+.register-btn, .signin-btn{
+    background-color: rgba(255,255,255,.8);
+    text-align: center;
+    display: inline-block;
+    width: 150px;
+    border: 2px solid orange;
+    border-radius: 10px;
+    padding: 2px 3px;
+    margin: 0 3px;
+    cursor: pointer;
+    font-weight: bold;
+    color: gray;
+    box-shadow: 2px 2px 10px 0;
+}
+
+.register-btn:hover, .signin-btn:hover {
+    background-color: rgba(255,255,255,.9);
+}
+
+/*REGISTER PAGE*/
+.register-signin-page {
+    position: absolute;
+    display: none;
+    left: 0;
+    right: 0;
+    top: 150px;
+    padding:15px;
+    margin: 0 auto;
+    z-index: 1;
+    text-align: center;   
+}
+
+@media (max-width: 767px) {
+    .register-signin-page {
+    top: 60px;
+}
+}
+
+.inner-register-page, .inner-signin-page {
+    display: inline-block;
+    padding: 5px 15px 15PX;
+    background-color: rgba(255, 255, 255, .95);
+    margin: 0 auto;
+    border-radius: 10px;
+}
+.inner-register-page h2, .inner-signin-page h2{
+    font-family: 'Josefin Slab', serif;
+}
+
+.inner-register-page div, .inner-signin-page div {
+    float: none;
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.register-signin-page div label {
+    flex: 1;
+}
+.register-signin-page div input:not([type=submit]) {
+    flex:2;
+    height: 25px;
+}
+
+
 .mobile-bars {
     position: absolute;
     right: 30px;
@@ -137,7 +210,7 @@ table {
 .mobile-nav {
     position: absolute;
     top: 70px;
-    right: -5px;
+    right: 0px;
     z-index: 2;
 }
 
@@ -146,7 +219,7 @@ table {
     background-color: rgba(0, 0, 0, .7);
     border-radius: 10px 0px 0px 10px;
     width: 100px;
-    height: 110px;
+    height: 184px;
 }
 
 .mobile-li {
@@ -160,8 +233,10 @@ table {
     border-radius: 10px 0px 0px 10px;
 }
 
-.mobile-nav ul li a {
+.mobile-nav a, .mobile-nav p {
     color: #fff;
+    font-weight: 900;
+    margin: 0;
 
 }
 
@@ -277,7 +352,7 @@ nav ul li a {
 
 .search-category-heading {
     padding: 5px 5px;
-    border-bottom: 2px solid #000;
+    border-bottom: 1px solid #000;
     margin-bottom: 15px;
 }
 
@@ -301,9 +376,10 @@ nav ul li a {
     flex-wrap: wrap;
 }
 
-.single-recipe_result {
+.single-recipe-result {
     padding: 10px;
     display: flex;
+    
 }
 
 .inner_recipe_box {

@@ -1,5 +1,30 @@
 $(document).ready( function() {
     
+    
+    /*MOBILE REGISTER BTN*/
+    $('.mobile-form-btn').click(function() {
+        $(".mobile-ul").hide('fade', 500)
+        $('.mobile-li').hide('fade', 500)
+    });
+    
+    /*REGISTER*/
+    $('.register-close-btn').click(function() {
+        $(this).parent().parent().parent().hide('fade', 500)
+    });
+    
+    $('.register-trigger').click(function() {
+        $(".signin-page").hide('fade')
+        $(".register-page").show('fade', 500)
+    });
+    
+    $('.signin-trigger').click(function() {
+        $(".register-page").hide('fade')
+        $(".signin-page").show('fade', 500)
+    });
+    
+    
+    
+    
     /* LIKE HEART*/
     $('#fa-heart').click(function() {
         $('#fa-heart').hide()
@@ -22,19 +47,22 @@ $(document).ready( function() {
     /* SEARCH BAR THAT OPENS DIFFERENT SEARCH CATEGORIES*/
     
     $(".search-btn").click(function() {
+        if ($(this).hasClass("choice")){
+            $(this).parent().next().next().next().next().removeClass("chosen")
+        }
         $(this).parent().next().next().next().next().show('fade', 500)
         $('.chosen').hide('fade', 500)
         $('.chosen').removeClass('chosen')
         $(this).parent().next().next().next().next().addClass('chosen')
         $('.search-btn').removeClass("choice")
         $(this).addClass("choice")
+        
     })
     
     $(".close-btn").on('click', function() {
         $('.chosen').hide('fade', 500)
         $('.chosen').removeClass('chosen')
         $('.choice').removeClass("choice")
-        
     })
     
     
