@@ -1,10 +1,12 @@
 import os 
 import json
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
+
+app.secret_key = os.urandom(24)
 
 app.config["MONGO_DBNAME"] = "meal-ponderer"
 app.config["MONGO_URI"] = "mongodb://admin:Mealponderer1@ds131763.mlab.com:31763/meal-ponderer" 
@@ -42,12 +44,46 @@ def recipe_database():
     }
     return data
     
+def registration_form():
+    data = {
+        "first_name":request.form.get('register-first-name'),
+        "last_name":request.form.get('register-last-name'),
+        "username":request.form.get('register-username'),
+        "email":request.form.get('register-email'),
+        "password":request.form.get('register-password')
+    }
+    return data
+    
 # //////////////// INDEX (render)
 
 @app.route("/")
 def index():
     
     return render_template('index.html')
+    
+# //////////////// SIGN IN
+@app.route('/signin', methods=['POST'])
+def signin():
+    username =  request.form.get('signin_username')
+    session['user'] = username
+    return redirect(url_for('my_recipes', username=username))
+
+# //////////////// REGISTER
+@app.route('/register', methods=['POST'])
+def register():
+    mongo.db.user_details.insert_one(registration_form())
+    username = request.form.get('register-username')
+    session['user'] = username
+  
+    return redirect(url_for('my_recipes', username=username))
+    
+@app.route('/my_recipes/<username>')
+def my_recipes(username):
+    user = mongo.db.user_details.find_one({"username":username})
+    print(user)
+    test = session['user']
+        
+    return render_template('my_recipes.html', user=user, test=test)
 
 
 # //////////////// RECIPES (render) 

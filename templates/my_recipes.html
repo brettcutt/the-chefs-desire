@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %}
+
+
+<h1>Hello {{ user.first_name }}</h1>
+
+<p>{{ user.last_name}}</p>
+
+{% if 'user' in session%}
+hello
+{% else%}
+not
+{% endif %}
+
+
+{% endblock %}
