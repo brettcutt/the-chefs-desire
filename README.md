@@ -21,6 +21,9 @@ After many different approaches and alterations to this code I just couldn't get
 The main problem I think was that the select tag is always giving a value, even if it's nothing as selected. To fix this I wrote if else
 statements to cover each outcome of the search possibilities.
 
+request.referrer
+https://stackoverflow.com/questions/45040365/flask-redirect-to-page-then-come-back
+
 multiple pymongo queries: find with "and" and "or"  
 https://stackoverflow.com/questions/40388657/query-mongodb-with-and-and-multiple-or
 
