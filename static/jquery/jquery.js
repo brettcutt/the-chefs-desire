@@ -1,5 +1,44 @@
 $(document).ready( function() {
     
+    $(".displayed-image").mouseenter(function(){
+       $(".overlay-image-heading").stop().animate({"color": "#fff"}, 'slow'); 
+       $(".displayed-image").stop().animate({"opacity": "1"}, 'slow');
+    });
+    $(".displayed-image").mouseleave(function(){
+       $(".overlay-image-heading").stop().animate({"color": "color: rgba(255,255,255,.7);"}, 'slow') 
+       $(".displayed-image").stop().animate({"opacity": ".7"}, 'slow');
+    });
+    $(".overlay-image-heading").mouseenter(function(){
+       $(".overlay-image-heading").stop().animate({"color": "#fff"}, 'slow') 
+       $(".displayed-image").stop().animate({"opacity": "1"}, 'slow');
+    });
+    $(".overlay-image-heading").mouseleave(function(){
+       $(".overlay-image-heading").stop().animate({"color": "color: rgba(255,255,255,.7);"}, 'slow') 
+       $(".displayed-image").stop().animate({"opacity": ".7"}, 'slow');
+    });
+        
+    
+    $('.test').each(function(i) {
+    $(this).attr('class',"box change-picture"+i);
+    });
+   
+    $('.change-picture0').show('fade', 500).delay(6000)
+    $('.change-picture0').hide('fade', 500)
+    var count  = 1
+    setInterval(function () {
+        $('.change-picture'+count).show('fade', 500).delay(6000)
+        $('.change-picture'+count).hide('fade', 500)
+        
+        if (count == 4) {
+            count = 0
+        } 
+        else {
+        count += 1
+            
+        } 
+    },7000 );
+    
+    
     
     /*MOBILE REGISTER BTN*/
     $('.mobile-form-btn').click(function() {

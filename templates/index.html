@@ -1,9 +1,27 @@
 {% extends 'base.html' %} {% block content %}
-
-{% if 'user' in session%}
-hello
-{% else%}
-not
-{% endif %}
-
+    
+<div class="row center recipe-display">
+{% for recipe in recipes %}
+    
+    <div class="col-xs-12 box test center">
+        
+        
+        <div class="col-xs-12 display-image">
+            <a href="{{ url_for('update_view_count', recipe_id=recipe._id)}}"><img class="displayed-image" src="{{ recipe.image }}" alt="{{ recipe.name }}"></a>
+            <div class="overlay">
+                <h3 class="overlay-image-heading">{{ recipe.name }}</h3>
+            </div>
+        </div>
+        
+    </div>
+    
+{% endfor%}
+</div>
+<main class="container">
+<div class="row">
+    <div class="col-xs-12">
+        <p>this is a sentence</p>
+    </div>
+</div>
+</main>
 {% endblock %}
