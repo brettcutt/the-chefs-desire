@@ -26,15 +26,30 @@
 
             <!--SIGN IN REGISTER BUTTONS-->
             <div class="signin-create hidden-xs">
+            {% if 'user' not in session %}
                 <p class="register-btn register-trigger">Register</p>
-
                 <p class="signin-btn signin-trigger">Sign In</p>
+            {% else %}
+                <a href="{{url_for('logout')}}"><p class="signin-btn">Log Out</p></a>
+            {% endif %}
             </div>
+            
             <!--REGISTRATION FORM-->
-            <div class="register-signin-page register-page">
+            <div class="register-signin-page register-page" {% if 'flash-message2' in session %}style="display:block;" {% endif %}>
                 <div id="#inner-register-page" class="inner-register-page">
                     <h2>Registration</h2>
-                    <form action="{{url_for('register')}}", method='POST'>
+                    {% if 'flash-message2' in session %}
+                    {% with messages = get_flashed_messages()%}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <p class="flash-message">{{ message }}</p>
+                    
+                    {% endfor %}
+                    {%endif%}
+                    {%endwith%}
+                    {%endif%}
+                    
+                    <form action="{{url_for('register')}}", method='POST' >
                         <div class="col-xs-12">
                             <label class="inline hidden-xs" for="register-first-name">First Name:</label>
                             <input class="inline" type="text" id="register-first-name" name="register-first-name" placeholder="First Name" required/>
@@ -66,15 +81,25 @@
             </div>
 
             <!--SIGN IN PAGE-->
-            <div class="register-signin-page signin-page">
+            <div class="register-signin-page signin-page" {% if 'flash-message1' in session %}style="display:block;" {% endif %}>
                 <div class="inner-signin-page">
                     <h2>Sign In</h2>
+                    {% if 'flash-message1' in session %}
+                    {% with messages = get_flashed_messages()%}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <p class="flash-message">{{ message }}</p>
+                    
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    {% endif %}
                     <form action="{{url_for('signin')}}", method='POST'>
                         <div class="col-xs-12">
                             <input class="inline" type="text" id="signin_username" name="signin_username" placeholder="User Name" required/>
                         </div>
                         <div class="col-xs-12">
-                            <input class="inline" type="password" id="signin-password" name="signin-password" placeholder="Password" required/>
+                            <input class="inline" type="password" id="signin-password" name="signin_password" placeholder="Password" required/>
                         </div>
 
                         <input class="inline" type="submit" />
@@ -110,10 +135,9 @@
                 <nav class="hidden-xs">
                     <ul>
                         <li><a href="{{url_for('index')}}">Home</a></li>
-                        <li><a href="{{url_for('recipes')}}">Recipes</a></li>
-                        <li><a href="{{url_for('add_recipe')}}">Add Recipe</a></li>
-                        
+                        <li><a href="{{url_for('recipes')}}">Browse</a></li>
                         {% if 'user' in session %}
+                        <li><a href="{{url_for('add_recipe')}}">Add Recipe</a></li>
                         <li><a href="{{url_for('my_recipes', username = session['user'])}}">My Recipes</a></li>
                         {% endif %}
                     </ul>
