@@ -1,9 +1,8 @@
 import os 
 import json
-from flask import Flask, render_template, redirect, request, url_for, session
+from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-
 app = Flask(__name__)
 
 app.secret_key = os.urandom(24)
@@ -40,7 +39,8 @@ def recipe_database():
         "cook_time":request.form.get('cook_time'),
         "recipe_yield":request.form.get('recipe_yield'),
         "author":request.form.get('author'),
-        "image":request.form.get('image')
+        "image":request.form.get('image'),
+        "username": session['user']
     }
     return data
     
@@ -64,26 +64,92 @@ def index():
 # //////////////// SIGN IN
 @app.route('/signin', methods=['POST'])
 def signin():
-    username =  request.form.get('signin_username')
-    session['user'] = username
-    return redirect(url_for('my_recipes', username=username))
+    
+    if 'flash-message2' in session:
+        session.pop('flash-message2')
+        
+    username = request.form.get('signin_username')
+    password = request.form.get('signin_password')
+    
+    try:
+        user_doc_username = mongo.db.user_details.find_one({'username':username}, {'username'})
+        user_doc_password = mongo.db.user_details.find_one({'username':username}, {'password'})
+        for key, value in user_doc_password.items():
+        
+            if key != "_id":
+                stored_password = value
+                if password == stored_password:
+                    session['user'] = username
+        
+                    print("user found")
+                    return redirect(url_for('my_recipes', username=username))
+                    
+            else:
+                session['flash-message1'] = 1
+                test = session['flash-message1']
+                print(test)
+                flash("Incorrect username or password")
+                return redirect(url_for('index'))
+    except:
+        print("not found")
+        return redirect(url_for('index'))
+    
+# //////////////// LOGOUT
+
+@app.route('/logout')
+def logout():
+    session.pop('user')
+    return redirect(url_for('index'))
 
 # //////////////// REGISTER
 @app.route('/register', methods=['POST'])
 def register():
-    mongo.db.user_details.insert_one(registration_form())
-    username = request.form.get('register-username')
-    session['user'] = username
-  
-    return redirect(url_for('my_recipes', username=username))
     
+    if 'flash-message1' in session:
+        session.pop('flash-message1')
+    
+       
+    requested_username = request.form.get("register-username")
+    new_password = request.form.get("register-password")
+    comfirm_password = request.form.get("comfirm-password")
+    
+    if comfirm_password == new_password:
+        try:
+            existing_user = mongo.db.user_details.find_one({'username':requested_username}, {"username"})
+            print(existing_user)
+            if existing_user == None:
+                mongo.db.user_details.insert_one(registration_form())
+                username = requested_username
+                session['user'] = username
+            
+                return redirect(url_for('my_recipes', username=username))
+            else:
+                session['flash-message2'] = 1
+                flash("Username already exists")
+                print("user name already exists")
+                return redirect(request.referrer)
+            
+        except:
+            
+            return render_template('index.html')
+    else:
+        session['flash-message2'] = 2
+        flash("Passwords are not the same")
+        print("passwords did not match")
+        return render_template('index.html',)
+        
+
+
+
+# //////////////// MY RECIPES
 @app.route('/my_recipes/<username>')
 def my_recipes(username):
     user = mongo.db.user_details.find_one({"username":username})
-    print(user)
-    test = session['user']
-        
-    return render_template('my_recipes.html', user=user, test=test)
+    print(session['user'])
+    user_recipes = mongo.db.recipe.find({"username":session['user']})
+    
+    
+    return render_template('my_recipes.html', user=user, user_recipes=user_recipes, cuisines_json=cuisines_json, allergens_json=allergens_json)
 
 
 # //////////////// RECIPES (render) 
@@ -118,8 +184,10 @@ def update_view_count(recipe_id):
 @app.route('/single_recipe/<recipe_id>')
 def single_recipe(recipe_id):
     the_recipe = mongo.db.recipe.find_one({"_id": ObjectId(recipe_id)})
-
-    return render_template("single_recipe.html", recipe=the_recipe, cuisines_json=cuisines_json, allergens_json=allergens_json)
+    creator_username = ""
+    if 'user' in session:
+        creator_username = session['user']
+    return render_template("single_recipe.html", recipe=the_recipe, cuisines_json=cuisines_json, allergens_json=allergens_json, creator_username=creator_username)
     
     
 # UPDATE LIKES
