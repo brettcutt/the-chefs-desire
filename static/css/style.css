@@ -14,7 +14,12 @@ body {
     background-image: url(../images/dish-background.jpg);
     background-size: cover;
     background-attachment: fixed;
+}
 
+.helo {
+    color:orange;
+    font-weight: bold;
+    
 }
 
 @media (max-width: 767px) {
@@ -534,9 +539,13 @@ table {
 }
 
 .index-heading-row {
-    margin: 35px 0 10px 0;
+    margin: 30px 0 10px 0;
 }
 
+.index-image-row {
+        margin: 0px 0 20px 0 ;
+    }
+    
 .index-tagline-row {
     margin-bottom: 10px;
 }
@@ -596,14 +605,14 @@ table {
     .index-heading-row {
         margin: 70px 0 50px 0;
     }
+    .index-image-row {
+        margin-bottom: 40px;
+    }
     .index-tagline-row {
         margin-bottom: 50px;
     }
     .index-tagline-row p {
         font-size: 35px;
-    }
-    .index-image-row {
-        margin-bottom: 40px;
     }
 
     .index-btn-row {
@@ -611,6 +620,24 @@ table {
     }
 }
 
+@media (min-width: 1380px) {
+  .index-heading-row {
+        margin: 70px 0 50px 0;
+    }
+    .index-image-row {
+        margin-bottom: 40px;
+    }
+    .index-tagline-row {
+        margin-bottom: 50px;
+    }
+    .index-tagline-row p {
+        font-size: 35px;
+    }
+
+    .index-btn-row {
+        margin-bottom: 40px;
+    }
+}
 
 
 .box {
@@ -626,7 +653,7 @@ table {
 
 .display-image img {
     border-radius: 60px;
-    width: 500px;
+    max-height: 330px;
     height: auto;
     opacity: .9;
     border: 1px solid #fff;
