@@ -21,7 +21,7 @@
             <div class="cuisine_container">
             <select name="cuisine" class="cuisine" id="cuisine">
                 <option disabled selected value="">Choose your option</option>
-                {% for item in cuisines_json.cuisine %}
+                {% for item in cuisines_json.cuisine|sort %}
                 <option value="{{ item }}">{{ item }}</option>
                 {% endfor %}
                 
