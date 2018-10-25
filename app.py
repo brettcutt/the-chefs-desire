@@ -233,7 +233,7 @@ def update_like(recipe_id):
 
 @app.route("/find_ingredient", methods=['POST'])
 def find_ingredient():
-    recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":request.form.get("ingredient_category")}})
+    recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":request.form.get("ingredient_category").lower()}})
     recipe_count = recipe_category.count()
     return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
 
@@ -254,7 +254,7 @@ def find_allergen():
 @app.route("/find_multiple_categories", methods=['POST'])
 def find_multiple_categories():
     
-    ingredient = request.form.get("find_ingredient")
+    ingredient = request.form.get("find_ingredient").lower()
     cuisine = request.form.get("find_cuisine")
     allergens = request.form.getlist("find_allergen")
     
