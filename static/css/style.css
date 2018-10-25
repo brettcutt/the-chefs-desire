@@ -1,4 +1,12 @@
+html {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
 body {
+    position: relative;
+    height: 100%;
     margin: 0;
     padding: 0;
     font-family: 'Josefin Slab', serif;
@@ -6,14 +14,34 @@ body {
     background-image: url(../images/dish-background.jpg);
     background-size: cover;
     background-attachment: fixed;
-    background-position: center;
+
 }
 
 @media (max-width: 767px) {
     body {
         font-size: 18px;
+        background-position: 20%;
     }
 }
+
+.wrapper {
+    position: relative;
+    min-height: 100%;
+}
+
+.main-container {
+    background-color: rgba(255, 255, 255, .8);
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+}
+
+.main-content {
+    padding-bottom: 130px;
+
+}
+
 
 .flash-message {
     color: red;
@@ -46,7 +74,17 @@ body {
     left: 4px;
 }
 
-/*default settings*/
+/* ///////////////////////////////////////default settings*/
+
+a {
+    text-decoration: none;
+    color: gray;
+}
+
+a:hover {
+    text-decoration: none;
+    color: gray;
+}
 
 .inline {
     display: inline-block;
@@ -60,7 +98,7 @@ body {
     text-align: center;
 }
 
-/*Headings*/
+/* ///////////////////////////////////////HEADINGS*/
 
 h1 {
     text-align: center;
@@ -74,29 +112,100 @@ h4 {
     font-weight: bold;
 }
 
-/*Forms, Inputs and buttons*/
+.logo {
+    font-family: 'Josefin Slab', serif;
+    color: #fff;
+    z-index: 2;
+}
+
+
+@media (max-width: 767px) {
+    .mobile-heading {
+        font-weight: bolder;
+        font-size: 45px;
+    }
+}
+
+/* //////////////////////////////////////FORM, INPUTS AND BUTTONS*/
 
 form fieldset {
     margin-bottom: 20px;
 }
 
 form legend {
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
 }
 
-input,
+fieldset select,
+fieldset input:not([type=checkbox]):not([type=submit]) {
+    display: inline-block;
+    height: 30px;
+    width: 500px;
+}
+
 textarea {
-    display: block;
+    display: inline-block;
+    width: 500px;
+    height: 150px;
+}
+
+.allergens_container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+}
+
+.allergen_checkbox {
+    width: 33%;
+}
+
+@media (max-width: 767px) {
+    fieldset select,
+    fieldset input:not([type=checkbox]):not([type=submit]) {
+        width: 180px;
+        margin-left: 17%;
+    }
+
+    textarea {
+        width: 180px;
+        margin-left: 17%;
+    }
+    .allergens_container {
+        display: block;
+        width: 180px;
+        margin-left: 17%;
+    }
+    .allergen_checkbox {
+        width: 100%;
+
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    fieldset select,
+    fieldset input:not([type=checkbox]) {
+        width: 370px;
+    }
+
+    textarea {
+        width: 370px;
+    }
+    .allergens_container {
+        display: block;
+        width: 370px;
+    }
+    .allergen_checkbox {
+        width: 100%;
+        margin-left: 10px;
+    }
+
 }
 
 input[type=checkbox] {
     float: left;
 }
-
-select {
-    width: 165px;
-}
-
 
 
 .close-btn,
@@ -130,7 +239,7 @@ table {
 
 
 
-/*BASE.HTML*/
+/* //////////////////////////////////////////////////BASE.HTML*/
 
 .signin-create {
     position: absolute;
@@ -139,28 +248,12 @@ table {
     color: white;
 }
 
-.register-btn,
-.signin-btn {
-    background-color: rgba(255, 255, 255, .8);
-    text-align: center;
-    display: inline-block;
-    width: 150px;
-    border: 2px solid orange;
-    border-radius: 10px;
-    padding: 2px 3px;
-    margin: 0 3px;
-    cursor: pointer;
-    font-weight: bold;
-    color: gray;
-    box-shadow: 2px 2px 10px 0;
-}
-
 .register-btn:hover,
 .signin-btn:hover {
-    background-color: rgba(255, 255, 255, .9);
+    background-color: rgba(255, 255, 255, 1);
 }
 
-/*REGISTER PAGE*/
+/* ///////////////////////////////////////////////REGISTER PAGE*/
 
 .register-signin-page {
     position: absolute;
@@ -210,27 +303,41 @@ table {
     height: 25px;
 }
 
+/* ///////////////////////////////////////////////////NAV*/
+.fa-bars {
+    font-size: 35px;
+    color: rgba(0, 0, 0, .6);
+}
 
 .mobile-bars {
     position: absolute;
-    right: 30px;
+    right: 10px;
     top: -50px;
     color: black;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, .4);
+    padding: 3px 7px 0px 7px;
+    border-radius: 5px;
+}
+
+.mobile-bars-clicked {
+    background-color: rgba(255, 255, 255, .9);
 }
 
 .mobile-nav {
-    position: absolute;
+    position: fixed;
     top: 70px;
     right: 0px;
     z-index: 2;
 }
 
 .mobile-ul {
+    margin-top: 10px;
+    padding: 0;
+    list-style: none;
     display: none;
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(255, 255, 255, .9);
     border-radius: 10px 0px 0px 10px;
-    width: 100px;
-    height: 184px;
 }
 
 .mobile-li {
@@ -240,64 +347,83 @@ table {
     padding: 0;
     margin: 0;
     padding: 5px 5px;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid rgba(255, 165, 0, 1);
     border-radius: 10px 0px 0px 10px;
 }
 
 .mobile-nav a,
 .mobile-nav p {
-    color: #fff;
+    font-size: 25px;
+    padding-left: 3px;
+    color: #000;
     font-weight: 900;
     margin: 0;
 
 }
 
-.fa-bars {
-    font-size: 45px;
-    color: black;
-}
+
 
 .header-row {
     padding: 5px 0 10px 0;
 }
 
-nav {
-    text-align: center;
-
+.navigation-menu {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
 }
 
-nav ul {
+.desktop-nav {
+    text-align: center;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: white;
+}
+
+.desktop-nav ul {
     padding: 0;
     display: inline-block;
     text-align: center;
 }
 
-nav ul li {
-    float: left;
-    list-style: none;
+.desktop-nav ul li {
+    background-color: rgba(255, 255, 255, .8);
+    text-align: center;
+    display: inline-block;
     width: 100px;
-    color: #000;
-    padding: 6px;
-    background-color: orange;
-    margin: 0 2px;
+    border: 2px solid orange;
     border-radius: 10px;
+    padding: 2px 3px;
+    margin: 0 3px;
+    cursor: pointer;
+    font-weight: bold;
+    color: gray;
+    box-shadow: 2px 2px 10px 0;
 }
 
-nav ul li a {
+.desktop-nav ul li:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.desktop-nav ul li a,
+.desktop-nav ul li p {
+    display: block;
     text-decoration: none;
     font-weight: bold;
-    color: #000;
+    color: gray;
+    margin-bottom: 0;
 }
 
-.container {
-    background-color: rgba(255, 255, 255, .8);
-    padding: 20px;
-    margin-top: 20px;
-    margin-bottom: 50px;
-    border-radius: 10px;
+.desktop-nav ul li a:hover {
+    text-decoration: none;
+    color: gray;
 }
 
-/* DEFINE SEARCH BOX ITEMS*/
+
+
+/* ////////////////////////////////////////////// DEFINE SEARCH */
 
 .search-box {
     display: inline-block;
@@ -325,6 +451,7 @@ nav ul li a {
     color: gray;
     box-shadow: 2px 2px 10px 0;
 }
+
 
 @media (max-width: 767px) {
     .search-btn {
@@ -358,6 +485,10 @@ nav ul li a {
     }
 }
 
+.margin-top-20 {
+    margin-top: 40px;
+}
+
 .margin-bottom-20 {
     margin-bottom: 20px;
 }
@@ -374,19 +505,109 @@ nav ul li a {
     text-align: left;
 }
 
-
-
 .choice {
     background-color: gray;
     color: #fff;
 }
 
-/* INDEX.HTML*/
+/* /////////////////////////////////////INDEX.HTML*/
+
+.index-heading {
+    font-size: 70px;
+    text-align: center;
+    color: #fff;
+    margin: 0;
+}
+
+.overlay-black {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, .4);
+    z-index: -1;
+}
+
+.index-heading-row {
+    margin: 35px 0 10px 0;
+}
+
+.index-tagline-row {
+    margin-bottom: 10px;
+}
+
+.index-tagline-p {
+    color: #fff;
+    font-family: 'Josefin Slab', serif;
+    font-size: 25px;
+    margin: 0;
+}
 
 .recipe-display {
     width: 100%;
     height: 330px;
 }
+.signin-btn {
+    background-color: rgba(255, 255, 255, .8);
+    text-align: center;
+    display: inline-block;
+    width: 150px;
+    border: 2px solid orange;
+    border-radius: 10px;
+    padding: 2px 3px;
+    margin: 0 3px;
+    cursor: pointer;
+    font-weight: bold;
+    color: gray;
+    box-shadow: 2px 2px 10px 0;
+}
+
+@media (max-width: 767px) {
+    
+    .index-image-row {
+        margin: 40px 0 0 0 ;
+    }
+    .index-tagline-row {
+        margin-top: 0px;
+    }
+    .index-tagline-p {
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .signin-btn {
+        width: 100px;
+    }
+
+}
+
+.index-btn-row {
+    margin-bottom: 40px;
+}
+
+
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .index-heading-row {
+        margin: 70px 0 50px 0;
+    }
+    .index-tagline-row {
+        margin-bottom: 50px;
+    }
+    .index-tagline-row p {
+        font-size: 35px;
+    }
+    .index-image-row {
+        margin-bottom: 40px;
+    }
+
+    .index-btn-row {
+        margin-bottom: 40px;
+    }
+}
+
+
 
 .box {
     display: none;
@@ -400,10 +621,11 @@ nav ul li a {
 }
 
 .display-image img {
-    border-radius: 10px;
+    border-radius: 60px;
     width: 500px;
     height: auto;
-    opacity:.8;
+    opacity: .9;
+    border: 1px solid #fff;
 }
 
 @media (max-width: 767px) {
@@ -414,16 +636,21 @@ nav ul li a {
     }
     .recipe-display {
         width: 100%;
-        height: 300px;
+        height: 200px;
     }
 }
 
-.overlay-image-heading {
+.overlay {
     position: absolute;
     left: 0;
     right: 0;
-    bottom:0px;
-    color: rgba(255,255,255,.7);
+    bottom: 20px;
+}
+
+.overlay-image-heading {
+    width: 300px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, .7);
     font-family: 'Josefin Slab', serif;
 }
 
@@ -431,7 +658,25 @@ nav ul li a {
     color: #fff;
 }
 
-/*search_results.html*/
+/* /////////////////////////////////////////// ADD RECIPES*/
+
+/* ///////////////////////////////////////////EDIT.HTML*/
+
+/* //////////////////////////////////////////// MY RECIPES*/
+
+.my-recipe-heading {
+    color: #000;
+    font-family: 'Josefin Slab', serif;
+    font-size: 40px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.recipe-count {
+    font-size: 20px;
+}
+
+/* ///////////////////////////////////////////// SEARCH RESULTS*/
 
 .found_recipe_row {
     display: flex;
@@ -456,6 +701,11 @@ nav ul li a {
     height: 50px;
 }
 
+.name_box p {
+    font-weight: bold;
+    font-size: 20px
+}
+
 .allergen_box {
     min-height: 50px;
 }
@@ -470,19 +720,9 @@ nav ul li a {
     border-radius: 10px;
 }
 
-/*EDIT.HTML*/
 
-.allergens_container {
-    display: flex;
-    flex-wrap: wrap;
-    width: 500px;
-}
 
-.allergen_checkbox {
-    width: 33%;
-}
-
-/*SINGLE RECIPE.HTML*/
+/* //////////////////////////////////////SINGLE RECIPE.HTML*/
 
 .recipe_image_container {
     margin-left: -5px;
@@ -574,9 +814,25 @@ ol li p {
     border-radius: 10px;
 }
 
-/*FOOTER*/
+/* /////////////////////////////////////////FOOTER*/
 
 footer {
-    height: 80px;
+    position: absolute;
     background-color: #000;
+    height: 130px;
+    width: 100%;
+    margin-top: 20px;
+    bottom: 0;
+    text-align: center;
+}
+
+#github-icon {
+    color: #fff;
+    font-size: 35px;
+    margin-top: 10px;
+}
+
+.web-developer {
+    color: #fff;
+    margin: 0;
 }

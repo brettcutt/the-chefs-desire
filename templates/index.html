@@ -1,27 +1,43 @@
 {% extends 'base.html' %} {% block content %}
+<div class="overlay-black"></div>
+<main class="container home-container">
     
-<div class="row center recipe-display">
-{% for recipe in recipes %}
+    <div class="row hidden-xs index-heading-row">
+        <div class="col-xs-12 ">
+            <p class="index-heading">The Chefs Desire</p> 
+        </div>
+    </div>
     
-    <div class="col-xs-12 box test center">
-        
-        
-        <div class="col-xs-12 display-image">
-            <a href="{{ url_for('update_view_count', recipe_id=recipe._id)}}"><img class="displayed-image" src="{{ recipe.image }}" alt="{{ recipe.name }}"></a>
-            <div class="overlay">
-                <h3 class="overlay-image-heading">{{ recipe.name }}</h3>
+
+    <div class="row center recipe-display index-image-row">
+    {% for recipe in recipes %}
+    
+        <div class="col-xs-12 box add-class center ">
+            
+            <div class="col-xs-12 display-image">
+                <a href="{{ url_for('update_view_count', recipe_id=recipe._id)}}"><img class="displayed-image" src="{{ recipe.image }}" alt="{{ recipe.name }}"></a>
+                <div class="overlay">
+                    <h3 class="overlay-image-heading">{{ recipe.name }}</h3>
+                </div>
             </div>
         </div>
         
+    {% endfor%}
     </div>
-    
-{% endfor%}
-</div>
-<main class="container">
-<div class="row">
-    <div class="col-xs-12">
-        <p>this is a sentence</p>
+    <div class="row index-tagline-row">
+        <div class="col-xs-12 center">
+            <p class="index-tagline-p hidden-xs">Create an account and start adding your own recipes today!</p>
+            <p class="index-tagline-p hidden-sm hidden-md hidden-lg">Create an account and add your own recipes today!</p>
+        </div>
+        
     </div>
-</div>
+    <div class="row index-btn-row">
+        <div class="col-xs-12 center">
+            <p class="signin-btn register-trigger">Register</p>
+            <p class="signin-btn signin-trigger"><a href="{{url_for('recipes')}}">Recipes</a></p>
+        </div>
+        
+    </div>
+
 </main>
 {% endblock %}
