@@ -1,12 +1,13 @@
 $(document).ready( function() {
     
+    /*INDEX PAGE CHANGING PICTURE*/
     $(".displayed-image").mouseenter(function(){
        $(".overlay-image-heading").stop().animate({"color": "#fff"}, 'slow'); 
        $(".displayed-image").stop().animate({"opacity": "1"}, 'slow');
     });
     $(".displayed-image").mouseleave(function(){
        $(".overlay-image-heading").stop().animate({"color": "color: rgba(255,255,255,.7);"}, 'slow') 
-       $(".displayed-image").stop().animate({"opacity": ".7"}, 'slow');
+       $(".displayed-image").stop().animate({"opacity": ".9"}, 'slow');
     });
     $(".overlay-image-heading").mouseenter(function(){
        $(".overlay-image-heading").stop().animate({"color": "#fff"}, 'slow') 
@@ -14,11 +15,11 @@ $(document).ready( function() {
     });
     $(".overlay-image-heading").mouseleave(function(){
        $(".overlay-image-heading").stop().animate({"color": "color: rgba(255,255,255,.7);"}, 'slow') 
-       $(".displayed-image").stop().animate({"opacity": ".7"}, 'slow');
+       $(".displayed-image").stop().animate({"opacity": ".9"}, 'slow');
     });
         
     
-    $('.test').each(function(i) {
+    $('.add-class').each(function(i) {
     $(this).attr('class',"box change-picture"+i);
     });
    
@@ -73,7 +74,10 @@ $(document).ready( function() {
     /*MOBILE MENU*/
     $('#fa-bars').click(function() {
         $('.mobile-ul').toggle('fade', 500)
+        $('.mobile-bars').toggleClass("mobile-bars-clicked")
     })
+    
+    
     $('#fa-bars').click(function() {
         $('.mobile-li').toggle('clip', 1000).delay(500)
     })
@@ -141,7 +145,7 @@ $(document).ready( function() {
     var select_remove_button = ' <i class="material-icons remove_select pointer">remove</i><br>';
     
         if ($(this).attr('id') == 'add_cuisine') {
-            $("#cuisine").clone().appendTo(".cuisine_container").before(select_remove_button)
+            $(".cuisine").clone().appendTo(".cuisine_container").before(select_remove_button)
             $(this).appendTo(".cuisine_container")
             $('.duplicate_select').addClass("add-fourpx")
         }
