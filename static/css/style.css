@@ -576,13 +576,17 @@ table {
     box-shadow: 2px 2px 10px 0;
 }
 
+.signin-btn a {
+    display: block;
+}
+
 @media (max-width: 767px) {
     
     .index-image-row {
-        margin: 40px 0 0 0 ;
+        margin: 40px 0 40px 0 ;
     }
     .index-tagline-row {
-        margin-top: 0px;
+        margin: 0px 0 20px 0;
     }
     .index-tagline-p {
         font-size: 22px;
@@ -661,9 +665,9 @@ table {
 
 @media (max-width: 767px) {
     .display-image img {
-        border-radius: 10px;
-        width: 280px;
-        height: auto;
+        border-radius: 30px;
+        width: auto;
+        max-height: 200px;
     }
     .recipe-display {
         width: 100%;
