@@ -11,46 +11,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet">
-    <title>The Meal Ponderer</title>
+    <title>A Chefs Desire</title>
 </head>
 
 <body>
-    <div class="container-fluid">
-        <header>
+    <div class="wrapper">
+
+        <header class="container-fluid">
 
             <!--TITLE-->
             <div class="col-xs-12">
-                <h1 class="hidden-xs">The Meal Ponderer</h1>
-                <h1 class="hidden-sm hidden-md hidden-lg">The Meal<br> Ponderer</h1>
+                <a href="{{url_for('index')}}">
+                    <h3 class="hidden-xs logo">The Chefs Desire</h3>
+                </a>
+                <h1 class="hidden-sm hidden-md hidden-lg mobile-heading">The Chefs<br> Desire</h1>
             </div>
 
             <!--SIGN IN REGISTER BUTTONS-->
-            <div class="signin-create hidden-xs">
-            {% if 'user' not in session %}
-                <p class="register-btn register-trigger">Register</p>
-                <p class="signin-btn signin-trigger">Sign In</p>
-            {% else %}
-                <a href="{{url_for('logout')}}"><p class="signin-btn">Log Out</p></a>
-            {% endif %}
-            </div>
-            
+
+
             <!--REGISTRATION FORM-->
-                                                              <!-- IF STATEMENT BELOW TO CREATE INLINE STYLE DISPLAY:BLOCK -->
+            <!-- IF STATEMENT BELOW TO CREATE INLINE STYLE DISPLAY:BLOCK -->
             <div class="register-signin-page register-page" {% if 'flash-message2' in session %}style="display:block;" {% endif %}>
                 <div id="#inner-register-page" class="inner-register-page">
                     <h2>Registration</h2>
-                    {% if 'flash-message2' in session %}
-                    {% with messages = get_flashed_messages()%}
-                    {% if messages %}
-                    {% for message in messages %}
+                    {% if 'flash-message2' in session %} {% with messages = get_flashed_messages()%} {% if messages %} {% for message in messages %}
                     <p class="flash-message">{{ message }}</p>
-                    
-                    {% endfor %}
-                    {%endif%}
-                    {%endwith%}
-                    {%endif%}
-                    
-                    <form action="{{url_for('register')}}", method='POST' >
+
+                    {% endfor %} {%endif%} {%endwith%} {%endif%}
+
+                    <form action="{{url_for('register')}}" , method='POST'>
                         <div class="col-xs-12">
                             <label class="inline hidden-xs" for="register-first-name">First Name:</label>
                             <input class="inline" type="text" id="register-first-name" name="register-first-name" placeholder="First Name" required/>
@@ -81,21 +71,16 @@
                 </div>
             </div>
 
-            <!--SIGN IN PAGE-->                      <!-- IF STATEMENT BELOW TO CREATE INLINE STYLE DISPLAY:BLOCK -->
+            <!--SIGN IN PAGE-->
+            <!-- IF STATEMENT BELOW TO CREATE INLINE STYLE DISPLAY:BLOCK -->
             <div class="register-signin-page signin-page" {% if 'flash-message1' in session %}style="display:block;" {% endif %}>
                 <div class="inner-signin-page">
                     <h2>Sign In</h2>
-                    {% if 'flash-message1' in session %}
-                    {% with messages = get_flashed_messages()%}
-                    {% if messages %}
-                    {% for message in messages %}
+                    {% if 'flash-message1' in session %} {% with messages = get_flashed_messages()%} {% if messages %} {% for message in messages %}
                     <p class="flash-message">{{ message }}</p>
-                    
-                    {% endfor %}
-                    {% endif %}
-                    {% endwith %}
-                    {% endif %}
-                    <form action="{{url_for('signin')}}", method='POST'>
+
+                    {% endfor %} {% endif %} {% endwith %} {% endif %}
+                    <form action="{{url_for('signin')}}" , method='POST'>
                         <div class="col-xs-12">
                             <input class="inline" type="text" id="signin_username" name="signin_username" placeholder="User Name" required/>
                         </div>
@@ -118,44 +103,79 @@
                 </div>
 
                 <ul class=" mobile-ul">
-                    <li class="mobile-li"><a href="{{url_for('index')}}">Home</a></li>
-                    <li class="mobile-li"><a href="{{url_for('recipes')}}">Recipes</a></li>
-                    <li class="mobile-li"><a href="{{url_for('add_recipe')}}">Add Recipe</a></li>
+                    <li class="mobile-li">
+                        <a href="{{url_for('index')}}">Home</a>
+                    </li>
+                    <li class="mobile-li">
+                        <a href="{{url_for('recipes')}}">Recipes</a>
+                    </li>
+                    {% if 'user' not in session %}
                     <li class="mobile-li">
                         <p class="mobile-form-btn register-trigger">Register</p>
                     </li>
                     <li class="mobile-li">
                         <p class=" mobile-form-btn signin-trigger">Sign In</p>
                     </li>
+                    {% else %}
+                    <li class="mobile-li">
+                        <a href="{{url_for('my_recipes', username = session['user'])}}">My Recipes</a>
+                    </li>
+                    <li class="mobile-li">
+                        <a href="{{url_for('logout')}}">Log Out</a>
+                    </li>
+                    {% endif %}
                 </ul>
 
             </nav>
 
             <!--NAVIGATION LINKS-->
-            <div class="col-xs-12">
-                <nav class="hidden-xs">
+            <div class="col-xs-12 navigation-menu">
+                <nav class="hidden-xs desktop-nav">
                     <ul>
-                        <li><a href="{{url_for('index')}}">Home</a></li>
-                        <li><a href="{{url_for('recipes')}}">Browse</a></li>
+                        <li>
+                            <a href="{{url_for('index')}}">Home</a>
+                        </li>
+                        <li>
+                            <a href="{{url_for('recipes')}}">Recipes</a>
+                        </li>
                         {% if 'user' in session %}
-                        <li><a href="{{url_for('add_recipe')}}">Add Recipe</a></li>
-                        <li><a href="{{url_for('my_recipes', username = session['user'])}}">My Recipes</a></li>
+                        <li>
+                            <a href="{{url_for('my_recipes', username = session['user'])}}">My Recipes</a>
+                        </li>
+                        <li>
+                            <a href="{{url_for('logout')}}">Log Out</a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <p class=" register-trigger">Register</p>
+                        </li>
+                        <li>
+                            <p class=" signin-trigger">Sign In</p>
+                        </li>
                         {% endif %}
+
                     </ul>
                 </nav>
             </div>
 
         </header>
+
+
+        <div class="main-content">
+            {% block content %} {% endblock %}
+        </div>
+
+        <footer class="container-fluid centering">
+
+            <div class=" col-xs-12">
+                <a href="https://github.com/brettcutt/the-meal-ponderer" target="_blank"><i id="github-icon" class="fab fa-github"></i></a>
+                <br>
+                <br>
+                <p class="web-developer">©2018 The Chefs Desire | Web development by Brett Cutting</p>
+            </div>
+
+        </footer>
     </div>
-
-    
-
-        {% block content %} {% endblock %}
-    
-
-    <footer>
-
-    </footer>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery-3.3.1.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery-ui.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery.js')}}"></script>
