@@ -117,7 +117,7 @@ $(document).ready( function() {
         
         if ($(this).attr('id') == 'first') {
             $(this).append().after(
-            '<br><input type="text" name="' + id_name +'" class="' + id_name +'" placeholder="Add"/>'+
+            '<br><input type="text" name="' + id_name +'" class="' + id_name +'" placeholder=""/>'+
             ' <i class="material-icons duplicate pointer">add</i>' +
             ' <i class="material-icons remove_duplicate pointer">remove</i>');
         } 
@@ -125,7 +125,7 @@ $(document).ready( function() {
         else 
         {
             $(this).prev().prev().prev().append().after(
-            '<br><input type="text" name="' + id_name +'" class="' + id_name +'" placeholder="Add"/>'+
+            '<br><input type="text" name="' + id_name +'" class="' + id_name +'" placeholder=""/>'+
             ' <i class="material-icons duplicate pointer">add</i>' +
             ' <i class="material-icons remove_duplicate pointer">remove</i>');
         }
