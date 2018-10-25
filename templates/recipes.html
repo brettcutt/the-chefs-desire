@@ -1,113 +1,111 @@
 {% extends 'base.html' %} {% block content %}
-<main class="container">
+<main class="container main-container margin-top-20">
 <!--SEARCH BAR-->
 <div class="row center margin-bottom-20">
 
-    <div class="col-xs-12 inline">
-        
-        <div class="search-box">
-            <p class=" hidden-xs"><b>Define Search by:</b></p>
-            
-            <div class="inline hidden-xs">
-                <P id='ingredient_btn' class='search-btn'>Ingredient</P>
-            </div>
-            
-            <div class="inline hidden-xs">
-                <P id='cuisine_btn' class='search-btn'>Cuisine</P>
-            </div>
-            
-            <div class="inline hidden-xs">
-                <P id='allergen_btn' class='search-btn'>Allergen</P>
-            </div>
-            
-            <div class="inline">
-                <P id='allergen_and_cuisine_btn' class='search-btn hidden-xs'>Advanced</P>
-                <P id='mobile-search-btn' class='search-btn hidden-sm hidden-md hidden-lg '>Define Search</P>
-            </div>
-            
-            <div id="ingredient_search" class="triggered_search_box">
-                <div class="inner-box inline">
-                    <form action="{{url_for('find_ingredient')}}" , method="POST">
-                        <p class="center search-category-heading"><b>Search Ingredient</b></p>
-                        <div class="inline">
-                            <input type="text" name="ingredient_category" id="ingredient_category" placeholder='e.g. chicken'>
-                        </div>
-                        <br>
-                        <br>
-                        <div class="center">
-                            <input class="inline" type="submit" value="Select" />
-                            <p class="close-btn inline">Close</p>
-                        </div>
-                        
-                    </form>
+        <div class="col-xs-12 inline">
+
+            <div class="search-box">
+                <p class=" hidden-xs"><b>Define Search by:</b></p>
+
+                <div class="inline hidden-xs">
+                    <P id='ingredient_btn' class='search-btn'>Ingredient</P>
                 </div>
-            </div>
-            <!--########################## CUISINE FORM-->
-            
-            <div id="cuisine_search" class="triggered_search_box">
-                <div class="inner-box inline">
-                    <form action="{{url_for('find_cuisine')}}" , method="POST">
-                        <p class="center search-category-heading"><b>Select Cuisine</b></p>
-                        <div class="inline">
-                            <select  name="cuisine_category" id="cuisine_category">
+
+                <div class="inline hidden-xs">
+                    <P id='cuisine_btn' class='search-btn'>Cuisine</P>
+                </div>
+
+                <div class="inline hidden-xs">
+                    <P id='allergen_btn' class='search-btn'>Allergen</P>
+                </div>
+
+                <div class="inline">
+                    <P id='allergen_and_cuisine_btn' class='search-btn hidden-xs'>Advanced</P>
+                    <P id='mobile-search-btn' class='search-btn hidden-sm hidden-md hidden-lg '>Define Search</P>
+                </div>
+                <!--########################## INGREDIENT FORM-->
+                <div id="ingredient_search" class="triggered_search_box">
+                    <div class="inner-box inline">
+                        <form class="center" action="{{url_for('find_ingredient')}}" , method="POST">
+                            <p class="center search-category-heading"><b>Search Ingredient</b></p>
+                            <div class="inline">
+                                <input class="search-ingredient" type="text" name="ingredient_category" id="ingredient_category" placeholder='e.g. chicken'>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="center">
+                                <input class="inline" type="submit" value="Select" />
+                                <p class="close-btn inline">Close</p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <!--########################## CUISINE FORM-->
+
+                <div id="cuisine_search" class="triggered_search_box">
+                    <div class="inner-box inline">
+                        <form class="center" action="{{url_for('find_cuisine')}}" , method="POST">
+                            <p class="center search-category-heading"><b>Select Cuisine</b></p>
+                            <div class="inline">
+                                <select name="cuisine_category" id="cuisine_category">
                             <option disabled value="" selected>None</option>
                             {% for item in cuisines_json.cuisine|sort %}
                             <option value="{{ item }}">{{ item }}</option>
                             {% endfor %}
                             </select>
-                        </div>
-                        <br>
-                        <br>
-                        <div class="center">
-                            <input class="inline" type="submit" value="Select" />
-                            <p class="close-btn inline">Close</p>
-                        </div>
-                        
-                    </form>
-                </div>
-            </div>
-            
-            <!--########################## END FORM-->
-            <!--########################## ALLERGEN FORM-->
-            
-            <div id="allergen_search" class="triggered_search_box center">
-                <div class="inner-box inline">
-                    <form action="{{url_for('find_allergen')}}" , method="POST">
-                    <p class="center search-category-heading"><b>Select allergen free</b></p>
-                        <div class=" col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-12">
-                            {% for item in allergens_json.allergen|sort %}
-                            <div class='allergen_search_checkbox'>
-                                <input value="{{ item }}" name="find_allergen" id="find_allergen" type="checkbox"> 
-                                <label for="find_allergen"> {{ item }}</label>
                             </div>
-                            {% if loop.index % 3 == 0 %}
-                            <br class="hidden-xs">
-                            {% endif%}
-                            {% endfor %}
                             <br>
                             <br>
-                        </div>
-                        <div class="center">
-                            <input class="inline" type="submit" value="Select" />
-                            <p class="close-btn inline">Close</p>
-                        </div>
-                        
-                    </form>
+                            <div class="center">
+                                <input class="inline" type="submit" value="Select" />
+                                <p class="close-btn inline">Close</p>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
-            </div>
-            
-            <!--########################## END FORM-->
-            <!--########################## ALLERGEN AND CUISINE FROM-->
-            <div id="allergen_and_cuisine_search" class="triggered_search_box">
-                <div class="inner-box inline">
-                    <form action="{{url_for('find_multiple_categories')}}" , method="POST">
-                        
-                        <div class="row center ">
-                            
-                            <div class="col-xs-12 col-sm-6 inline margin-bottom-20">
-                                
-                                <p class="search-category-heading"><b>Select Cuisine</b></p>
-                                <select class="" name="find_cuisine" id="find_cuisine">
+
+                <!--########################## END FORM-->
+                <!--########################## ALLERGEN FORM-->
+
+                <div id="allergen_search" class="triggered_search_box center">
+                    <div class="inner-box inline">
+                        <form action="{{url_for('find_allergen')}}" , method="POST">
+                            <p class="center search-category-heading"><b>Select allergen free</b></p>
+                            <div class=" col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-12">
+                                {% for item in allergens_json.allergen|sort %}
+                                <div class='allergen_search_checkbox'>
+                                    <input value="{{ item }}" name="allergen_category" type="checkbox">
+                                    <label for="find_allergen"> {{ item }}</label>
+                                </div>
+                                {% if loop.index % 3 == 0 %}
+                                <br class="hidden-xs"> {% endif%} {% endfor %}
+                                <br>
+                                <br>
+                            </div>
+                            <div class="center">
+                                <input class="inline" type="submit" value="Select" />
+                                <p class="close-btn inline">Close</p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <!--########################## END FORM-->
+                <!--########################## ALLERGEN AND CUISINE FROM-->
+                <div id="allergen_and_cuisine_search" class="triggered_search_box">
+                    <div class="inner-box inline">
+                        <form action="{{url_for('find_multiple_categories')}}" , method="POST">
+
+                            <div class="row center ">
+
+                                <div class="col-xs-12 col-sm-6 inline margin-bottom-20">
+
+                                    <p class="search-category-heading"><b>Select Cuisine</b></p>
+                                    <select class="" name="find_cuisine" id="find_cuisine">
                                     
                                     <option class="inline"value="" selected>None</option>
                                     {% for item in cuisines_json.cuisine|sort %}
@@ -115,54 +113,51 @@
                                     {% endfor %}
                                     
                                 </select>
-                            </div>
-                            
-                            <div class="col-xs-12 col-sm-6 inline margin-bottom-20">
-                                
-                                <p class="search-category-heading"><b>Search Ingredient</b></p>
-                                    <input class="inline" type="text" name="find_ingredient" id="find_ingredient" placeholder='e.g. chicken'>
-                                    
-                            </div>
-                            
-                        </div>
-                        
-                        <div class="row">
-                            <div class=" col-xs-12 margin-bottom-20 inline">
-                                <p class="center search-category-heading"><b>Select allergen free</b></p>
-                                <div class=" col-xs-offset-2 col-xs-8 col-sm-offset-1 col-sm-11">
-                                    {% for item in allergens_json.allergen|sort %}
-                                    
-                                <div class='allergen_search_checkbox'>
-                                    <input value="{{ item }}" name="find_allergen" id="find_allergen" type="checkbox"> 
-                                    <label for="find_allergen"> {{ item }}</label>
                                 </div>
-                            
-                                {% if loop.index % 3 == 0 %}
-                                <br class="hidden-xs">
-                                {% endif%}
-                                
-                                {% endfor %}
+
+                                <div class="col-xs-12 col-sm-6 inline margin-bottom-20">
+
+                                    <p class="search-category-heading"><b>Search Ingredient</b></p>
+                                    <input class="inline search-ingredient" type="text" name="find_ingredient" id="find_ingredient" placeholder='e.g. chicken'>
+
+                                </div>
+
                             </div>
+
+                            <div class="row">
+                                <div class=" col-xs-12 margin-bottom-20 inline">
+                                    <p class="center search-category-heading"><b>Select allergen free</b></p>
+                                    <div class=" col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-12">
+                                        {% for item in allergens_json.allergen|sort %}
+
+                                        <div class='allergen_search_checkbox'>
+                                            <input value="{{ item }}" name="find_allergen" type="checkbox">
+                                            <label for="find_allergen"> {{ item }}</label>
+                                        </div>
+
+                                        {% if loop.index % 3 == 0 %}
+                                        <br class="hidden-xs"> {% endif%} {% endfor %}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="center">
-                            <input class="inline" type="submit" value="Select" />
-                            <p class="inline close-btn">Close</p>
-                        </div>
-                        
-                        
-                        
-                    </form>
+                            <div class="center">
+                                <input class="inline" type="submit" value="Select" />
+                                <p class="inline close-btn">Close</p>
+                            </div>
+
+
+
+                        </form>
+                    </div>
                 </div>
+
             </div>
-            
-        </div>    
             <!--########################## INGREDIENT FORM-->
-            
+
             <!--########################## END FORM-->
-        
+
+        </div>
     </div>
-</div>
 
 <div class="row found_recipe_row">
 

@@ -493,6 +493,10 @@ table {
     margin-bottom: 20px;
 }
 
+.search-ingredient {
+    width: 150px;    
+}
+
 .search-category-heading {
     padding: 5px 5px;
     border-bottom: 1px solid #000;
