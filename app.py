@@ -162,8 +162,9 @@ def my_recipes(username):
     user = mongo.db.user_details.find_one({"username":username})
     print(session['user'])
     user_recipes = mongo.db.recipe.find({"username":session['user']})
-    
-    return render_template('my_recipes.html', user=user, user_recipes=user_recipes, cuisines_json=cuisines_json, allergens_json=allergens_json)
+    recipe_count = user_recipes.count()
+    print(recipe_count)
+    return render_template('my_recipes.html', user=user, user_recipes=user_recipes, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
 
 
 # //////////////// RECIPES (render) 
@@ -282,7 +283,7 @@ def find_multiple_categories():
         recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":cuisine},
                                                          {"allergens":{"$nin": allergens}},
                                                          {"ingredients":{"$regex":ingredient}}  ]})
-    print(recipe_category.count())
+    
     recipe_count = recipe_category.count()
     return render_template('search_results.html', recipe_category=recipe_category, recipe_count=recipe_count, cuisines_json=cuisines_json, allergens_json=allergens_json)
   
@@ -336,17 +337,15 @@ def update_recipe(recipe_id):
     
     
     return redirect(url_for('single_recipe', recipe_id=recipe_id ))
-
-    return redirect(url_for('recipes'))
     
     
 # //////////////// DELETE RECIPE
 # Delete (redirect)
 @app.route("/delete_recipe/<recipe_id>")
 def delete_recipe(recipe_id):
-    
+    username = if_user_in_session()
     mongo.db.recipe.remove({'_id':ObjectId(recipe_id)})
-    return redirect(url_for('recipes'))
+    return redirect(url_for('my_recipes', username=username))
 
 
 
