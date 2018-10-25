@@ -1,11 +1,11 @@
 {% extends 'base.html' %} {% block content %}
-<main class="container">
+<main class="container main-container">
 <div class="row">
     <div class="col-xs-12">
-        <h1>Add a Recipe</h1>
+        <p class="my-recipe-heading">Add a Recipe</p>
     </div>
-
-    <form action="{{url_for('insert_recipe')}}" method="POST" class="col-xs-12">
+<div class=" col-xs-12 col-sm-offset-3 col-sm-8 col-md-offset-3 col-md-6">
+    <form class="" action="{{url_for('insert_recipe')}}" method="POST">
         
 <!--recipe name-->
 
@@ -39,7 +39,7 @@
                 
                     {% for item in allergens_json.allergen %}
                 <div class='allergen_checkbox'>
-                    <input class="{{ item }}" id="allergen" name="allergens" type="checkbox" value="{{ item }}">
+                    <input class="{{ item }}"  name="allergens" type="checkbox" value="{{ item }}">
                     <label class="{{ item }}1" for="allergen">{{ item }}</label>
                 </div>
                 {% endfor%}
@@ -89,28 +89,29 @@
 
         <fieldset>
             <legend>Recipe Yield</legend>
-            <input type="number" name="recipe_yield" id="recipe_yield" placeholder="recipe_yield" />
+            <input type="number" name="recipe_yield" id="recipe_yield" placeholder="Servings" />
         </fieldset>
         
 <!--Author-->
 
         <fieldset>
             <legend>Author</legend>
-            <input type="text" name="author" id="author" placeholder="author" />
+            <input type="text" name="author" id="author" placeholder="Author" />
         </fieldset>
         
 <!--Image-->
 
         <fieldset>
             <legend>Image</legend>
-            <input type="text" name="image" id="image" placeholder="Image" />
+            <input type="text" name="image" id="image" placeholder="http://url" />
         </fieldset>
         
 <!--Submit-->
-
-        <input type="submit" value="Submit" />
+        <div class="center margin-bottom-20">
+            <input class="inline" type="submit" value="Submit" />
+        </div>
     </form>
-
+</div>
 </div>
 </main>
 

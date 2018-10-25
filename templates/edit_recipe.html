@@ -1,11 +1,11 @@
 {% extends 'base.html' %} {% block content %}
-<main class="container">
+<main class="container main-container">
 <div class="row">
     <div class="col-xs-12">
-        <h1>Edit Recipe</h1>
+        <p class="my-recipe-heading">Edit Recipe</p>
     </div>
-
-    <form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" class="col-xs-12">
+<div class=" col-xs-12 col-sm-offset-3 col-sm-8 col-md-offset-3 col-md-6">
+    <form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" >
         
 <!--Recipe name-->
         <fieldset>
@@ -20,7 +20,7 @@
             <div class="cuisine_container">
                 
                 {% if recipe.cuisine == [] %}
-                    <select name="cuisine" class="cuisine" id="cuisine">
+                    <select name="cuisine" class="cuisine" >
                     <option value="" selected>Choose a Cuisine</option>
                     
                     {% for item in cuisines_json.cuisine %}
@@ -31,7 +31,7 @@
                 
                 {% if recipe.cuisine != [] %}
                 {% for cuisines in recipe.cuisine %}
-                <select name="cuisine" class="cuisine" id="cuisine">
+                <select name="cuisine" class="cuisine">
                     
                     <option selected>{{cuisines}}</option>
                     
@@ -57,14 +57,14 @@
                 
                 {% for allergen in recipe.allergens %}
                 <div class='allergen_checkbox'>
-                    <input checked id="allergen" class="{{ allergen }}" name="allergens" type="checkbox" value="{{ allergen }}">
+                    <input checked  class="{{ allergen }}" name="allergens" type="checkbox" value="{{ allergen }}">
                     <label class="{{ allergen }}1" for="allergen">{{ allergen }}</label>
                 </div>
                 
                 {% endfor %}
                     {% for item in allergens_json.allergen %}
                 <div class='allergen_checkbox'>
-                    <input class="{{ item }}" id="allergen" name="allergens" type="checkbox" value="{{ item }}">
+                    <input class="{{ item }}" name="allergens" type="checkbox" value="{{ item }}">
                     <label class="{{ item }}1" for="allergen">{{ item }}</label>
                 </div>
                 {% endfor%}
@@ -84,7 +84,7 @@
         <fieldset id="duplicate_ingredient">
             <legend>Ingredients</legend>
             {% for ingredient in recipe.ingredients %}
-                <br><input type="text" name="ingredients" class="ingredients inline" id="ingredients" value="{{ ingredient }}" />
+                <br><input type="text" name="ingredients" class="ingredients inline" value="{{ ingredient }}" />
             
                 {% if loop.index == 1%}
                 <i id="first" class="material-icons duplicate pointer">add</i>
@@ -102,7 +102,7 @@
         <fieldset id="instructions_fieldset">
             <legend>Instructions</legend>
             {% for instruction in recipe.instructions %}
-                <br><input type="text" name="instructions" class="instructions inline" id="instructions" value="{{ instruction }}" />
+                <br><input type="text" name="instructions" class="instructions inline"  value="{{ instruction }}" />
                 {% if loop.index == 1%}
                 
                 <i id="first" class="material-icons duplicate pointer">add</i>
@@ -151,10 +151,13 @@
         
 <!--Submit-->
 
-        <input type="submit" value="Submit" />
+        <div class="center margin-bottom-20">
+            <input class="inline" type="submit" value="Submit" />
+        </div>
         
         
     </form>
+</div>
 </div>
 </main>
 
