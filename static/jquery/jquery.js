@@ -1,5 +1,22 @@
 $(document).ready( function() {
     
+    var current = $(window).scrollTop();
+    
+    /*RECIPE DELETE BUTTON*/
+    $(".delete-btn").click(function() {
+        $(".comfirmation").show('fade', 500)
+        $(window).scroll(function() {
+        $(window).scrollTop(current);
+});
+    });
+    
+    $("#comfirmation-no").click(function() {
+        $(".comfirmation").hide('fade', 500)
+        $(window).off('scroll');
+    })
+    
+    
+    
     /*INDEX PAGE CHANGING PICTURE*/
     $(".displayed-image").mouseenter(function(){
        $(".overlay-image-heading").stop().animate({"color": "#fff"}, 'slow'); 
@@ -50,16 +67,24 @@ $(document).ready( function() {
     /*REGISTER*/
     $('.register-close-btn').click(function() {
         $(this).parent().parent().parent().hide('fade', 500)
+        $(window).off('scroll');
     });
     
     $('.register-trigger').click(function() {
         $(".signin-page").hide('fade')
         $(".register-page").show('fade', 500)
+        $(window).scroll(function() {
+        $(window).scrollTop(current);
+});
     });
     
     $('.signin-trigger').click(function() {
         $(".register-page").hide('fade')
         $(".signin-page").show('fade', 500)
+        $(window).scroll(function() {
+        $(window).scrollTop(current);
+});
+        
     });
     
     
@@ -83,8 +108,12 @@ $(document).ready( function() {
     })
     
     
+    
     $("#mobile-search-btn").click(function() {
         $("#allergen_and_cuisine_search").show()
+        $(window).scroll(function() {
+        $(window).scrollTop(current);
+});
     })
     
     /* SEARCH BAR THAT OPENS DIFFERENT SEARCH CATEGORIES*/
@@ -99,13 +128,16 @@ $(document).ready( function() {
         $(this).parent().next().next().next().next().addClass('chosen')
         $('.search-btn').removeClass("choice")
         $(this).addClass("choice")
-        
+        $(window).scroll(function() {
+        $(window).scrollTop(current);
+});
     })
     
     $(".close-btn").on('click', function() {
         $('.chosen').hide('fade', 500)
         $('.chosen').removeClass('chosen')
         $('.choice').removeClass("choice")
+        $(window).off('scroll');
     })
     
     

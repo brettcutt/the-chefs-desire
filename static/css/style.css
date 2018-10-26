@@ -103,6 +103,10 @@ a:hover {
     text-align: center;
 }
 
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
 /* ///////////////////////////////////////HEADINGS*/
 
 h1 {
@@ -484,7 +488,7 @@ table {
 .triggered_search_box {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     left: 0;
     right: 0;
     text-align: center;
@@ -502,7 +506,7 @@ table {
 
 @media (max-width: 767px) {
     .triggered_search_box {
-        top: 20px;
+        top: 0px;
     }
 }
 
@@ -774,6 +778,30 @@ table {
 
 
 /* //////////////////////////////////////SINGLE RECIPE.HTML*/
+
+
+.comfirmation {
+    display: none;
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    text-align: center;
+    
+}
+
+.inner-comfirmation {
+    display: inline-block;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, .95);
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+}
+.edit-btn, .delete-btn {
+    width: 120px;
+}
 
 .recipe_image_container {
     margin-left: -5px;
