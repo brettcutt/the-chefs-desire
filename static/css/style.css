@@ -165,6 +165,11 @@ textarea {
     width: 33%;
 }
 
+.spacer{
+        width: 500px;
+        height: 20px
+    }
+
 @media (max-width: 767px) {
     fieldset select,
     fieldset input:not([type=checkbox]):not([type=submit]) {
@@ -185,7 +190,13 @@ textarea {
         width: 100%;
 
     }
-
+    .spacer{
+        margin-left: 17%;
+        width: 180px;
+        height: 20px
+    }
+.first-add {
+}
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -205,6 +216,7 @@ textarea {
         width: 100%;
         margin-left: 10px;
     }
+    
 
 }
 
@@ -240,6 +252,10 @@ input[type=submit] {
 
 table {
     display: inline-block;
+}
+
+#instructions_fieldset {
+    position: relative;
 }
 
 

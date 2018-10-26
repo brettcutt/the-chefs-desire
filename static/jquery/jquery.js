@@ -116,7 +116,7 @@ $(document).ready( function() {
         var id_name = $(this).parent().children('input').attr("name");
         
         if ($(this).attr('id') == 'first') {
-            $(this).append().after(
+            $(this).append().prev().before(
             '<br><input type="text" name="' + id_name +'" class="' + id_name +'" placeholder=""/>'+
             ' <i class="material-icons duplicate pointer">add</i>' +
             ' <i class="material-icons remove_duplicate pointer">remove</i>');
@@ -145,7 +145,7 @@ $(document).ready( function() {
     var select_remove_button = ' <i class="material-icons remove_select pointer">remove</i><br>';
     
         if ($(this).attr('id') == 'add_cuisine') {
-            $(".cuisine").clone().appendTo(".cuisine_container").before(select_remove_button)
+            $(this).prev().clone().appendTo(".cuisine_container").before(select_remove_button)
             $(this).appendTo(".cuisine_container")
             $('.duplicate_select').addClass("add-fourpx")
         }
