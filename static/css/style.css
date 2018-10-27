@@ -733,6 +733,11 @@ table {
 
 /* ///////////////////////////////////////////// SEARCH RESULTS*/
 
+.results-found {
+    font-size: 20px;
+    font-weight:bold;
+}
+
 .found_recipe_row {
     display: flex;
     flex-wrap: wrap;
@@ -778,6 +783,20 @@ table {
 
 
 /* //////////////////////////////////////SINGLE RECIPE.HTML*/
+.ordered-by-row {
+    margin-top: 30px;
+}
+
+.ordered-by-title {
+    font-size: 23px;
+    font-weight: bold;
+    margin:0 0 10px 0;
+    border-bottom: 1.5px solid #000;
+}
+
+.see-all {
+    font-weight: bold;
+}
 
 
 .comfirmation {
@@ -787,7 +806,6 @@ table {
     left: 0;
     right: 0;
     text-align: center;
-    
 }
 
 .inner-comfirmation {

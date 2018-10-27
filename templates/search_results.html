@@ -3,7 +3,19 @@
 <main class="container main-container">
     <!--SEARCH BAR-->
     <div class="row">
-        <p class="my-recipe-heading">Search Results</p>
+        {% if 'search_title' in session %}
+            {% if search_title == 1 %}
+                <p class="my-recipe-heading">Most Popular Recipes</p>
+            {% elif search_title == 2 %}
+                <p class="my-recipe-heading">Most View Recipes</p>
+            {% elif search_title == 3 %}
+                <p class="my-recipe-heading">All Recipes</p>
+            {% else %}
+            
+                <p class="my-recipe-heading">Search Results</p>
+            {% endif %}
+        {% endif %}
+        
     </div>
     <div class="row center margin-bottom-20">
 
@@ -56,7 +68,7 @@
                                 <select name="cuisine_category" id="cuisine_category">
                             <option disabled value="" selected>None</option>
                             {% for item in cuisines_json.cuisine|sort %}
-                            <option value="{{ item }}">{{ item }}</option>
+                            <option value="{{ item }}">{{ item|title }}</option>
                             {% endfor %}
                             </select>
                             </div>
@@ -82,7 +94,7 @@
                                 {% for item in allergens_json.allergen|sort %}
                                 <div class='allergen_search_checkbox'>
                                     <input value="{{ item }}" name="allergen_category" type="checkbox">
-                                    <label for="find_allergen"> {{ item }}</label>
+                                    <label for="find_allergen"> {{ item|title }}</label>
                                 </div>
                                 {% if loop.index % 3 == 0 %}
                                 <br class="hidden-xs"> {% endif%} {% endfor %}
@@ -113,7 +125,7 @@
                                     
                                     <option class="inline"value="" selected>None</option>
                                     {% for item in cuisines_json.cuisine|sort %}
-                                    <option value="{{ item }}">{{ item }}</option>
+                                    <option value="{{ item }}">{{ item|title }}</option>
                                     {% endfor %}
                                     
                                 </select>
@@ -136,7 +148,7 @@
 
                                         <div class='allergen_search_checkbox'>
                                             <input value="{{ item }}" name="find_allergen" type="checkbox">
-                                            <label for="find_allergen"> {{ item }}</label>
+                                            <label for="find_allergen"> {{ item| title }}</label>
                                         </div>
 
                                         {% if loop.index % 3 == 0 %}
@@ -165,19 +177,22 @@
     
     <div class="row">
         <div class="col-xs-12 center">
-            {% if recipe_count == 0 %}
-            <div>
-                <p><b>No results found!</b></p>
-            </div>
-
-            {% else %} {% if recipe_count == 1 %}
-            <div>
-                <p><b>{{ recipe_count}} result found!</b></p>
-            </div>
-            {% else %}
-            <div>
-                <p><b>{{ recipe_count}} results found!</b></p>
-            </div>
+                
+            {% if recipe_count != None %}
+                {% if recipe_count == 0 %}
+                <div>
+                    <p class="results-found">No results found!</p>
+                </div>
+    
+                {% elif recipe_count == 1 %}
+                <div>
+                    <p class="results-found">{{ recipe_count}} result found!</p>
+                </div>
+                {% else %}
+                <div>
+                    <p class="results-found">{{ recipe_count}} results found!</p>
+                </div>
+                {% endif %}
             {% endif %}
         </div>
     </div>
@@ -195,8 +210,8 @@
                 <div class="row">
                     <div class="col-xs-12 found_image_box">
                         <a href="{{ url_for('single_recipe', recipe_id=recipe._id)}}">
-                <img class="found_image" src="{{ recipe.image }}" alt=" {{ recipe.name }}">
-                </a>
+                            <img class="found_image" src="{{ recipe.image }}" alt=" {{ recipe.name }}">
+                        </a>
                     </div>
 
                     <div class=" name_box col-xs-12 center">
@@ -226,7 +241,7 @@
 
 
 
-        {% endfor %} {% endif %}
+        {% endfor %}
     </div>
 </main>
 

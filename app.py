@@ -164,6 +164,8 @@ def my_recipes(username):
     user_recipes = mongo.db.recipe.find({"username":session['user']})
     recipe_count = user_recipes.count()
     print(recipe_count)
+    
+    
     return render_template('my_recipes.html', user=user, user_recipes=user_recipes, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
 
 
@@ -171,8 +173,12 @@ def my_recipes(username):
 
 @app.route("/recipes")
 def recipes():
+    most_popular_recipes=mongo.db.recipe.find( { "$query": {}, "$orderby": { "likes" : -1 } } ).limit(4)
+    most_viewed_recipes=mongo.db.recipe.find( { "$query": {}, "$orderby": { "views" : -1 } } ).limit(4)
+    all_recipes=mongo.db.recipe.find( { "$query": {}, "$orderby": { "name" : 1 } } ).limit(4)
     
-    return render_template('recipes.html', recipes=mongo.db.recipe.find(), cuisines_json=cuisines_json, allergens_json=allergens_json)
+    return render_template('recipes.html',all_recipes=all_recipes, most_viewed_recipes=most_viewed_recipes, most_popular_recipes=most_popular_recipes, cuisines_json=cuisines_json, allergens_json=allergens_json)
+
 
 
 # //////////////// SINGLE SEARCHED RECIPE (render)
@@ -231,21 +237,46 @@ def update_like(recipe_id):
 
 # //////////////// SEARCHING RESULT (render)
 
+@app.route("/most_popular_recipes")
+def most_popular_recipes():
+    recipe_category = mongo.db.recipe.find( { "$query": {}, "$orderby": { "likes" : -1 } } ).limit(10)
+    recipe_count = None
+    session["search_title"] = 1
+    search_title = session["search_title"]
+    return render_template('search_results.html', search_title = session["search_title"], recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
+
+@app.route("/most_viewed_recipes")
+def most_viewed_recipes():
+    session["search_title"] = 2
+    recipe_category = mongo.db.recipe.find( { "$query": {}, "$orderby": { "views" : -1 } } ).limit(10)
+    recipe_count = None
+    return render_template('search_results.html', search_title = session["search_title"], recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
+    
+@app.route("/all_recipes")
+def all_recipes():
+    session["search_title"] = 3
+    recipe_category = mongo.db.recipe.find( { "$query": {}, "$orderby": { "name" : -1 } } )
+    recipe_count = None
+    return render_template('search_results.html', search_title = session["search_title"], recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
+
 @app.route("/find_ingredient", methods=['POST'])
 def find_ingredient():
-    recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":request.form.get("ingredient_category").lower()}})
+    session["search_title"] = 0
+    recipe_category = mongo.db.recipe.find({"ingredients": {"$regex": request.form.get("ingredient_category"), "$options": 'i'}})
     recipe_count = recipe_category.count()
     return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
 
 @app.route("/find_cuisine", methods=['POST'])
 def find_cuisine():
-    recipe_category = mongo.db.recipe.find({"cuisine":request.form.get("cuisine_category")})
+    session["search_title"] = 0
+    recipe_category = mongo.db.recipe.find({"cuisine":request.form.get("cuisine_category").title()})
     recipe_count = recipe_category.count()
     return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
     
     
 @app.route("/find_allergen", methods=['POST'])
 def find_allergen():
+    session["search_title"] = 0
     recipe_category = mongo.db.recipe.find({"allergens":{"$nin": request.form.getlist("allergen_category")}})
     recipe_count = recipe_category.count()
     return render_template('search_results.html', recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)    
@@ -253,16 +284,16 @@ def find_allergen():
     
 @app.route("/find_multiple_categories", methods=['POST'])
 def find_multiple_categories():
-    
-    ingredient = request.form.get("find_ingredient").lower()
-    cuisine = request.form.get("find_cuisine")
+    session["search_title"] = 0
+    ingredient = request.form.get("find_ingredient")
+    cuisine = request.form.get("find_cuisine").title()
     allergens = request.form.getlist("find_allergen")
     
     if cuisine == "" and not ingredient:
         recipe_category = mongo.db.recipe.find({"allergens":{"$nin": allergens}})
     
     elif cuisine == "" and not allergens:
-        recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":ingredient}})
+        recipe_category = mongo.db.recipe.find({"ingredients": {"$regex":ingredient, "$options": 'i'}})
         
     elif not ingredient and not allergens:
         recipe_category = mongo.db.recipe.find({"cuisine":cuisine})

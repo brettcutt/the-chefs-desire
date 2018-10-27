@@ -2,7 +2,7 @@
 <main class="container main-container margin-top-20">
     
     <div class="row">
-        <p class="my-recipe-heading">All Recipes</p>
+        <p class="my-recipe-heading">Recipes</p>
     </div>
 <!--SEARCH BAR-->
 <div class="row center margin-bottom-20">
@@ -56,7 +56,7 @@
                                 <select name="cuisine_category" id="cuisine_category">
                             <option disabled value="" selected>None</option>
                             {% for item in cuisines_json.cuisine|sort %}
-                            <option value="{{ item }}">{{ item }}</option>
+                            <option value="{{ item }}">{{ item|title }}</option>
                             {% endfor %}
                             </select>
                             </div>
@@ -82,7 +82,7 @@
                                 {% for item in allergens_json.allergen|sort %}
                                 <div class='allergen_search_checkbox'>
                                     <input value="{{ item }}" name="allergen_category" type="checkbox">
-                                    <label for="find_allergen"> {{ item }}</label>
+                                    <label for="find_allergen"> {{ item|title }}</label>
                                 </div>
                                 {% if loop.index % 3 == 0 %}
                                 <br class="hidden-xs"> {% endif%} {% endfor %}
@@ -113,7 +113,7 @@
                                     
                                     <option class="inline"value="" selected>None</option>
                                     {% for item in cuisines_json.cuisine|sort %}
-                                    <option value="{{ item }}">{{ item }}</option>
+                                    <option value="{{ item }}">{{ item|title }}</option>
                                     {% endfor %}
                                     
                                 </select>
@@ -136,7 +136,7 @@
 
                                         <div class='allergen_search_checkbox'>
                                             <input value="{{ item }}" name="find_allergen" type="checkbox">
-                                            <label for="find_allergen"> {{ item }}</label>
+                                            <label for="find_allergen"> {{ item| title }}</label>
                                         </div>
 
                                         {% if loop.index % 3 == 0 %}
@@ -162,10 +162,17 @@
 
         </div>
     </div>
+    
+
+<div class="row ordered-by-row">
+    <div class="col-xs-12 col-sm-5">
+        <p class="ordered-by-title">Most Popular Recipes</p>
+        <a href="{{url_for('most_popular_recipes')}}" class="see-all">See All</a>
+    </div>
+</div>
 
 <div class="row found_recipe_row">
-
-{% for recipe in recipes %}
+{% for recipe in most_popular_recipes %}
 
     <div class="single-recipe-result col-xs-12 col-sm-4 col-md-3">
         <div class="inner_recipe_box">
@@ -187,7 +194,7 @@
                 {% if loop.index == 0 or item == "" %}
                 <p>None</p>
                 {% else %}
-                    <span>{{ item }}</span>
+                    <span>{{ item | title}}</span>
                 {% endif %}
                 {% endfor %}
                 
@@ -199,18 +206,123 @@
                 {% if loop.index == 0 or item == "" %}
                 <p>None</p>
                 {% else %}
-                    <span>{{ item }}</span>
+                    <span>{{ item |title}}</span>
                 {% endif %}
                 {% endfor %}
                 </div>
             </div>
         </div>
     </div>
-
-
     
 {% endfor %}
 </div>
+
+<div class="row ordered-by-row">
+    <div class="col-xs-12 col-sm-5">
+        <p class="ordered-by-title">Most Viewed Recipes</p>
+        <a href="{{url_for('most_viewed_recipes')}}" class="see-all">See All</a>
+    </div>
+</div>
+
+<div class="row found_recipe_row">
+{% for recipe in most_viewed_recipes %}
+
+    <div class="single-recipe-result col-xs-12 col-sm-4 col-md-3">
+        <div class="inner_recipe_box">
+            <div class="row">
+                <div class="col-xs-12 found_image_box">
+                    <a href="{{ url_for('update_view_count', recipe_id=recipe._id)}}">
+                    <img class="found_image" src="{{ recipe.image }}" alt=" {{ recipe.name }}">
+                    </a>
+                </div>
+                
+                <div class=" name_box col-xs-12 center">
+                    <h4><b>{{ recipe.name }}</b></h4>
+                </div>
+                
+                <div class=" allergen_box col-xs-12">
+                    <div><b>Allergens</b></div>
+                    
+                {% for item in recipe.allergens %}
+                {% if loop.index == 0 or item == "" %}
+                <p>None</p>
+                {% else %}
+                    <span>{{ item | title}}</span>
+                {% endif %}
+                {% endfor %}
+                
+                </div>
+                
+                <div class="cuisine_box col-xs-12">
+                    <div><b>Cuisine</b></div>
+                {% for item in recipe.cuisine %}
+                {% if loop.index == 0 or item == "" %}
+                <p>None</p>
+                {% else %}
+                    <span>{{ item |title}}</span>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endfor %}
+</div>
+
+<div class="row ordered-by-row">
+    <div class="col-xs-12 col-sm-5">
+        <p class="ordered-by-title">All Recipes</p>
+        <a href="{{url_for('all_recipes')}}" class="see-all">See All</a>
+    </div>
+</div>
+
+<div class="row found_recipe_row">
+{% for recipe in all_recipes %}
+
+    <div class="single-recipe-result col-xs-12 col-sm-4 col-md-3">
+        <div class="inner_recipe_box">
+            <div class="row">
+                <div class="col-xs-12 found_image_box">
+                    <a href="{{ url_for('update_view_count', recipe_id=recipe._id)}}">
+                    <img class="found_image" src="{{ recipe.image }}" alt=" {{ recipe.name }}">
+                    </a>
+                </div>
+                
+                <div class=" name_box col-xs-12 center">
+                    <h4><b>{{ recipe.name }}</b></h4>
+                </div>
+                
+                <div class=" allergen_box col-xs-12">
+                    <div><b>Allergens</b></div>
+                    
+                {% for item in recipe.allergens %}
+                {% if loop.index == 0 or item == "" %}
+                <p>None</p>
+                {% else %}
+                    <span>{{ item | title}}</span>
+                {% endif %}
+                {% endfor %}
+                
+                </div>
+                
+                <div class="cuisine_box col-xs-12">
+                    <div><b>Cuisine</b></div>
+                {% for item in recipe.cuisine %}
+                {% if loop.index == 0 or item == "" %}
+                <p>None</p>
+                {% else %}
+                    <span>{{ item |title}}</span>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endfor %}
+</div>
+
 </main>
 
 {% endblock %}
