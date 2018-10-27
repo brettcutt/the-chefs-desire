@@ -224,12 +224,12 @@ def update_like(recipe_id):
         
         recipe_name = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"name"})
         recipe_likes = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"likes"})
-        user_check = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"username"})
+        recipe_author = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"username"})
         users_liked_recipes = mongo.db.user_details.find_one({"username": username}, {"liked_recipes"})
         
         recipe_name = find_value(recipe_name)
-        recipe_author = find_value(user_check)# FUNCTION 1
-        count = find_value(recipe_likes)  # FUNCTION 1
+        recipe_author = find_value(recipe_author)# FUNCTION 1
+        recipe_likes = find_value(recipe_likes)  # FUNCTION 1
     
      
         for key, value in users_liked_recipes.items():
@@ -238,10 +238,10 @@ def update_like(recipe_id):
             
                 mongo.db.user_details.update({'username':username},{"$push":{"liked_recipes": recipe_name }}, upsert = True)
             
-                if not count:
+                if not recipe_likes:
                     mongo.db.recipe.update_one({'_id':ObjectId(recipe_id)},{"$set":{"likes": 1 }}, upsert = True)
-                elif count >= 0:
-                    mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"likes": count + 1 }})
+                elif recipe_likes >= 0:
+                    mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"likes": recipe_likes + 1 }})
                     
                 return redirect(url_for('single_recipe', recipe_id=recipe_id ))
                 
