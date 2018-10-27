@@ -53,7 +53,7 @@
                                 <select name="cuisine_category" id="cuisine_category">
                             <option disabled value="" selected>None</option>
                             {% for item in cuisines_json.cuisine|sort %}
-                            <option value="{{ item }}">{{ item }}</option>
+                            <option value="{{ item }}">{{ item|title }}</option>
                             {% endfor %}
                             </select>
                             </div>
@@ -79,7 +79,7 @@
                                 {% for item in allergens_json.allergen|sort %}
                                 <div class='allergen_search_checkbox'>
                                     <input value="{{ item }}" name="allergen_category" type="checkbox">
-                                    <label for="find_allergen"> {{ item }}</label>
+                                    <label for="find_allergen"> {{ item|title }}</label>
                                 </div>
                                 {% if loop.index % 3 == 0 %}
                                 <br class="hidden-xs"> {% endif%} {% endfor %}
@@ -110,7 +110,7 @@
                                     
                                     <option class="inline"value="" selected>None</option>
                                     {% for item in cuisines_json.cuisine|sort %}
-                                    <option value="{{ item }}">{{ item }}</option>
+                                    <option value="{{ item }}">{{ item|title }}</option>
                                     {% endfor %}
                                     
                                 </select>
@@ -133,7 +133,7 @@
 
                                         <div class='allergen_search_checkbox'>
                                             <input value="{{ item }}" name="find_allergen" type="checkbox">
-                                            <label for="find_allergen"> {{ item }}</label>
+                                            <label for="find_allergen"> {{ item| title }}</label>
                                         </div>
 
                                         {% if loop.index % 3 == 0 %}
@@ -292,13 +292,13 @@
                     <div class="col-xs-6 center ">
                         <h4>Cuisine</h4> 
                         {% for item in recipe.cuisine|sort %}
-                        <p class="cuisine-item">{{ item }}</p>
+                        <p class="cuisine-item">{{ item|title }}</p>
                         {% endfor %}
                     </div>
                     <div class="col-xs-6 center">
                         <h4>Allergens</h4>
                         {% for item in recipe.allergens|sort %}
-                        <p class="cuisine-item">{{ item }}</p>
+                        <p class="cuisine-item">{{ item|title }}</p>
                         {% endfor %}
                     </div>
                 </div>
