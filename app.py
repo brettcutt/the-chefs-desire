@@ -50,7 +50,8 @@ def registration_form():
         "last_name":request.form.get('register-last-name'),
         "username":request.form.get('register-username'),
         "email":request.form.get('register-email'),
-        "password":request.form.get('register-password')
+        "password":request.form.get('register-password'),
+        "liked_recipes":[]
     }
     return data
     
@@ -218,21 +219,35 @@ def single_recipe(recipe_id):
 @app.route('/update_like/<recipe_id>')
 def update_like(recipe_id):
     
-    recipe_likes = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"likes"})
-    user_check = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"username"})
-    
-    recipe_username = find_value(user_check)# FUNCTION 1
-    count = find_value(recipe_likes)  # FUNCTION 1
-            
-    if if_user_in_session() != recipe_username: # FUNCTION 2    
-        if not count:
-            mongo.db.recipe.update_one({'_id':ObjectId(recipe_id)},{"$set":{"likes": 1 }}, upsert = True)
-        elif count >= 0:
-            mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"likes": count + 1 }})
-            
-        return redirect(url_for('single_recipe', recipe_id=recipe_id ))
+    try:
+        username = if_user_in_session()
         
-    else:
+        recipe_name = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"name"})
+        recipe_likes = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"likes"})
+        user_check = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"username"})
+        users_liked_recipes = mongo.db.user_details.find_one({"username": username}, {"liked_recipes"})
+        
+        recipe_name = find_value(recipe_name)
+        recipe_author = find_value(user_check)# FUNCTION 1
+        count = find_value(recipe_likes)  # FUNCTION 1
+    
+     
+        for key, value in users_liked_recipes.items():
+            
+            if username != recipe_author and recipe_name not in value: # FUNCTION 2    
+            
+                mongo.db.user_details.update({'username':username},{"$push":{"liked_recipes": recipe_name }}, upsert = True)
+            
+                if not count:
+                    mongo.db.recipe.update_one({'_id':ObjectId(recipe_id)},{"$set":{"likes": 1 }}, upsert = True)
+                elif count >= 0:
+                    mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"likes": count + 1 }})
+                    
+                return redirect(url_for('single_recipe', recipe_id=recipe_id ))
+                
+            else:
+                return redirect(url_for('single_recipe', recipe_id=recipe_id ))
+    except:
         return redirect(url_for('single_recipe', recipe_id=recipe_id ))
 
 # //////////////// SEARCHING RESULT (render)
