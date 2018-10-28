@@ -5,15 +5,22 @@ $(document).ready( function() {
     /*RECIPE DELETE BUTTON*/
     $(".delete-btn").click(function() {
         $(".comfirmation").show('fade', 500)
-        $(window).scroll(function() {
-        $(window).scrollTop(current);
-});
     });
+    
+    $(".guest-heart").click(function() {
+        $(".comfirmation").show('fade', 500)
+        });
     
     $("#comfirmation-no").click(function() {
         $(".comfirmation").hide('fade', 500)
         $(window).off('scroll');
     })
+    
+     $(".like-register").click( function() {
+         $(".comfirmation").hide('fade', 500)
+         
+    
+ });
     
     
     
@@ -73,9 +80,14 @@ $(document).ready( function() {
     $('.register-trigger').click(function() {
         $(".signin-page").hide('fade')
         $(".register-page").show('fade', 500)
+        $(window).off('scroll');
+        $('body,html').animate({
+            scrollTop: 0
+        }, 800);
         $(window).scroll(function() {
         $(window).scrollTop(current);
 });
+        
     });
     
     $('.signin-trigger').click(function() {

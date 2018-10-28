@@ -183,9 +183,22 @@
                     <p id="comfirmation-no" class=" signin-btn comfirmation-no">No</p>
                 </div>
             </div>
+        {% endif %}
+        {% else %}
+        
+            
+            <div class="comfirmation">
+                <div class="inner-comfirmation center">
+                    <p><b>Only registered users can like recipes.</b></p>
+                    <p class="signin-btn register-trigger like-register">Register</p>
+                    <p id="comfirmation-no" class="signin-btn comfirmation-no">Close</p>
+                </div>
+            </div>
         </div>
         {% endif %}
-        {% endif %}
+        
+        
+        
     </div>
 
 
@@ -297,7 +310,7 @@
                                 
                                     <i id="heart-2" class="fas fa-heart heart-2"></i>
                                 {% elif recipe_liked == 2 %}
-                                    <i id="fa-heart" class="far fa-heart"></i>
+                                    <i id="fa-heart" class="guest-heart far fa-heart"></i>
                                 {% endif %}
                                 
                                

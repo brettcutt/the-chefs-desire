@@ -891,6 +891,7 @@ ol li p {
 
 .heart-2 {
     display: inline-block;
+    cursor: auto;
 }
 
 .fa-eye {
