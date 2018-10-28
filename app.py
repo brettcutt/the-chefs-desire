@@ -5,7 +5,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 app = Flask(__name__)
 
-app.secret_key = os.urandom(24)
+app.secret_key = os.urandom(22)
 
 app.config["MONGO_DBNAME"] = "meal-ponderer"
 app.config["MONGO_URI"] = "mongodb://admin:Mealponderer1@ds131763.mlab.com:31763/meal-ponderer" 
@@ -161,10 +161,8 @@ def register():
 def my_recipes(username):
     
     user = mongo.db.user_details.find_one({"username":username})
-    print(session['user'])
     user_recipes = mongo.db.recipe.find({"username":session['user']})
     recipe_count = user_recipes.count()
-    print(recipe_count)
     
     
     return render_template('my_recipes.html', user=user, user_recipes=user_recipes, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
@@ -183,37 +181,33 @@ def recipes():
 
 
 # //////////////// SINGLE SEARCHED RECIPE (render)
-
-# UPDATE THE RECIPE VIEWS
-@app.route('/update_view_count/<recipe_id>')
-def update_view_count(recipe_id):
-    
-    recipe_views = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"views"})
-    user_check = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"username"})
-    
-    count = find_value(recipe_views) # FUNCTION 1  
-    recipe_username = find_value(user_check) # FUNCTION 1
-       
-    if if_user_in_session() != recipe_username: # FUNCTION 2
-        if not count:
-            mongo.db.recipe.update_one({'_id':ObjectId(recipe_id)},{"$set":{"views": 1 }}, upsert = True)
-            
-        elif count >= 0:
-            mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"views": count + 1 }})
-            
-        return redirect(url_for('single_recipe', recipe_id=recipe_id ))
-        
-    else:
-        return redirect(url_for('single_recipe', recipe_id=recipe_id ))
     
 # SINGLE RECIPE
 @app.route('/single_recipe/<recipe_id>')
 def single_recipe(recipe_id):
+    
+    recipe_name = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"name"})
     the_recipe = mongo.db.recipe.find_one({"_id": ObjectId(recipe_id)})
-    creator_username = if_user_in_session() # FUNCTION 2
+    username = if_user_in_session() # FUNCTION 2
     
-    return render_template("single_recipe.html", recipe=the_recipe, cuisines_json=cuisines_json, allergens_json=allergens_json, creator_username=creator_username)
+    users_liked_recipes = mongo.db.user_details.find_one({"username": username}, {"liked_recipes"})
     
+    
+    recipe = find_value(recipe_name)
+    
+    if if_user_in_session():
+        
+        if recipe in find_value(users_liked_recipes):
+            session['recipe_liked'] = 1
+
+        else:
+            session['recipe_liked'] = 0
+        return render_template("single_recipe.html", recipe_liked = session['recipe_liked'], recipe=the_recipe, cuisines_json=cuisines_json, allergens_json=allergens_json, username=username)
+        
+    else:
+        session['recipe_liked'] = 2
+        return render_template("single_recipe.html", recipe_liked = session['recipe_liked'], recipe=the_recipe, cuisines_json=cuisines_json, allergens_json=allergens_json)
+
     
 # UPDATE LIKES
 @app.route('/update_like/<recipe_id>')
@@ -230,25 +224,51 @@ def update_like(recipe_id):
         recipe_name = find_value(recipe_name)
         recipe_author = find_value(recipe_author)# FUNCTION 1
         recipe_likes = find_value(recipe_likes)  # FUNCTION 1
-    
-     
-        for key, value in users_liked_recipes.items():
             
-            if username != recipe_author and recipe_name not in value: # FUNCTION 2    
-            
-                mongo.db.user_details.update({'username':username},{"$push":{"liked_recipes": recipe_name }}, upsert = True)
-            
-                if not recipe_likes:
-                    mongo.db.recipe.update_one({'_id':ObjectId(recipe_id)},{"$set":{"likes": 1 }}, upsert = True)
-                elif recipe_likes >= 0:
-                    mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"likes": recipe_likes + 1 }})
-                    
-                return redirect(url_for('single_recipe', recipe_id=recipe_id ))
+        if username != recipe_author and recipe_name not in find_value(users_liked_recipes): # FUNCTION 2    
+        
+            mongo.db.user_details.update({'username':username},{"$push":{"liked_recipes": recipe_name }}, upsert = True)
+        
+            if not recipe_likes:
+                mongo.db.recipe.update_one({'_id':ObjectId(recipe_id)},{"$set":{"likes": 1 }}, upsert = True)
                 
-            else:
-                return redirect(url_for('single_recipe', recipe_id=recipe_id ))
+            elif recipe_likes >= 0:
+                mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"likes": recipe_likes + 1 }})
+                
+            return redirect(url_for('single_recipe', recipe_id=recipe_id ))
+            
+        else:
+            return redirect(url_for('single_recipe', recipe_id=recipe_id ))
     except:
         return redirect(url_for('single_recipe', recipe_id=recipe_id ))
+
+# UPDATE THE RECIPE VIEWS
+@app.route('/update_view_count/<recipe_id>')
+def update_view_count(recipe_id):
+    recipe_name = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"name"})
+    recipe_name = find_value(recipe_name)
+    
+    recipe_views = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"views"})
+    recipe_author = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"username"})
+    count = find_value(recipe_views) # FUNCTION 1  
+    recipe_author = find_value(recipe_author) # FUNCTION 1
+    
+    
+    if if_user_in_session() != recipe_author and recipe_name not in session:
+        session[recipe_name] = True
+        
+        if not count:
+            mongo.db.recipe.update_one({'_id':ObjectId(recipe_id)},{"$set":{"views": 1 }}, upsert = True)
+            
+        elif count >= 0:
+            mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"views": count + 1 }})
+    
+        return redirect(url_for('single_recipe', recipe_id=recipe_id ))
+        
+        
+    else:
+        return redirect(url_for('single_recipe', recipe_id=recipe_id ))
+        
 
 # //////////////// SEARCHING RESULT (render)
 
@@ -270,7 +290,7 @@ def most_viewed_recipes():
 @app.route("/all_recipes")
 def all_recipes():
     session["search_title"] = 3
-    recipe_category = mongo.db.recipe.find( { "$query": {}, "$orderby": { "name" : -1 } } )
+    recipe_category = mongo.db.recipe.find( { "$query": {}, "$orderby": { "name" : 1 } } )
     recipe_count = None
     return render_template('search_results.html', search_title = session["search_title"], recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
 
