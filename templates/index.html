@@ -33,7 +33,9 @@
     </div>
     <div class="row index-btn-row">
         <div class="col-xs-12 center">
+            {% if 'user' not in session%}
             <p class="signin-btn register-trigger">Register</p>
+            {% endif %}
             <p class="signin-btn "><a href="{{url_for('recipes')}}">Enter</a></p>
         </div>
         

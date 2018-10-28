@@ -1,7 +1,4 @@
 $(document).ready( function() {
-    
-    var current = $(window).scrollTop();
-    
     /*RECIPE DELETE BUTTON*/
     $(".delete-btn").click(function() {
         $(".comfirmation").show('fade', 500)
@@ -25,6 +22,7 @@ $(document).ready( function() {
     
     
     /*INDEX PAGE CHANGING PICTURE*/
+    /*Hover to change opacity of picture and text*/
     $(".displayed-image").mouseenter(function(){
        $(".overlay-image-heading").stop().animate({"color": "#fff"}, 'slow'); 
        $(".displayed-image").stop().animate({"opacity": "1"}, 'slow');
@@ -42,7 +40,7 @@ $(document).ready( function() {
        $(".displayed-image").stop().animate({"opacity": ".9"}, 'slow');
     });
         
-    
+    /*Adds class names to div elements so this function has something to refer to*/
     $('.add-class').each(function(i) {
     $(this).attr('class',"box change-picture"+i);
     });
@@ -85,7 +83,7 @@ $(document).ready( function() {
             scrollTop: 0
         }, 800);
         $(window).scroll(function() {
-        $(window).scrollTop(current);
+        $(window).scrollTop();
 });
         
     });
@@ -94,15 +92,10 @@ $(document).ready( function() {
         $(".register-page").hide('fade')
         $(".signin-page").show('fade', 500)
         $(window).scroll(function() {
-        $(window).scrollTop(current);
+        $(window).scrollTop();
 });
         
     });
-    
-    
-    
-    
-    /* LIKE HEART*/
     
     /*MOBILE MENU*/
     $('#fa-bars').click(function() {
