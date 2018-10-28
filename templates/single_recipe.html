@@ -172,7 +172,7 @@
         </div>
         
         {% if 'user' in session %}
-        {% if creator_username ==  recipe.username or creator_username == 'admin' %}
+        {% if username == recipe.username or username == 'admin' %}
         <div class="col-xs-12 center margin-bottom-10">
             <a class="signin-btn edit-btn" href="{{ url_for('edit_recipe', recipe_id=recipe._id)}}">Edit Recipe</a>
             <p class="signin-btn delete-btn">Delete Recipe</p>
@@ -208,10 +208,20 @@
                 <i class="far fa-eye "></i> <span> <b>{{ recipe.views }} views</b></span>
             </div>
             <div class="view_and_like">
-                <a href="{{ url_for('update_like', recipe_id=recipe._id)}}">
-                    <i id="fa-heart" class="far fa-heart"></i>
-                    <i id="heart-2" class="fas fa-heart heart-2"></i>
-                </a> 
+                {% if 'recipe_liked' in session %}
+                    {% if recipe_liked == 0 %}
+                        <a href="{{ url_for('update_like', recipe_id=recipe._id)}}">
+                            <i id="fa-heart" class="far fa-heart"></i>
+                        </a>
+                    {% elif recipe_liked == 1 %}
+                    
+                        <i id="heart-2" class="fas fa-heart heart-2"></i>
+                    {% elif recipe_liked == 2 %}
+                        <i id="fa-heart" class="far fa-heart"></i>
+                    {% endif %}
+                    
+                   
+                {% endif %} 
                 <span> <b>{{ recipe.likes }} likes</b></span>
             </div>
         </div>
@@ -278,10 +288,20 @@
                             <i class="far fa-eye "></i> <span> <b>{{ recipe.views }} views</b></span>
                         </div>
                         <div class="view_and_like">
-                            <a href="{{ url_for('update_like', recipe_id=recipe._id)}}">
-                                <i id="fa-heart" class="far fa-heart"></i>
-                                <i id="heart-2" class="fas fa-heart heart-2"></i>
-                            </a> 
+                            {% if 'recipe_liked' in session %}
+                                {% if recipe_liked == 0 %}
+                                    <a href="{{ url_for('update_like', recipe_id=recipe._id)}}">
+                                        <i id="fa-heart" class="far fa-heart"></i>
+                                    </a>
+                                {% elif recipe_liked == 1 %}
+                                
+                                    <i id="heart-2" class="fas fa-heart heart-2"></i>
+                                {% elif recipe_liked == 2 %}
+                                    <i id="fa-heart" class="far fa-heart"></i>
+                                {% endif %}
+                                
+                               
+                            {% endif %} 
                             <span> <b>{{ recipe.likes }} likes</b></span>
                         </div>
                     </div>

@@ -890,7 +890,7 @@ ol li p {
 }
 
 .heart-2 {
-    display: none;
+    display: inline-block;
 }
 
 .fa-eye {
