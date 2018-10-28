@@ -1,112 +1,112 @@
 {% extends 'base.html' %} {% block content %}
 <main class="container main-container">
-<div class="single-recipe">
-    <!--SEARCH BOX-->
-    <div class="row center">
+    <div class="single-recipe">
+        <!--SEARCH BOX-->
+        <div class="row center">
 
-        <div class="col-xs-12 inline">
+            <div class="col-xs-12 inline">
 
-            <div class="search-box">
-                <p class=" hidden-xs"><b>Define Search by:</b></p>
+                <div class="search-box">
+                    <p class=" hidden-xs"><b>Define Search by:</b></p>
 
-                <div class="inline hidden-xs">
-                    <P id='ingredient_btn' class='search-btn'>Ingredient</P>
-                </div>
-
-                <div class="inline hidden-xs">
-                    <P id='cuisine_btn' class='search-btn'>Cuisine</P>
-                </div>
-
-                <div class="inline hidden-xs">
-                    <P id='allergen_btn' class='search-btn'>Allergen</P>
-                </div>
-
-                <div class="inline">
-                    <P id='allergen_and_cuisine_btn' class='search-btn hidden-xs'>Advanced</P>
-                    <P id='mobile-search-btn' class='search-btn hidden-sm hidden-md hidden-lg '>Define Search</P>
-                </div>
-                <!--########################## INGREDIENT FORM-->
-                <div id="ingredient_search" class="triggered_search_box">
-                    <div class="inner-box inline">
-                        <form class="center" action="{{url_for('find_ingredient')}}" , method="POST">
-                            <p class="center search-category-heading"><b>Search Ingredient</b></p>
-                            <div class="inline">
-                                <input class="search-ingredient" type="text" name="ingredient_category" id="ingredient_category" placeholder='e.g. chicken'>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="center">
-                                <input class="inline" type="submit" value="Select" />
-                                <p class="close-btn inline">Close</p>
-                            </div>
-
-                        </form>
+                    <div class="inline hidden-xs">
+                        <P id='ingredient_btn' class='search-btn'>Ingredient</P>
                     </div>
-                </div>
-                <!--########################## CUISINE FORM-->
 
-                <div id="cuisine_search" class="triggered_search_box">
-                    <div class="inner-box inline">
-                        <form class="center" action="{{url_for('find_cuisine')}}" , method="POST">
-                            <p class="center search-category-heading"><b>Select Cuisine</b></p>
-                            <div class="inline">
-                                <select name="cuisine_category" id="cuisine_category">
+                    <div class="inline hidden-xs">
+                        <P id='cuisine_btn' class='search-btn'>Cuisine</P>
+                    </div>
+
+                    <div class="inline hidden-xs">
+                        <P id='allergen_btn' class='search-btn'>Allergen</P>
+                    </div>
+
+                    <div class="inline">
+                        <P id='allergen_and_cuisine_btn' class='search-btn hidden-xs'>Advanced</P>
+                        <P id='mobile-search-btn' class='search-btn hidden-sm hidden-md hidden-lg '>Define Search</P>
+                    </div>
+                    <!--########################## INGREDIENT FORM-->
+                    <div id="ingredient_search" class="triggered_search_box">
+                        <div class="inner-box inline">
+                            <form class="center" action="{{url_for('find_ingredient')}}" , method="POST">
+                                <p class="center search-category-heading"><b>Search Ingredient</b></p>
+                                <div class="inline">
+                                    <input class="search-ingredient" type="text" name="ingredient_category" id="ingredient_category" placeholder='e.g. chicken'>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="center">
+                                    <input class="inline" type="submit" value="Select" />
+                                    <p class="close-btn inline">Close</p>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <!--########################## CUISINE FORM-->
+
+                    <div id="cuisine_search" class="triggered_search_box">
+                        <div class="inner-box inline">
+                            <form class="center" action="{{url_for('find_cuisine')}}" , method="POST">
+                                <p class="center search-category-heading"><b>Select Cuisine</b></p>
+                                <div class="inline">
+                                    <select name="cuisine_category" id="cuisine_category">
                             <option disabled value="" selected>None</option>
                             {% for item in cuisines_json.cuisine|sort %}
                             <option value="{{ item }}">{{ item|title }}</option>
                             {% endfor %}
                             </select>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="center">
-                                <input class="inline" type="submit" value="Select" />
-                                <p class="close-btn inline">Close</p>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-
-                <!--########################## END FORM-->
-                <!--########################## ALLERGEN FORM-->
-
-                <div id="allergen_search" class="triggered_search_box center">
-                    <div class="inner-box inline">
-                        <form action="{{url_for('find_allergen')}}" , method="POST">
-                            <p class="center search-category-heading"><b>Select allergen free</b></p>
-                            <div class=" col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-12">
-                                {% for item in allergens_json.allergen|sort %}
-                                <div class='allergen_search_checkbox'>
-                                    <input value="{{ item }}" name="allergen_category" type="checkbox">
-                                    <label for="find_allergen"> {{ item|title }}</label>
                                 </div>
-                                {% if loop.index % 3 == 0 %}
-                                <br class="hidden-xs"> {% endif%} {% endfor %}
                                 <br>
                                 <br>
-                            </div>
-                            <div class="center">
-                                <input class="inline" type="submit" value="Select" />
-                                <p class="close-btn inline">Close</p>
-                            </div>
+                                <div class="center">
+                                    <input class="inline" type="submit" value="Select" />
+                                    <p class="close-btn inline">Close</p>
+                                </div>
 
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <!--########################## END FORM-->
-                <!--########################## ALLERGEN AND CUISINE FROM-->
-                <div id="allergen_and_cuisine_search" class="triggered_search_box">
-                    <div class="inner-box inline">
-                        <form action="{{url_for('find_multiple_categories')}}" , method="POST">
+                    <!--########################## END FORM-->
+                    <!--########################## ALLERGEN FORM-->
 
-                            <div class="row center ">
+                    <div id="allergen_search" class="triggered_search_box center">
+                        <div class="inner-box inline">
+                            <form action="{{url_for('find_allergen')}}" , method="POST">
+                                <p class="center search-category-heading"><b>Select allergen free</b></p>
+                                <div class=" col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-12">
+                                    {% for item in allergens_json.allergen|sort %}
+                                    <div class='allergen_search_checkbox'>
+                                        <input value="{{ item }}" name="allergen_category" type="checkbox">
+                                        <label for="find_allergen"> {{ item|title }}</label>
+                                    </div>
+                                    {% if loop.index % 3 == 0 %}
+                                    <br class="hidden-xs"> {% endif%} {% endfor %}
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="center">
+                                    <input class="inline" type="submit" value="Select" />
+                                    <p class="close-btn inline">Close</p>
+                                </div>
 
-                                <div class="col-xs-12 col-sm-6 inline margin-bottom-20">
+                            </form>
+                        </div>
+                    </div>
 
-                                    <p class="search-category-heading"><b>Select Cuisine</b></p>
-                                    <select class="" name="find_cuisine" id="find_cuisine">
+                    <!--########################## END FORM-->
+                    <!--########################## ALLERGEN AND CUISINE FROM-->
+                    <div id="allergen_and_cuisine_search" class="triggered_search_box">
+                        <div class="inner-box inline">
+                            <form action="{{url_for('find_multiple_categories')}}" , method="POST">
+
+                                <div class="row center ">
+
+                                    <div class="col-xs-12 col-sm-6 inline margin-bottom-20">
+
+                                        <p class="search-category-heading"><b>Select Cuisine</b></p>
+                                        <select class="" name="find_cuisine" id="find_cuisine">
                                     
                                     <option class="inline"value="" selected>None</option>
                                     {% for item in cuisines_json.cuisine|sort %}
@@ -114,234 +114,223 @@
                                     {% endfor %}
                                     
                                 </select>
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-6 inline margin-bottom-20">
+
+                                        <p class="search-category-heading"><b>Search Ingredient</b></p>
+                                        <input class="inline search-ingredient" type="text" name="find_ingredient" id="find_ingredient" placeholder='e.g. chicken'>
+
+                                    </div>
+
                                 </div>
 
-                                <div class="col-xs-12 col-sm-6 inline margin-bottom-20">
+                                <div class="row">
+                                    <div class=" col-xs-12 margin-bottom-20 inline">
+                                        <p class="center search-category-heading"><b>Select allergen free</b></p>
+                                        <div class=" col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-12">
+                                            {% for item in allergens_json.allergen|sort %}
 
-                                    <p class="search-category-heading"><b>Search Ingredient</b></p>
-                                    <input class="inline search-ingredient" type="text" name="find_ingredient" id="find_ingredient" placeholder='e.g. chicken'>
+                                            <div class='allergen_search_checkbox'>
+                                                <input value="{{ item }}" name="find_allergen" type="checkbox">
+                                                <label for="find_allergen"> {{ item| title }}</label>
+                                            </div>
 
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-                                <div class=" col-xs-12 margin-bottom-20 inline">
-                                    <p class="center search-category-heading"><b>Select allergen free</b></p>
-                                    <div class=" col-xs-offset-1 col-xs-11 col-sm-offset-0 col-sm-12">
-                                        {% for item in allergens_json.allergen|sort %}
-
-                                        <div class='allergen_search_checkbox'>
-                                            <input value="{{ item }}" name="find_allergen" type="checkbox">
-                                            <label for="find_allergen"> {{ item| title }}</label>
+                                            {% if loop.index % 3 == 0 %}
+                                            <br class="hidden-xs"> {% endif%} {% endfor %}
                                         </div>
-
-                                        {% if loop.index % 3 == 0 %}
-                                        <br class="hidden-xs"> {% endif%} {% endfor %}
                                     </div>
                                 </div>
-                            </div>
-                            <div class="center">
-                                <input class="inline" type="submit" value="Select" />
-                                <p class="inline close-btn">Close</p>
-                            </div>
+                                <div class="center">
+                                    <input class="inline" type="submit" value="Select" />
+                                    <p class="inline close-btn">Close</p>
+                                </div>
 
 
 
-                        </form>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <!--########################## INGREDIENT FORM-->
+
+                <!--########################## END FORM-->
+
+            </div>
+        </div>
+
+
+        <div class="row margin-bottom-10">
+
+            <div class="col-xs-12 center">
+                <h2 class=" inline"> {{ recipe.name }}</h2>
+
+            </div>
+            <div class="col-xs-12 center margin-bottom-10">
+                <span><b>By {{ recipe.author }}</b></span>
+            </div>
+
+            {% if 'user' in session %} {% if username == recipe.username or username == 'admin' %}
+            <div class="col-xs-12 center margin-bottom-10">
+                <a class="signin-btn edit-btn" href="{{ url_for('edit_recipe', recipe_id=recipe._id)}}">Edit Recipe</a>
+                <p class="signin-btn delete-btn">Delete Recipe</p>
+                <div class="comfirmation">
+                    <div class="inner-comfirmation center">
+                        <p><b>Are you sure you want to delete this recipe?</b></p><br>
+                        <a class="comfirmation-yes signin-btn " href="{{ url_for('delete_recipe', recipe_id=recipe._id)}}">Yes</a>
+                        <p id="comfirmation-no" class=" signin-btn comfirmation-no">No</p>
                     </div>
                 </div>
-
-            </div>
-            <!--########################## INGREDIENT FORM-->
-
-            <!--########################## END FORM-->
-
-        </div>
-    </div>
+                {% endif %} {% else %}
 
 
-    <div class="row margin-bottom-10">
-
-        <div class="col-xs-12 center">
-            <h2 class=" inline"> {{ recipe.name }}</h2>
-            
-        </div>
-        <div class="col-xs-12 center margin-bottom-10">
-            <span><b>By {{ recipe.author }}</b></span>
-        </div>
-        
-        {% if 'user' in session %}
-        {% if username == recipe.username or username == 'admin' %}
-        <div class="col-xs-12 center margin-bottom-10">
-            <a class="signin-btn edit-btn" href="{{ url_for('edit_recipe', recipe_id=recipe._id)}}">Edit Recipe</a>
-            <p class="signin-btn delete-btn">Delete Recipe</p>
-            <div class="comfirmation">
-                <div class="inner-comfirmation center">
-                    <p><b>Are you sure you want to delete this recipe?</b></p><br>
-                    <a class="comfirmation-yes signin-btn " href="{{ url_for('delete_recipe', recipe_id=recipe._id)}}">Yes</a>
-                    <p id="comfirmation-no" class=" signin-btn comfirmation-no">No</p>
+                <div class="comfirmation">
+                    <div class="inner-comfirmation center">
+                        <p><b>Only registered users can like recipes.</b></p>
+                        <p class="signin-btn register-trigger like-register">Register</p>
+                        <p id="comfirmation-no" class="signin-btn comfirmation-no">Close</p>
+                    </div>
                 </div>
             </div>
-        {% endif %}
-        {% else %}
-        
-            
-            <div class="comfirmation">
-                <div class="inner-comfirmation center">
-                    <p><b>Only registered users can like recipes.</b></p>
-                    <p class="signin-btn register-trigger like-register">Register</p>
-                    <p id="comfirmation-no" class="signin-btn comfirmation-no">Close</p>
+            {% endif %}
+
+
+
+        </div>
+
+
+        <div class="row margin-bottom-10">
+
+            <div class="col-xs-offset-1 col-xs-10 center">
+                <p><b>{{ recipe.description }}</b></p>
+            </div>
+        </div>
+
+        <!--MOBILE AND TABLET PICTURE-->
+        <div class="row recipe_image_container hidden-md hidden-lg">
+            <div class="col-xs-12">
+                <img class="single-recipe_image" src="{{ recipe.image }}"></img>
+            </div>
+
+            <br>
+            <div class="row center margin-bottom-10">
+                <div class="view_and_like">
+                    <i class="far fa-eye "></i> <span> <b>{{ recipe.views }} views</b></span>
                 </div>
-            </div>
-        </div>
-        {% endif %}
-        
-        
-        
-    </div>
-
-
-    <div class="row margin-bottom-10">
-
-        <div class="col-xs-offset-1 col-xs-10 center">
-            <p><b>{{ recipe.description }}</b></p>
-        </div>
-    </div>
-    
-    <!--MOBILE AND TABLET PICTURE-->
-    <div class="row recipe_image_container hidden-md hidden-lg">
-        <div class="col-xs-12">
-            <img class="single-recipe_image" src="{{ recipe.image }}"></img>
-        </div>
-    
-        <br>
-        <div class="row center margin-bottom-10">
-            <div class="view_and_like">
-                <i class="far fa-eye "></i> <span> <b>{{ recipe.views }} views</b></span>
-            </div>
-            <div class="view_and_like">
-                {% if 'recipe_liked' in session %}
-                    {% if recipe_liked == 0 %}
-                        <a href="{{ url_for('update_like', recipe_id=recipe._id)}}">
-                            <i id="fa-heart" class="far fa-heart"></i>
-                        </a>
-                    {% elif recipe_liked == 1 %}
-                    
-                        <i id="heart-2" class="fas fa-heart heart-2"></i>
-                    {% elif recipe_liked == 2 %}
+                <div class="view_and_like">
+                    {% if 'recipe_liked' in session %} {% if recipe_liked == 0 %}
+                    <a href="{{ url_for('update_like', recipe_id=recipe._id)}}">
                         <i id="fa-heart" class="far fa-heart"></i>
-                    {% endif %}
-                    
-                   
-                {% endif %} 
-                <span> <b>{{ recipe.likes }} likes</b></span>
+                    </a> {% elif recipe_liked == 1 %}
+
+                    <i id="heart-2" class="fas fa-heart heart-2"></i> {% elif recipe_liked == 2 %}
+                    <i id="fa-heart" class="guest-heart far fa-heart"></i> {% endif %} {% endif %}
+                    <span> <b>{{ recipe.likes }} likes</b></span>
+                </div>
             </div>
+
         </div>
-        
-    </div>
-        
 
 
-    <div class="row margin-bottom-10">
-        <!--INGREDIENT CONTAINER-->
-        <div class="col-xs-12 col-sm-12 col-md-6">
-            <div class="row recipe_image_container">
-                
-                <div class="col-xs-12 single-recipe-ingredients">
-                    
-                    <div class="row margin-bottom-10">
-                        <div class="col-xs-12 flex-box">
-                            <div class="flex1 center"><h4 class="inline">Prep Time :</h4> {{ recipe.prep_time }}</div>
-                            <div class="flex1 center"><i class="far fa-clock"></i> <h4 class="inline"> Cook Time :</h4> {{ recipe.cook_time }}</div>
-                            <div class="flex1 center"><i class="fas fa-utensils"></i> <h4 class="inline">Servings :</h4>  {{ recipe.recipe_yield }}</div>
+
+        <div class="row margin-bottom-10">
+            <!--INGREDIENT CONTAINER-->
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="row recipe_image_container">
+
+                    <div class="col-xs-12 single-recipe-ingredients">
+
+                        <div class="row margin-bottom-10">
+                            <div class="col-xs-12 flex-box">
+                                <div class="flex1 center">
+                                    <h4 class="inline">Prep Time :</h4> {{ recipe.prep_time }}</div>
+                                <div class="flex1 center"><i class="far fa-clock"></i>
+                                    <h4 class="inline"> Cook Time :</h4> {{ recipe.cook_time }}</div>
+                                <div class="flex1 center"><i class="fas fa-utensils"></i>
+                                    <h4 class="inline">Servings :</h4> {{ recipe.recipe_yield }}</div>
+                            </div>
                         </div>
+
+                        <div class="row margin-bottom-10">
+                            <div class="col-xs-12">
+                                <h3 class="">Ingredients</h3>
+                                <ul class="no-padding">
+                                    {% for ingredient in recipe.ingredients %} {% if ingredient != ""%}
+                                    <li>{{ ingredient }}</li>
+                                    {% endif %} {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
-                    
-                    <div class="row margin-bottom-10">
+                </div>
+
+                <div class="row margin-bottom-10 recipe_image_container">
+                    <div class="col-xs-12 single-recipe-instructions">
+                        <h3 class="">Instructions</h3>
+                        <ol class="no-padding">
+                            {% for instruction in recipe.instructions %}
+                            <li>
+                                <p>{{ instruction }}</p>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!--IMAGE CONTAINER-->
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="row recipe_image_container">
+
+                    <div class="hidden-xs hidden-sm">
                         <div class="col-xs-12">
-                            <h3 class="">Ingredients</h3>
-                            <ul class="no-padding">
-                                {% for ingredient in recipe.ingredients %} {% if ingredient != ""%}
-                                <li>{{ ingredient }}</li>
-                                {% endif %} {% endfor %}
-                            </ul>
+                            <img class="single-recipe_image" src="{{ recipe.image }}"></img>
                         </div>
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="row margin-bottom-10 recipe_image_container">
-                <div class="col-xs-12 single-recipe-instructions">
-                    <h3 class="">Instructions</h3>
-                    <ol class="no-padding">
-                        {% for instruction in recipe.instructions %}
-                        <li>
-                            <p>{{ instruction }}</p>
-                        </li>
-                        {% endfor %}
-                    </ol>
-                </div>
-            </div>
-        </div>  
-        
-        <!--IMAGE CONTAINER-->
-        <div class="col-xs-12 col-sm-12 col-md-6">
-            <div class="row recipe_image_container">
-                
-                <div class="hidden-xs hidden-sm">
-                    <div class="col-xs-12">
-                        <img class="single-recipe_image" src="{{ recipe.image }}"></img>
-                    </div>
-                
-                    <br>
-                    <div class="row center margin-bottom-10">
-                        <div class="view_and_like">
-                            <i class="far fa-eye "></i> <span> <b>{{ recipe.views }} views</b></span>
-                        </div>
-                        <div class="view_and_like">
-                            {% if 'recipe_liked' in session %}
-                                {% if recipe_liked == 0 %}
-                                    <a href="{{ url_for('update_like', recipe_id=recipe._id)}}">
+
+                        <br>
+
+                        <!--LIKES AND VIEWS DESKTOP-->
+                        <div class="row center margin-bottom-10">
+                            <div class="view_and_like">
+                                <i class="far fa-eye "></i> <span> <b>{{ recipe.views }} views</b></span>
+                            </div>
+                            <div class="view_and_like">
+                                {% if 'recipe_liked' in session %} {% if recipe_liked == 0 %}
+                                <a href="{{ url_for('update_like', recipe_id=recipe._id)}}">
                                         <i id="fa-heart" class="far fa-heart"></i>
-                                    </a>
-                                {% elif recipe_liked == 1 %}
-                                
-                                    <i id="heart-2" class="fas fa-heart heart-2"></i>
-                                {% elif recipe_liked == 2 %}
-                                    <i id="fa-heart" class="guest-heart far fa-heart"></i>
-                                {% endif %}
-                                
-                               
-                            {% endif %} 
-                            <span> <b>{{ recipe.likes }} likes</b></span>
+                                    </a> {% elif recipe_liked == 1 %}
+
+                                <i id="heart-2" class="fas fa-heart heart-2"></i> {% elif recipe_liked == 2 %}
+                                <i id="fa-heart" class="guest-heart far fa-heart"></i> {% endif %} {% endif %}
+                                <span> <b>{{ recipe.likes }} likes</b></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 cuisine-and-allergen-container">
+
+                        <div class="col-xs-6 center ">
+                            <h4>Cuisine</h4>
+                            {% for item in recipe.cuisine|sort %}
+                            <p class="cuisine-item">{{ item|title }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="col-xs-6 center">
+                            <h4>Allergens</h4>
+                            {% for item in recipe.allergens|sort %}
+                            <p class="cuisine-item">{{ item|title }}</p>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-                
-                <div class="col-xs-12 cuisine-and-allergen-container">
-                
-                    <div class="col-xs-6 center ">
-                        <h4>Cuisine</h4> 
-                        {% for item in recipe.cuisine|sort %}
-                        <p class="cuisine-item">{{ item|title }}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="col-xs-6 center">
-                        <h4>Allergens</h4>
-                        {% for item in recipe.allergens|sort %}
-                        <p class="cuisine-item">{{ item|title }}</p>
-                        {% endfor %}
-                    </div>
-                </div>
             </div>
+
+
         </div>
-        
-            
-    </div>
 </main>
-    
+
 
 
 {% endblock %}

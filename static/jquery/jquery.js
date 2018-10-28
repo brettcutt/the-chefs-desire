@@ -103,10 +103,6 @@ $(document).ready( function() {
     
     
     /* LIKE HEART*/
-    $('#fa-heart').click(function() {
-        $('#fa-heart').hide()
-        $('#heart-2').show()
-    })
     
     /*MOBILE MENU*/
     $('#fa-bars').click(function() {
