@@ -12,6 +12,25 @@
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet">
     <title>The Chefs Desire</title>
+    <script language="JavaScript"> 
+function anyvalidate() {
+var test = form.find_allergen;
+var test2 = false
+var i;
+for (i = 0; i < test.length; i++) {
+  if (test[i].checked == true) {
+    test2 = true;
+  }
+}    
+    
+if (       form.find_ingredient.value == ""
+	&& test2 == false
+	&& form.find_cuisine.value == "") {
+alert( "You need to complete at least 1 field to conduct a search" );
+     return false;
+	 }
+	 }
+</script>
 </head>
 
 <body>
@@ -63,7 +82,7 @@
                         </div>
                         <div class="col-xs-12">
                             <label class="inline hidden-xs" for="comfirm-password">Re-enter Password:</label>
-                            <input class="inline" type="password" id="comfirm-password" name="comfirm-password" placeholder="Comfirm password" required/>
+                            <input class="inline" type="password" id="comfirm-password" name="comfirm-password" placeholder="Confirm password" required/>
                         </div>
                         <input class="inline" type="submit" />
                         <p class="register-close-btn close-btn inline">Close</p>
@@ -179,6 +198,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery-3.3.1.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery-ui.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery.js')}}"></script>
+    
 </body>
 
 </html>
