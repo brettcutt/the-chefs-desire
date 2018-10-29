@@ -894,6 +894,10 @@ ol li p {
     cursor: auto;
 }
 
+.creator-heart {
+    cursor: auto;
+}
+
 .fa-eye {
     font-size: 20px;
 }

@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %}
+
 <main class="container main-container margin-top-20">
     
     <div class="row">
@@ -34,7 +35,7 @@
                         <form class="center" action="{{url_for('find_ingredient')}}" , method="POST">
                             <p class="center search-category-heading"><b>Search Ingredient</b></p>
                             <div class="inline">
-                                <input class="search-ingredient" type="text" name="ingredient_category" id="ingredient_category" placeholder='e.g. chicken'>
+                                <input required class="search-ingredient" type="text" name="ingredient_category" id="ingredient_category" placeholder='e.g. chicken'>
                             </div>
                             <br>
                             <br>
@@ -53,7 +54,7 @@
                         <form class="center" action="{{url_for('find_cuisine')}}" , method="POST">
                             <p class="center search-category-heading"><b>Select Cuisine</b></p>
                             <div class="inline">
-                                <select name="cuisine_category" id="cuisine_category">
+                                <select required name="cuisine_category" id="cuisine_category">
                             <option disabled value="" selected>None</option>
                             {% for item in cuisines_json.cuisine|sort %}
                             <option value="{{ item }}">{{ item|title }}</option>
@@ -82,7 +83,7 @@
                                 {% for item in allergens_json.allergen|sort %}
                                 <div class='allergen_search_checkbox'>
                                     <input value="{{ item }}" name="allergen_category" type="checkbox">
-                                    <label for="find_allergen"> {{ item|title }}</label>
+                                    <label for="find_allergen"> {{ item | title }}</label>
                                 </div>
                                 {% if loop.index % 3 == 0 %}
                                 <br class="hidden-xs"> {% endif%} {% endfor %}
@@ -102,7 +103,7 @@
                 <!--########################## ALLERGEN AND CUISINE FROM-->
                 <div id="allergen_and_cuisine_search" class="triggered_search_box">
                     <div class="inner-box inline">
-                        <form action="{{url_for('find_multiple_categories')}}" , method="POST">
+                        <form name="form" action="{{url_for('find_multiple_categories')}}" onSubmit="return anyvalidate()" method="POST">
 
                             <div class="row center ">
 
@@ -188,6 +189,12 @@
                 </div>
                 
                 <div class=" allergen_box col-xs-12">
+                    
+                <p>{{ recipe.description |truncate(65) }}</p>
+                
+                </div>
+                
+                <div class=" allergen_box col-xs-12">
                     <div><b>Allergens</b></div>
                     
                 {% for item in recipe.allergens %}
@@ -241,6 +248,12 @@
                 </div>
                 
                 <div class=" allergen_box col-xs-12">
+                    
+                <p>{{ recipe.description |truncate(65) }}</p>
+                
+                </div>
+                
+                <div class=" allergen_box col-xs-12">
                     <div><b>Allergens</b></div>
                     
                 {% for item in recipe.allergens %}
@@ -291,6 +304,12 @@
                 
                 <div class=" name_box col-xs-12 center">
                     <h4><b>{{ recipe.name }}</b></h4>
+                </div>
+                
+                <div class=" allergen_box col-xs-12">
+                    
+                <p>{{ recipe.description |truncate(65) }}</p>
+                
                 </div>
                 
                 <div class=" allergen_box col-xs-12">
