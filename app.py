@@ -70,14 +70,53 @@ def if_user_in_session():
         username = session['user']
     return username
     
-# //////////////// INDEX (render)
+# /////////////////////////////////////////////////////////////////////////////// INDEX (render)
 
 @app.route("/")
 def index():
     recipes = mongo.db.recipe.aggregate([{"$sample": {"size": 5}}])
     return render_template('index.html', recipes=recipes)
+
+# /////////////////////////////////////////////////////////////////////////////// REGISTER
+@app.route('/register', methods=['POST'])
+def register():
     
-# //////////////// SIGN IN
+    if 'flash-message1' in session:
+        session.pop('flash-message1')
+    
+       
+    requested_username = request.form.get("register-username")
+    new_password = request.form.get("register-password")
+    comfirm_password = request.form.get("comfirm-password")
+    
+    if comfirm_password == new_password:
+        try:
+            existing_user = mongo.db.user_details.find_one({'username':requested_username}, {"username"})
+            
+            if existing_user == None:
+                
+                if 'flash-message2' in session:
+                    session.pop('flash-message2')
+                    
+                mongo.db.user_details.insert_one(registration_form())
+                session['user'] = requested_username
+                return redirect(url_for('my_recipes', username=requested_username))
+                
+            else:
+                session['flash-message2'] = 1
+                flash("Username already exists")
+                return redirect(request.referrer)
+            
+        except:
+            return redirect(request.referrer)
+            
+    else:
+        session['flash-message2'] = 2
+        flash("Passwords are not the same")
+        return redirect(request.referrer)
+        
+    
+# ////////////////////////////////////////////////////////////////////////////// SIGN IN
 @app.route('/signin', methods=['POST'])
 def signin():
     
@@ -102,73 +141,21 @@ def signin():
         else:
             session['flash-message1'] = 1
             flash("Incorrect username or password")
-            return redirect(url_for('index'))
+            return redirect(request.referrer)
             
     except:
         session['flash-message1'] = 1
-        flash("Incorrect username or password")
-        return redirect(url_for('index'))
+        flash("An error occured")
+        return redirect(request.referrer)
     
-# //////////////// LOGOUT
+# /////////////////////////////////////////////////////////////////////////////// LOGOUT
 
 @app.route('/logout')
 def logout():
     session.pop('user')
     return redirect(url_for('index'))
 
-# //////////////// REGISTER
-@app.route('/register', methods=['POST'])
-def register():
-    
-    if 'flash-message1' in session:
-        session.pop('flash-message1')
-    
-       
-    requested_username = request.form.get("register-username")
-    new_password = request.form.get("register-password")
-    comfirm_password = request.form.get("comfirm-password")
-    
-    if comfirm_password == new_password:
-        try:
-            existing_user = mongo.db.user_details.find_one({'username':requested_username}, {"username"})
-            
-            if existing_user == None:
-                
-                if 'flash-message2' in session:
-                    session.pop('flash-message2')
-                mongo.db.user_details.insert_one(registration_form())
-                session['user'] = requested_username
-                return redirect(url_for('my_recipes', username=requested_username))
-                
-            else:
-                session['flash-message2'] = 1
-                flash("Username already exists")
-                return redirect(request.referrer)
-            
-        except:
-            return render_template('index.html')
-            
-    else:
-        session['flash-message2'] = 2
-        flash("Passwords are not the same")
-        return render_template('index.html',)
-        
-
-
-
-# //////////////// MY RECIPES
-@app.route('/my_recipes/<username>')
-def my_recipes(username):
-    
-    user = mongo.db.user_details.find_one({"username":username})
-    user_recipes = mongo.db.recipe.find({"username":session['user']})
-    recipe_count = user_recipes.count()
-    
-    
-    return render_template('my_recipes.html', user=user, user_recipes=user_recipes, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
-
-
-# //////////////// RECIPES (render) 
+# ////////////////////////////////////////////////////////////////////////////// RECIPES (render) 
 
 @app.route("/recipes")
 def recipes():
@@ -179,10 +166,45 @@ def recipes():
     return render_template('recipes.html',all_recipes=all_recipes, most_viewed_recipes=most_viewed_recipes, most_popular_recipes=most_popular_recipes, cuisines_json=cuisines_json, allergens_json=allergens_json)
 
 
-
-# //////////////// SINGLE SEARCHED RECIPE (render)
+# ////////////////////////////////////////////////////////////////////////////// MY RECIPES( USERS PERSONALLY ADDED RECIPES)
+@app.route('/my_recipes/<username>')
+def my_recipes(username):
     
-# SINGLE RECIPE
+    user = mongo.db.user_details.find_one({"username":username})
+    user_recipes = mongo.db.recipe.find({"username":session['user']})
+    recipe_count = user_recipes.count()
+    
+    
+    return render_template('my_recipes.html', user=user, user_recipes=user_recipes, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
+
+# ///////////////////////////////////////////////////////////////////////////// UPDATE THE RECIPE VIEWS
+@app.route('/update_view_count/<recipe_id>')
+def update_view_count(recipe_id):
+    recipe_name = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"name"})
+    recipe_name = find_value(recipe_name)
+    
+    recipe_views = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"views"})
+    recipe_author = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"username"})
+    count = find_value(recipe_views) # FUNCTION 1  
+    recipe_author = find_value(recipe_author) # FUNCTION 1
+    
+    
+    if if_user_in_session() != recipe_author and recipe_name not in session:
+        session[recipe_name] = True
+        
+        if not count:
+            mongo.db.recipe.update_one({'_id':ObjectId(recipe_id)},{"$set":{"views": 1 }}, upsert = True)
+            
+        elif count >= 0:
+            mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"views": count + 1 }})
+    
+        return redirect(url_for('single_recipe', recipe_id=recipe_id ))
+        
+        
+    else:
+        return redirect(url_for('single_recipe', recipe_id=recipe_id ))
+    
+# //////////////////////////////////////////////////////////////////////////////  SINGLE RECIPE
 @app.route('/single_recipe/<recipe_id>')
 def single_recipe(recipe_id):
     
@@ -209,7 +231,7 @@ def single_recipe(recipe_id):
         return render_template("single_recipe.html", recipe_liked = session['recipe_liked'], recipe=the_recipe, cuisines_json=cuisines_json, allergens_json=allergens_json)
 
     
-# UPDATE LIKES
+# ///////////////////////////////////////////////////////////////////////////// UPDATE LIKES
 @app.route('/update_like/<recipe_id>')
 def update_like(recipe_id):
     
@@ -242,46 +264,19 @@ def update_like(recipe_id):
     except:
         return redirect(url_for('single_recipe', recipe_id=recipe_id ))
 
-# UPDATE THE RECIPE VIEWS
-@app.route('/update_view_count/<recipe_id>')
-def update_view_count(recipe_id):
-    recipe_name = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"name"})
-    recipe_name = find_value(recipe_name)
-    
-    recipe_views = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"views"})
-    recipe_author = mongo.db.recipe.find_one({'_id':ObjectId(recipe_id)}, {"username"})
-    count = find_value(recipe_views) # FUNCTION 1  
-    recipe_author = find_value(recipe_author) # FUNCTION 1
-    
-    
-    if if_user_in_session() != recipe_author and recipe_name not in session:
-        session[recipe_name] = True
-        
-        if not count:
-            mongo.db.recipe.update_one({'_id':ObjectId(recipe_id)},{"$set":{"views": 1 }}, upsert = True)
-            
-        elif count >= 0:
-            mongo.db.recipe.update({'_id':ObjectId(recipe_id)},{"$set": {"views": count + 1 }})
-    
-        return redirect(url_for('single_recipe', recipe_id=recipe_id ))
-        
-        
-    else:
-        return redirect(url_for('single_recipe', recipe_id=recipe_id ))
-        
-
-# //////////////// SEARCHING RESULT (render)
+# ////////////////////////////////////////////////////////////////////////////// SEARCHING RESULT (render)
 
 @app.route("/most_popular_recipes")
 def most_popular_recipes():
+    
     recipe_category = mongo.db.recipe.find( { "$query": {}, "$orderby": { "likes" : -1 } } ).limit(10)
     recipe_count = None
     session["search_title"] = 1
-    search_title = session["search_title"]
     return render_template('search_results.html', search_title = session["search_title"], recipe_category=recipe_category, cuisines_json=cuisines_json, allergens_json=allergens_json, recipe_count=recipe_count)
 
 @app.route("/most_viewed_recipes")
 def most_viewed_recipes():
+    
     session["search_title"] = 2
     recipe_category = mongo.db.recipe.find( { "$query": {}, "$orderby": { "views" : -1 } } ).limit(10)
     recipe_count = None
@@ -289,6 +284,7 @@ def most_viewed_recipes():
     
 @app.route("/all_recipes")
 def all_recipes():
+    
     session["search_title"] = 3
     recipe_category = mongo.db.recipe.find( { "$query": {}, "$orderby": { "name" : 1 } } )
     recipe_count = None
@@ -296,6 +292,7 @@ def all_recipes():
 
 @app.route("/find_ingredient", methods=['POST'])
 def find_ingredient():
+    
     session["search_title"] = 0
     recipe_category = mongo.db.recipe.find({"ingredients": {"$regex": request.form.get("ingredient_category"), "$options": 'i'}})
     recipe_count = recipe_category.count()
@@ -303,6 +300,7 @@ def find_ingredient():
 
 @app.route("/find_cuisine", methods=['POST'])
 def find_cuisine():
+    
     session["search_title"] = 0
     recipe_category = mongo.db.recipe.find({"cuisine":request.form.get("cuisine_category").title()})
     recipe_count = recipe_category.count()
@@ -311,6 +309,7 @@ def find_cuisine():
     
 @app.route("/find_allergen", methods=['POST'])
 def find_allergen():
+    
     session["search_title"] = 0
     recipe_category = mongo.db.recipe.find({"allergens":{"$nin": request.form.getlist("allergen_category")}})
     recipe_count = recipe_category.count()
@@ -319,6 +318,7 @@ def find_allergen():
     
 @app.route("/find_multiple_categories", methods=['POST'])
 def find_multiple_categories():
+    
     session["search_title"] = 0
     ingredient = request.form.get("find_ingredient")
     cuisine = request.form.get("find_cuisine").title()
@@ -339,28 +339,28 @@ def find_multiple_categories():
         
     elif ingredient and cuisine == "" and allergens:
         recipe_category = mongo.db.recipe.find({"$and": [{"allergens":{"$nin": allergens}},
-                                                         {"ingredients":{"$regex":ingredient}}  ]})
+                                                         {"ingredients":{"$regex":ingredient, "$options": 'i'}}  ]})
                                                          
     elif ingredient and cuisine and not allergens:
         recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":cuisine},
-                                                         {"ingredients":{"$regex":ingredient}}  ]})
+                                                         {"ingredients":{"$regex":ingredient, "$options": 'i'}}  ]})
                                                          
     elif ingredient and cuisine and allergens:
         recipe_category = mongo.db.recipe.find({"$and": [{"cuisine":cuisine},
                                                          {"allergens":{"$nin": allergens}},
-                                                         {"ingredients":{"$regex":ingredient}}  ]})
+                                                         {"ingredients":{"$regex":ingredient, "$options": 'i'}}  ]})
     
     recipe_count = recipe_category.count()
     return render_template('search_results.html', recipe_category=recipe_category, recipe_count=recipe_count, cuisines_json=cuisines_json, allergens_json=allergens_json)
   
     
-# //////////////// ADD RECIPE(render) AND INSERT RECIPE(redirect)
+# /////////////////////////////////////////////////////////////////////////////// ADD RECIPE(render) AND INSERT RECIPE(redirect)
 # Add (render)
 @app.route("/add_recipe")
 def add_recipe():
     return render_template("add_recipe.html", cuisines_json=cuisines_json, allergens_json=allergens_json)
 
-#Insert (redirect)
+# Insert (redirect)
 @app.route("/insert_recipe", methods=['POST'])
 def insert_recipe():
     doc = recipe_database()
@@ -378,7 +378,7 @@ def insert_recipe():
     
     return redirect(url_for('single_recipe', recipe_id=recipe_id ))
 
-# //////////////// EDIT RECIPE AND UPDATE RECIPE
+# /////////////////////////////////////////////////////////////////////////////// EDIT RECIPE AND UPDATE RECIPE
 # Edit (render)
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
@@ -405,7 +405,7 @@ def update_recipe(recipe_id):
     return redirect(url_for('single_recipe', recipe_id=recipe_id ))
     
     
-# //////////////// DELETE RECIPE
+# ////////////////////////////////////////////////////////////////////////////// DELETE RECIPE
 # Delete (redirect)
 @app.route("/delete_recipe/<recipe_id>")
 def delete_recipe(recipe_id):
