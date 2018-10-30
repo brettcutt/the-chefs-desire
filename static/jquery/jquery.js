@@ -48,7 +48,7 @@ $(document).ready(function() {
         $(".comfirmation").show('fade', 500)
     });
 
-    $("#comfirmation-no").click(function() {
+    $(".comfirmation-no").click(function() {
         $(".comfirmation").hide('fade', 500)
         $(window).off('scroll');
     })
@@ -142,7 +142,7 @@ $(document).ready(function() {
 
         var id_name = $(this).parent().children('input').attr("name");
 
-        if ($(this).attr('id') == 'first') {
+        if ($(this).attr('id') == 'firsta' || $(this).attr('id') == 'firstb' ) {
             $(this).append().prev().before(
                 '<br><input type="text" name="' + id_name + '" class="' + id_name + '" placeholder=""/>' +
                 ' <i class="material-icons duplicate pointer">add</i>' +

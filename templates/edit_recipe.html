@@ -58,14 +58,14 @@
                 {% for allergen in recipe.allergens %}
                 <div class='allergen_checkbox'>
                     <input checked  class="{{ allergen }}" name="allergens" type="checkbox" value="{{ allergen }}">
-                    <label class="{{ allergen }}1" for="allergen">{{ allergen }}</label>
+                    <p class="{{ allergen }}1">{{ allergen }}</p>
                 </div>
                 
                 {% endfor %}
                     {% for item in allergens_json.allergen %}
                 <div class='allergen_checkbox'>
                     <input class="{{ item }}" name="allergens" type="checkbox" value="{{ item }}">
-                    <label class="{{ item }}1" for="allergen">{{ item }}</label>
+                    <p class="{{ item }}1">{{ item }}</p>
                 </div>
                 {% endfor%}
                 
@@ -76,7 +76,7 @@
 
         <fieldset>
             <legend>Recipe Description</legend>
-            <textarea type="text" name="description" id="description" class="">{{ recipe.description }}</textarea>
+            <textarea name="description" id="description" class="">{{ recipe.description }}</textarea>
         </fieldset>
         
 <!--Ingredients-->
@@ -92,7 +92,7 @@
             
             {% endfor %}
             <div class="spacer inline"></div>
-                <i id="first" class="material-icons duplicate pointer">add</i>
+                <i id="firsta" class="material-icons duplicate pointer">add</i>
         </fieldset>
         
 <!--Instructions-->
@@ -107,7 +107,7 @@
                 {% endif %}
             {% endfor %}
             <div class="spacer inline"></div>
-                <i id="first" class="material-icons duplicate pointer">add</i>
+                <i id="firstb" class="material-icons duplicate pointer">add</i>
         </fieldset>
         
 <!--Prep time-->

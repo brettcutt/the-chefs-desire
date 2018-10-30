@@ -28,7 +28,7 @@
                 <!--########################## INGREDIENT FORM-->
                 <div id="ingredient_search" class="triggered_search_box">
                     <div class="inner-box inline">
-                        <form class="center" action="{{url_for('find_ingredient')}}" , method="POST">
+                        <form class="center" action="{{url_for('find_ingredient')}}" method="POST">
                             <p class="center search-category-heading"><b>Search Ingredient</b></p>
                             <div class="inline">
                                 <input required class="search-ingredient" type="text" name="ingredient_category" id="ingredient_category" placeholder='e.g. chicken'>
@@ -47,7 +47,7 @@
 
                 <div id="cuisine_search" class="triggered_search_box">
                     <div class="inner-box inline">
-                        <form class="center" action="{{url_for('find_cuisine')}}" , method="POST">
+                        <form class="center" action="{{url_for('find_cuisine')}}" method="POST">
                             <p class="center search-category-heading"><b>Select Cuisine</b></p>
                             <div class="inline">
                                 <select required name="cuisine_category" id="cuisine_category">
@@ -73,13 +73,13 @@
 
                 <div id="allergen_search" class="triggered_search_box center">
                     <div class="inner-box inline">
-                        <form action="{{url_for('find_allergen')}}" , method="POST">
+                        <form action="{{url_for('find_allergen')}}" method="POST">
                             <p class="center search-category-heading"><b>Select allergen free</b></p>
                             <div class=" col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-12">
                                 {% for item in allergens_json.allergen|sort %}
                                 <div class='allergen_search_checkbox'>
                                     <input value="{{ item }}" name="allergen_category" type="checkbox">
-                                    <label for="find_allergen"> {{ item | title }}</label>
+                                    <p for="find_allergen"> {{ item | title }}</p>
                                 </div>
                                 {% if loop.index % 3 == 0 %}
                                 <br class="hidden-xs"> {% endif%} {% endfor %}
@@ -133,7 +133,7 @@
 
                                         <div class='allergen_search_checkbox'>
                                             <input value="{{ item }}" name="find_allergen" type="checkbox">
-                                            <label for="find_allergen"> {{ item| title }}</label>
+                                            <P> {{ item| title }}</P>
                                         </div>
 
                                         {% if loop.index % 3 == 0 %}
@@ -153,7 +153,6 @@
                 </div>
 
             </div>
-            <!--########################## INGREDIENT FORM-->
 
             <!--########################## END FORM-->
 
@@ -179,7 +178,7 @@
                     <div class="inner-comfirmation center">
                         <p><b>Are you sure you want to delete this recipe?</b></p><br>
                         <a class="comfirmation-yes signin-btn " href="{{ url_for('delete_recipe', recipe_id=recipe._id)}}">Yes</a>
-                        <p id="comfirmation-no" class=" signin-btn comfirmation-no">No</p>
+                        <p class=" signin-btn comfirmation-no">No</p>
                     </div>
                 </div>
                 {% endif %} {% else %}
@@ -189,7 +188,7 @@
                     <div class="inner-comfirmation center">
                         <p><b>Only registered users can like recipes.</b></p>
                         <p class="signin-btn register-trigger like-register">Register</p>
-                        <p id="comfirmation-no" class="signin-btn comfirmation-no">Close</p>
+                        <p class="signin-btn comfirmation-no">Close</p>
                     </div>
                 </div>
             </div>
@@ -210,7 +209,7 @@
         <!--MOBILE AND TABLET PICTURE-->
         <div class="row recipe_image_container hidden-md hidden-lg">
             <div class="col-xs-12">
-                <img class="single-recipe_image" src="{{ recipe.image }}"></img>
+                <img class="single-recipe_image" src="{{ recipe.image }}" alt="{{ recipe.name}}">
             </div>
 
             <br>
@@ -221,11 +220,11 @@
                 <div class="view_and_like">
                     {% if 'recipe_liked' in session %} {% if recipe_liked == 0 %}
                     <a href="{{ url_for('update_like', recipe_id=recipe._id)}}">
-                        <i id="fa-heart" class="far fa-heart"></i>
+                        <i  class="far fa-heart"></i>
                     </a> {% elif recipe_liked == 1 %}
 
-                    <i id="heart-2" class="fas fa-heart heart-2"></i> {% elif recipe_liked == 2 %}
-                    <i id="fa-heart" class="guest-heart far fa-heart"></i> {% endif %} {% endif %}
+                    <i  class="fas fa-heart heart-2"></i> {% elif recipe_liked == 2 %}
+                    <i  class="guest-heart far fa-heart"></i> {% endif %} {% endif %}
                     <span> <b>{{ recipe.likes }} likes</b></span>
                 </div>
             </div>
@@ -286,7 +285,7 @@
 
                     <div class="hidden-xs hidden-sm">
                         <div class="col-xs-12">
-                            <img class="single-recipe_image" src="{{ recipe.image }}"></img>
+                            <img class="single-recipe_image" src="{{ recipe.image }}" alt="{{ recipe.name }}">
                         </div>
 
                         <br>
@@ -297,21 +296,15 @@
                                 <i class="far fa-eye "></i> <span> <b>{{ recipe.views }} views</b></span>
                             </div>
                             <div class="view_and_like">
-                                {% if 'recipe_liked' in session %} 
-                                {% if recipe_liked == 2 %}
-                                <i id="fa-heart" class="guest-heart far fa-heart"></i> 
-                                
-                                {% elif username == recipe.username %}
-                                <i id="fa-heart" class="creator-heart far fa-heart"></i>
-                                {% elif recipe_liked == 0 %}
+                                {% if 'recipe_liked' in session %} {% if recipe_liked == 2 %}
+                                <i  class="guest-heart far fa-heart"></i> {% elif username == recipe.username %}
+                                <i class="creator-heart far fa-heart"></i> {% elif recipe_liked == 0 %}
                                 <a href="{{ url_for('update_like', recipe_id=recipe._id)}}">
-                                        <i id="fa-heart" class="far fa-heart"></i>
-                                    </a> 
-                                {% elif recipe_liked == 1 %}
-                                <i id="heart-2" class="fas fa-heart heart-2"></i> 
-                                {% endif %} {% endif %}
-                                
-                                
+                                        <i  class="far fa-heart"></i>
+                                    </a> {% elif recipe_liked == 1 %}
+                                <i  class="fas fa-heart heart-2"></i> {% endif %} {% endif %}
+
+
                                 <span> <b>{{ recipe.likes }} likes</b></span>
                             </div>
                         </div>

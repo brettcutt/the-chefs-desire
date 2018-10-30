@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet">
     <title>The Chefs Desire</title>
-    <script language="JavaScript"> 
+    <script> 
 function anyvalidate() {
 var test = form.find_allergen;
 var test2 = false
@@ -59,7 +59,7 @@ alert( "You need to complete at least 1 field to conduct a search" );
 
                     {% endfor %} {%endif%} {%endwith%} {%endif%}
 
-                    <form action="{{url_for('register')}}" , method='POST'>
+                    <form action="{{url_for('register')}}" method='POST'>
                         <div class="col-xs-12">
                             <label class="inline hidden-xs" for="register-first-name">First Name:</label>
                             <input class="inline" type="text" id="register-first-name" name="register-first-name" placeholder="First Name" required/>
@@ -84,7 +84,7 @@ alert( "You need to complete at least 1 field to conduct a search" );
                             <label class="inline hidden-xs" for="comfirm-password">Re-enter Password:</label>
                             <input class="inline" type="password" id="comfirm-password" name="comfirm-password" placeholder="Confirm password" required/>
                         </div>
-                        <input class="inline" type="submit" />
+                        <input class="inline" type="submit" value="Submit" />
                         <p class="register-close-btn close-btn inline">Close</p>
                     </form>
                 </div>
@@ -99,7 +99,8 @@ alert( "You need to complete at least 1 field to conduct a search" );
                     <p class="flash-message">{{ message }}</p>
 
                     {% endfor %} {% endif %} {% endwith %} {% endif %}
-                    <form action="{{url_for('signin')}}" , method='POST'>
+                    <form action="{{url_for('signin')}}"flask
+                    method='POST'>
                         <div class="col-xs-12">
                             <input class="inline" type="text" id="signin_username" name="signin_username" placeholder="User Name" required/>
                         </div>
@@ -107,7 +108,7 @@ alert( "You need to complete at least 1 field to conduct a search" );
                             <input class="inline" type="password" id="signin-password" name="signin_password" placeholder="Password" required/>
                         </div>
 
-                        <input class="inline" type="submit" />
+                        <input class="inline" type="submit" value="Submit" />
                         <p class="register-close-btn close-btn inline">Close</p>
                     </form>
                 </div>

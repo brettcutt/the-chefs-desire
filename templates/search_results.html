@@ -43,7 +43,7 @@
                 <!--########################## INGREDIENT FORM-->
                 <div id="ingredient_search" class="triggered_search_box">
                     <div class="inner-box inline">
-                        <form class="center" action="{{url_for('find_ingredient')}}" , method="POST">
+                        <form class="center" action="{{url_for('find_ingredient')}}" method="POST">
                             <p class="center search-category-heading"><b>Search Ingredient</b></p>
                             <div class="inline">
                                 <input required class="search-ingredient" type="text" name="ingredient_category" id="ingredient_category" placeholder='e.g. chicken'>
@@ -62,7 +62,7 @@
 
                 <div id="cuisine_search" class="triggered_search_box">
                     <div class="inner-box inline">
-                        <form class="center" action="{{url_for('find_cuisine')}}" , method="POST">
+                        <form class="center" action="{{url_for('find_cuisine')}}" method="POST">
                             <p class="center search-category-heading"><b>Select Cuisine</b></p>
                             <div class="inline">
                                 <select required name="cuisine_category" id="cuisine_category">
@@ -88,13 +88,13 @@
 
                 <div id="allergen_search" class="triggered_search_box center">
                     <div class="inner-box inline">
-                        <form action="{{url_for('find_allergen')}}" , method="POST">
+                        <form action="{{url_for('find_allergen')}}" method="POST">
                             <p class="center search-category-heading"><b>Select allergen free</b></p>
                             <div class=" col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-12">
                                 {% for item in allergens_json.allergen|sort %}
                                 <div class='allergen_search_checkbox'>
                                     <input value="{{ item }}" name="allergen_category" type="checkbox">
-                                    <label for="find_allergen"> {{ item | title }}</label>
+                                    <p for="find_allergen"> {{ item | title }}</p>
                                 </div>
                                 {% if loop.index % 3 == 0 %}
                                 <br class="hidden-xs"> {% endif%} {% endfor %}
@@ -148,7 +148,7 @@
 
                                         <div class='allergen_search_checkbox'>
                                             <input value="{{ item }}" name="find_allergen" type="checkbox">
-                                            <label for="find_allergen"> {{ item| title }}</label>
+                                            <P> {{ item| title }}</P>
                                         </div>
 
                                         {% if loop.index % 3 == 0 %}
@@ -168,7 +168,6 @@
                 </div>
 
             </div>
-            <!--########################## INGREDIENT FORM-->
 
             <!--########################## END FORM-->
 
