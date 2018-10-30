@@ -266,6 +266,10 @@ table {
 
 /* //////////////////////////////////////////////////BASE.HTML*/
 
+#validation-message {
+    color: red;
+}
+
 .signin-create {
     position: absolute;
     top: 15px;

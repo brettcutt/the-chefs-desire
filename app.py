@@ -25,7 +25,6 @@ allergens_json = []
 with open("data/allergen_category.json", "r") as file:
     allergens_json = json.load(file)
 
-
 # Data added and edited in mlabs
 def recipe_database():
     data = {
@@ -47,11 +46,11 @@ def recipe_database():
 
 def registration_form():
     data = {
-        "first_name": request.form.get('register-first-name'),
-        "last_name": request.form.get('register-last-name'),
-        "username": request.form.get('register-username'),
-        "email": request.form.get('register-email'),
-        "password": request.form.get('register-password'),
+        "first_name": request.form.get('register_first_name'),
+        "last_name": request.form.get('register_last_name'),
+        "username": request.form.get('register_username'),
+        "email": request.form.get('register_email'),
+        "password": request.form.get('register_password'),
         "liked_recipes": []
     }
     return data
@@ -74,37 +73,44 @@ def if_user_in_session():
     if 'user' in session:
         username = session['user']
     return username
+    
+def pop_flask_message():
+    if 'flash-message1' in session:
+        return session.pop('flash-message1')
 
+def current_usernames():
+    items = []
+    usernames = mongo.db.user_details.find()
+    for item in usernames:
+        for key, value in item.items():
+            if key == "username":
+                items.append(value)  
+    return items
+print(current_usernames())
 # ////////////////////////////////////////////////////////////// INDEX (render)
 
 
 @app.route("/")
 def index():
-    recipes = mongo.db.recipe.aggregate([{"$sample": {"size": 5}}])
-    return render_template('index.html', recipes=recipes)
+    usernames = current_usernames()
+    recipes = mongo.db.recipe.aggregate([{ "$match": { "username": "admin"} }, {"$sample": {"size": 5}}])
+    return render_template('index.html', recipes=recipes, usernames=usernames)
 
 # /////////////////////////////////////////////////////////////// REGISTER
 
 
 @app.route('/register', methods=['POST'])
 def register():
-
-    if 'flash-message1' in session:
-        session.pop('flash-message1')
-
-    requested_username = request.form.get("register-username")
-    new_password = request.form.get("register-password")
-    comfirm_password = request.form.get("comfirm-password")
+    
+    requested_username = request.form.get("register_username")
+    new_password = request.form.get("register_password")
+    comfirm_password = request.form.get("comfirm_password")
 
     if comfirm_password == new_password:
         try:
-            existing_user = mongo.db.user_details.find_one(
-                {'username': requested_username}, {"username"})
+            existing_user = mongo.db.user_details.find_one({'username': requested_username}, {"username"})
 
             if existing_user is None:
-
-                if 'flash-message2' in session:
-                    session.pop('flash-message2')
 
                 mongo.db.user_details.insert_one(registration_form())
                 session['user'] = requested_username
@@ -114,26 +120,19 @@ def register():
                         username=requested_username))
 
             else:
-                session['flash-message2'] = 1
-                flash("Username already exists")
                 return redirect(request.referrer)
 
         except BaseException:
             return redirect(request.referrer)
 
     else:
-        session['flash-message2'] = 2
-        flash("Passwords are not the same")
         return redirect(request.referrer)
 
 
 # /////////////////////////////////////////////////////////////////// SIGN IN
 @app.route('/signin', methods=['POST'])
 def signin():
-
-    if 'flash-message2' in session:
-        session.pop('flash-message2')
-
+    
     username = request.form.get('signin_username')
     password = request.form.get('signin_password')
 
@@ -152,12 +151,12 @@ def signin():
         else:
             session['flash-message1'] = 1
             flash("Incorrect username or password")
-            return redirect(request.referrer)
+            return redirect(url_for('index'))
 
     except BaseException:
         session['flash-message1'] = 1
         flash("Incorrect username or password")
-        return redirect(request.referrer)
+        return redirect(url_for('index'))
 
 # ///////////////////////////////////////////////////////////////////// LOGOUT
 
@@ -172,17 +171,21 @@ def logout():
 
 @app.route("/recipes")
 def recipes():
+    usernames = current_usernames()
     most_popular_recipes = mongo.db.recipe.find({"$query": {}, "$orderby": {"likes": -1}}).limit(4)
     most_viewed_recipes = mongo.db.recipe.find({"$query": {}, "$orderby": {"views": -1}}).limit(4)
     all_recipes = mongo.db.recipe.find({"$query": {}, "$orderby": {"name": 1}}).limit(4)
-
+    
+    pop_flask_message()
+    
     return render_template(
         'recipes.html',
         all_recipes=all_recipes,
         most_viewed_recipes=most_viewed_recipes,
         most_popular_recipes=most_popular_recipes,
         cuisines_json=cuisines_json,
-        allergens_json=allergens_json)
+        allergens_json=allergens_json,
+        usernames=usernames)
 
 
 # ////////////////////////////////// MY RECIPES( USERS PERSONALLY ADDED RECIPES)
@@ -235,7 +238,8 @@ def update_view_count(recipe_id):
 
 @app.route('/single_recipe/<recipe_id>')
 def single_recipe(recipe_id):
-
+    pop_flask_message()
+    usernames = current_usernames()
     recipe_name = mongo.db.recipe.find_one({'_id': ObjectId(recipe_id)}, {"name"})
     the_recipe = mongo.db.recipe.find_one({"_id": ObjectId(recipe_id)})
     username = if_user_in_session()  # FUNCTION 2
@@ -267,7 +271,8 @@ def single_recipe(recipe_id):
             recipe_liked=session['recipe_liked'],
             recipe=the_recipe,
             cuisines_json=cuisines_json,
-            allergens_json=allergens_json)
+            allergens_json=allergens_json,
+            usernames=usernames)
 
 
 # ///////////////////////////////////////////////////////////////UPDATE LIKES
@@ -313,7 +318,8 @@ def update_like(recipe_id):
 
 @app.route("/most_popular_recipes")
 def most_popular_recipes():
-
+    pop_flask_message()
+    usernames = current_usernames()
     recipe_category = mongo.db.recipe.find(
         {"$query": {}, "$orderby": {"likes": -1}}).limit(10)
     recipe_count = None
@@ -324,12 +330,14 @@ def most_popular_recipes():
         recipe_category=recipe_category,
         cuisines_json=cuisines_json,
         allergens_json=allergens_json,
-        recipe_count=recipe_count)
+        recipe_count=recipe_count,
+        usernames=usernames)
 
 
 @app.route("/most_viewed_recipes")
 def most_viewed_recipes():
-
+    pop_flask_message()
+    usernames = current_usernames()
     session["search_title"] = 2
     recipe_category = mongo.db.recipe.find(
         {"$query": {}, "$orderby": {"views": -1}}).limit(10)
@@ -340,15 +348,17 @@ def most_viewed_recipes():
         recipe_category=recipe_category,
         cuisines_json=cuisines_json,
         allergens_json=allergens_json,
-        recipe_count=recipe_count)
+        recipe_count=recipe_count,
+        usernames=usernames)
 
 
 @app.route("/all_recipes")
 def all_recipes():
-
+    pop_flask_message()
+    usernames = current_usernames()
     session["search_title"] = 3
-    recipe_category = mongo.db.recipe.find(
-        {"$query": {}, "$orderby": {"name": 1}})
+    recipe_category = mongo.db.recipe.find({"$query": {}, "$orderby": {"name": 1}})
+    
     recipe_count = None
     return render_template(
         'search_results.html',
@@ -356,12 +366,14 @@ def all_recipes():
         recipe_category=recipe_category,
         cuisines_json=cuisines_json,
         allergens_json=allergens_json,
-        recipe_count=recipe_count)
+        recipe_count=recipe_count,
+        usernames=usernames)
 
 
 @app.route("/find_ingredient", methods=['POST'])
 def find_ingredient():
-
+    pop_flask_message()
+    usernames = current_usernames()
     session["search_title"] = 0
     recipe_category = mongo.db.recipe.find(
         {"ingredients": {"$regex": request.form.get("ingredient_category"), "$options": 'i'}})
@@ -371,12 +383,14 @@ def find_ingredient():
         recipe_category=recipe_category,
         cuisines_json=cuisines_json,
         allergens_json=allergens_json,
-        recipe_count=recipe_count)
+        recipe_count=recipe_count,
+        usernames=usernames)
 
 
 @app.route("/find_cuisine", methods=['POST'])
 def find_cuisine():
-
+    pop_flask_message()
+    usernames = current_usernames()
     session["search_title"] = 0
     recipe_category = mongo.db.recipe.find(
         {"cuisine": request.form.get("cuisine_category").title()})
@@ -386,12 +400,14 @@ def find_cuisine():
         recipe_category=recipe_category,
         cuisines_json=cuisines_json,
         allergens_json=allergens_json,
-        recipe_count=recipe_count)
+        recipe_count=recipe_count,
+        usernames=usernames)
 
 
 @app.route("/find_allergen", methods=['POST'])
 def find_allergen():
-
+    pop_flask_message()
+    usernames = current_usernames()
     session["search_title"] = 0
     recipe_category = mongo.db.recipe.find(
         {"allergens": {"$nin": request.form.getlist("allergen_category")}})
@@ -401,12 +417,14 @@ def find_allergen():
         recipe_category=recipe_category,
         cuisines_json=cuisines_json,
         allergens_json=allergens_json,
-        recipe_count=recipe_count)
+        recipe_count=recipe_count,
+        usernames=usernames)
 
 
 @app.route("/find_multiple_categories", methods=['POST'])
 def find_multiple_categories():
-
+    pop_flask_message()
+    usernames = current_usernames()
     session["search_title"] = 0
     ingredient = request.form.get("find_ingredient")
     cuisine = request.form.get("find_cuisine").title()
@@ -443,7 +461,8 @@ def find_multiple_categories():
         recipe_category=recipe_category,
         recipe_count=recipe_count,
         cuisines_json=cuisines_json,
-        allergens_json=allergens_json)
+        allergens_json=allergens_json,
+        usernames=usernames)
 
 
 # ////////////////////////////// ADD RECIPE(render) AND INSERT RECIPE(redirect)

@@ -30,6 +30,19 @@ alert( "You need to complete at least 1 field to conduct a search" );
      return false;
 	 }
 	 }
+	 
+function validateusername() {
+var usernames = `{{usernames}}`
+if ( usernames.includes(registrationform.register_username.value)  ) {
+document.getElementById('validation-message').innerHTML = "The Username already exists.";
+     return false;
+	 }
+	 else if (registrationform.register_password.value != registrationform.comfirm_password.value) {
+document.getElementById('validation-message').innerHTML = "The passwords do not match.";
+return false;
+	 }
+	 }
+	 console.log(`{{usernames}}`)
 </script>
 </head>
 
@@ -48,42 +61,39 @@ alert( "You need to complete at least 1 field to conduct a search" );
 
             <!--SIGN IN REGISTER BUTTONS-->
 
-
             <!--REGISTRATION FORM-->
             <!-- IF STATEMENT BELOW TO CREATE INLINE STYLE DISPLAY:BLOCK -->
-            <div class="register-signin-page register-page" {% if 'flash-message2' in session %}style="display:block;" {% endif %}>
-                <div id="#inner-register-page" class="inner-register-page">
+            <div class="register-signin-page register-page">
+                <div id="inner-register-page" class="inner-register-page">
                     <h2>Registration</h2>
-                    {% if 'flash-message2' in session %} {% with messages = get_flashed_messages()%} {% if messages %} {% for message in messages %}
-                    <p class="flash-message">{{ message }}</p>
 
-                    {% endfor %} {%endif%} {%endwith%} {%endif%}
-
-                    <form action="{{url_for('register')}}" method='POST'>
+                    <form name="registrationform"  action="{{url_for('register')}}" onSubmit="return validateusername()" method='POST'>
+                        <p id="validation-message"></p>
                         <div class="col-xs-12">
-                            <label class="inline hidden-xs" for="register-first-name">First Name:</label>
-                            <input class="inline" type="text" id="register-first-name" name="register-first-name" placeholder="First Name" required/>
+                            <label class="inline hidden-xs" for="register_first_name">First Name:</label>
+                            <input class="inline" type="text" id="register_first_name" name="register_first_name" placeholder="First Name" required/>
                         </div>
                         <div class="col-xs-12">
-                            <label class="inline hidden-xs" for="register-last-name">Last Name:</label>
-                            <input class="inline" type="text" id="register-last-name" name="register-last-name" placeholder="Last Name" required/>
+                            <label class="inline hidden-xs" for="register_last_name">Last Name:</label>
+                            <input class="inline" type="text" id="register_last_name" name="register_last_name" placeholder="Last Name" required/>
                         </div>
                         <div class="col-xs-12">
-                            <label class="inline hidden-xs" for="register-username">User Name:</label>
-                            <input class="inline" type="text" id="register-username" name="register-username" placeholder="User Name" required/>
+                            <label class="inline hidden-xs" for="register_username">User Name:</label>
+                            <input class="inline" type="text" id="register_username" name="register_username" placeholder="User Name" required/>
                         </div>
                         <div class="col-xs-12">
-                            <label class="inline hidden-xs" for="register-email">E-mail:</label>
-                            <input class="inline" type="email" id="register-email" name="register-email" placeholder="e-mail" required/>
+                            <label class="inline hidden-xs" for="register_email">E-mail:</label>
+                            <input class="inline" type="email" id="register_email" name="register_email" placeholder="e-mail" required/>
                         </div>
                         <div class="col-xs-12">
-                            <label class="inline hidden-xs" for="register-password">Password:</label>
-                            <input class="inline" type="password" id="register-password" name="register-password" placeholder="password" required/>
+                            <label class="inline hidden-xs" for="register_password">Password:</label>
+                            <input class="inline" type="password" id="register_password" name="register_password" placeholder="password" required/>
                         </div>
                         <div class="col-xs-12">
-                            <label class="inline hidden-xs" for="comfirm-password">Re-enter Password:</label>
-                            <input class="inline" type="password" id="comfirm-password" name="comfirm-password" placeholder="Confirm password" required/>
+                            <label class="inline hidden-xs" for="comfirm_password">Re-enter Password:</label>
+                            <input class="inline" type="password" id="comfirm_password" name="comfirm_password" placeholder="Confirm password" required/>
                         </div>
+                        
                         <input class="inline" type="submit" value="Submit" />
                         <p class="register-close-btn close-btn inline">Close</p>
                     </form>
