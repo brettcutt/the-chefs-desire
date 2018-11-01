@@ -11,7 +11,6 @@ app.config["MONGO_DBNAME"] = "meal-ponderer"
 app.config["MONGO_URI"] = "mongodb://admin:Mealponderer1@ds131763.mlab.com:31763/meal-ponderer"
 
 mongo = PyMongo(app)
-
 # Data for listing the cuisine categories
 cuisines_json = []
 
@@ -86,7 +85,6 @@ def current_usernames():
             if key == "username":
                 items.append(value)  
     return items
-print(current_usernames())
 # ////////////////////////////////////////////////////////////// INDEX (render)
 
 
@@ -94,6 +92,7 @@ print(current_usernames())
 def index():
     usernames = current_usernames()
     recipes = mongo.db.recipe.aggregate([{ "$match": { "username": "admin"} }, {"$sample": {"size": 5}}])
+    
     return render_template('index.html', recipes=recipes, usernames=usernames)
 
 # /////////////////////////////////////////////////////////////// REGISTER
@@ -225,7 +224,7 @@ def update_view_count(recipe_id):
                                        "$set": {"views": 1}}, upsert=True)
 
         elif count >= 0:
-            mongo.db.recipe.update({'_id': ObjectId(recipe_id)}, {
+            mongo.db.recipe.update_one({'_id': ObjectId(recipe_id)}, {
                                    "$set": {"views": count + 1}})
 
         return redirect(url_for('single_recipe', recipe_id=recipe_id))
@@ -303,7 +302,7 @@ def update_like(recipe_id):
                                            "$set": {"likes": 1}}, upsert=True)
 
             elif recipe_likes >= 0:
-                mongo.db.recipe.update({'_id': ObjectId(recipe_id)}, {
+                mongo.db.recipe.update_one({'_id': ObjectId(recipe_id)}, {
                                        "$set": {"likes": recipe_likes + 1}})
 
             return redirect(url_for('single_recipe', recipe_id=recipe_id))
@@ -429,7 +428,7 @@ def find_multiple_categories():
     ingredient = request.form.get("find_ingredient")
     cuisine = request.form.get("find_cuisine").title()
     allergens = request.form.getlist("find_allergen")
-
+    
     if cuisine == "" and not ingredient:
         recipe_category = mongo.db.recipe.find({"allergens": {"$nin": allergens}})
 
@@ -491,7 +490,10 @@ def insert_recipe():
     for key, value in id_num.items():
         if key == "_id":
             recipe_id = ObjectId(value)
-
+    mongo.db.recipe.update_one({'_id': ObjectId(recipe_id)}, {
+                                       "$set": {"views": 0}}, upsert=True)
+    mongo.db.recipe.update_one({'_id': ObjectId(recipe_id)}, {
+                                       "$set": {"likes": 0}}, upsert=True)
     return redirect(url_for('single_recipe', recipe_id=recipe_id))
 
 # /////////////////////////////////////////////// EDIT RECIPE AND UPDATE RECIPE
