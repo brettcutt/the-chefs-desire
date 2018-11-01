@@ -119,5 +119,15 @@ of the page and opens the register form.
   - The font-size was bigger than usual, which made the containers larger and out of place.
   - This font awesome hearts also were not supported amd didn't show.
 
-## Index page(login)
+### Form Testing
 ![registration form](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/test-registration.jpeg?raw=true "registration form")
+![registration database data](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/user-details-database.jpeg?raw=true "registration database data")
+![existing user](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/existing-user.jpeg?raw=true "registering with existing username")
+![login form](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/login.jpeg?raw=true "login form")
+![login account](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/signin-account.jpeg?raw=true "login account")
+![login validation](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/wrong-login-details.jpeg?raw=true "login with correct username but wrong password")
+![add recipe form](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/add-recipe-form.jpeg?raw=true "add recipe form")
+![added recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/added-recipe.jpeg?raw=true "added recipe")
+![edit recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/edit-recipe.jpeg?raw=true "edit recipe")
+![edited recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/edited-recipe.jpeg?raw=true "edited recipe")
+![recipe database data](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/recipe-data.jpeg?raw=true "recipe database date")
