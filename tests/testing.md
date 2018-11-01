@@ -120,14 +120,41 @@ of the page and opens the register form.
   - This font awesome hearts also were not supported amd didn't show.
 
 ### Form Testing
+- Creating a user account.
+
 ![registration form](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/test-registration.jpeg?raw=true "registration form")
+
+- Checking that the data was sent to the database.
 ![registration database data](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/user-details-database.jpeg?raw=true "registration database data")
+
+- Ensuring another user can't register an existing username.
 ![existing user](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/existing-user.jpeg?raw=true "registering with existing username")
+
+- Ensuring the user can log in with their login details.
+
 ![login form](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/login.jpeg?raw=true "login form")
-![login account](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/signin-account.jpeg?raw=true "login account")
+
+- Ensuring a user account can't be accessed with an incorrect password
+
 ![login validation](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/wrong-login-details.jpeg?raw=true "login with correct username but wrong password")
+
+- Redirecting to the user account screen after logging in.
+![login account](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/signin-account.jpeg?raw=true "login account")
+
+- Filling out the form to add a recipe.
+
 ![add recipe form](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/add-recipe-form.jpeg?raw=true "add recipe form")
-![added recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/added-recipe.jpeg?raw=true "added recipe")
+
+- The result of adding the recipe information to the database.
+
+![added recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/added_recipe.jpeg?raw=true "added recipe")
+
+- Adding to the existing recipe.
+
 ![edit recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/edit-recipe.jpeg?raw=true "edit recipe")
+
+- Result of the edited recipe.
 ![edited recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/edited-recipe.jpeg?raw=true "edited recipe")
+
+- The recipe information stored in the database.
 ![recipe database data](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/recipe-data.jpeg?raw=true "recipe database date")
