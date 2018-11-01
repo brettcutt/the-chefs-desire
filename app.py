@@ -482,7 +482,7 @@ def add_recipe():
 @app.route("/insert_recipe", methods=['POST'])
 def insert_recipe():
     doc = recipe_database()
-
+ 
     username = if_user_in_session()  # FUNCTION 2
 
     mongo.db.recipe.insert_one(doc)
@@ -505,7 +505,7 @@ def insert_recipe():
 
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
-
+    
     the_recipe = mongo.db.recipe.find_one({"_id": ObjectId(recipe_id)})
     return render_template(
         'edit_recipe.html',
@@ -520,27 +520,48 @@ def edit_recipe(recipe_id):
 def update_recipe(recipe_id):
 
     username = if_user_in_session()  # FUNCTION 2
-
-    mongo.db.recipe.update_many({'_id': ObjectId(recipe_id)}, {"$set": recipe_database()})
-
-    id_num = mongo.db.recipe.find_one({'name': request.form.get('name'), 'username': username})
-
-    recipe_id = ""
-    for key, value in id_num.items():
-        if key == "_id":
-            recipe_id = ObjectId(value)
-
-    return redirect(url_for('single_recipe', recipe_id=recipe_id))
-
+    
+    author = mongo.db.recipe.find_one({'_id': ObjectId(recipe_id)})
+    contributer = ""
+    for key, value in author.items():
+        if key == "username":
+            contributer = value
+            
+    if username == contributer or username == "admin":
+        mongo.db.recipe.update_many({'_id': ObjectId(recipe_id)}, {"$set": recipe_database()})
+    
+        id_num = mongo.db.recipe.find_one({'name': request.form.get('name'), 'username': username})
+    
+        recipe_id = ""
+        for key, value in id_num.items():
+            if key == "_id":
+                recipe_id = ObjectId(value)
+    
+        return redirect(url_for('single_recipe', recipe_id=recipe_id))
+    else:
+        session.pop('user')
+        return redirect(url_for('index'))
 
 # ///////////////////////////////////////////////////////// DELETE RECIPE
 # Delete (redirect)
 @app.route("/delete_recipe/<recipe_id>")
 def delete_recipe(recipe_id):
     username = if_user_in_session()
-    mongo.db.recipe.remove({'_id': ObjectId(recipe_id)})
-    return redirect(url_for('my_recipes', username=username))
-
+    
+    author = mongo.db.recipe.find_one({'_id': ObjectId(recipe_id)})
+    contributer = ""
+    for key, value in author.items():
+        if key == "username":
+            contributer = value
+            
+    if username == contributer or username == "admin":
+    
+        mongo.db.recipe.remove({'_id': ObjectId(recipe_id)})
+        return redirect(url_for('my_recipes', username=username))
+    else:
+        session.pop('user')
+        return redirect(url_for('index'))
+        
 
 if __name__ == '__main__':
     app.run(
