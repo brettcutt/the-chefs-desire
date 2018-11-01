@@ -4,6 +4,7 @@ from flask import Flask, render_template, redirect, request, url_for, session
 import unittest
 from flask_testing import TestCase
 from app import app
+import random
 
 class finding_views(unittest.TestCase):
     """ This is a routing test to find the various paths the the site pages"""
@@ -19,7 +20,6 @@ class finding_views(unittest.TestCase):
         app.config['SERVER_NAME'] 
         app.config['TESTING'] = True
         app.config['DEBUG'] = False
-        app.config['user'] = "admin"
         self.client = app.test_client()
         print("set up")
         
@@ -32,115 +32,179 @@ class finding_views(unittest.TestCase):
     ###############
     #### tests ####
     ###############
- 
+    """
+    # Ensure the index page can be reached
     def test_index(self):
         response = app.test_client(self).get('/', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"The Chefs Desire", response.data)
-        print("index found")
-        
+        print("index found")"""
+    """    
+    # Ensure the single_reciepe page can be reached
     def test_single_recipe(self):
         response = app.test_client(self).get('/single_recipe/5bd1616413092517e8e05062', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("single recipe found")
+        print("single recipe found")"""
     
+    
+    # Ensure the add_recipe page can be reached
     def test_add_recipe(self):
         response = app.test_client(self).get('/add_recipe', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("add recipe found")
+        print("add recipe found//", "response location =", response.location) 
         
-    # WORKS JUST INSERTING BLANK RECIPES    
-    """def test_insert_recipe(self):
-        response = app.test_client(self).post('/insert_recipe', follow_redirects=False)
-        self.assertEqual(response.status_code, 302)
-        print("insert recipe found")"""
+    """
+    # Ensure the insert_recipe page can be reached
+    def test_insert_recipe(self):
+        data=dict(
+            name= "recipe",
+        cuisine="british",
+        allergens="wheat",
+        description="test",
+        ingredients="apple",
+        instructions="test",
+        prep_time="test",
+        cook_time="test",
+        recipe_yield="test",
+        author="test",
+        image="test",
+        user="test"
+            )
+        response = app.test_client(self).post('/insert_recipe', content_type='multipart/form-data', data=data, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        print(response.location)
+        print("insert recipe found//", "response location =", response.location) """
         
+    """    
+    # Ensure the edit_recipe page can be reached
     def test_edit_recipe(self):
         response = app.test_client(self).get('/edit_recipe/5bd1616413092517e8e05062', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("edit recipe found")
+        print("edit recipe found") """
         
-    # WORKS JUST EDITING BLANK RECIPES    
-    """def test_update_recipe(self):
+    """
+    # Ensure the edit_recipe page can be reached
+    def test_update_recipe(self):
         response = app.test_client(self).post('/update_recipe/5bd1616413092517e8e05062', follow_redirects=False)
         self.assertEqual(response.status_code, 302)
         print("update recipe found")"""
-    
-    def test_valid_user_registration(self):
+    """
+    # Ensure the registration page can be reached and that it sends the correct data.
+    def test_registration(self):
         data=dict(
-        register_first_name="m5",
-        register_last_name="m5",
-        register_username="m5",
-        register_email="m5@m5.com",
-        register_password="m5",
-        comfirm_password="m5"
+        register_first_name="testuserfirstname",
+        register_last_name="testuserlastname",
+        register_username='m' + str(random.randint(1,1000)),
+        register_email="email@email.com",
+        register_password="testpassword",
+        comfirm_password="testpassword"
         )
-        response = app.test_client(self).post('/register', content_type='multipart/form-data', data=dict(data), follow_redirects=True)
-        print(response.location)
-        
-        
-    # return super(SecureCookieSession, self).__getitem__(key)
-    # KeyError: 'user'
-    """def test_my_recipes(self):
-        response = app.test_client(self).get('/my_recipes/admin', follow_redirects=True)
+        response = app.test_client(self).post('/register', content_type='multipart/form-data', data=data, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("my recipes found")"""
+        self.assertIn(b"Hello testuserfirstname", response.data)
+        print("register found//", "response location =", response.location) """
         
+    """  
+    # Ensure the sign in page can be reached and that it sends the correct data.
+    def test_login(self):
+        data=dict(
+        signin_username="testuser123",
+        signin_password="t1"
+        )
+        response = app.test_client(self).post('/signin', content_type='multipart/form-data', data=data, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Hello testuser123", response.data)
+        self.assertNotIn(b"Hello admin", response.data)
+        print(dir(response))
+        print(response.status)"""
+        
+    """   
+    # Ensure the recipes page can be reached.
     def test_recipes(self):
         response = app.test_client(self).get('/recipes', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("recipes found")
-        
+        print("recipes found")"""
+    """   
+    # Ensure the most popular recipes page can be reached.
     def test_most_popular_recipes(self):
         response = app.test_client(self).get('/most_popular_recipes', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("most popular recipes found")
-        
+        print("most popular recipes found")"""
+    """    
+    # Ensure the most viewed recipes page can be reached.    
     def test_most_viewed_recipes(self):
         response = app.test_client(self).get('/most_viewed_recipes', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("most viewed recipes found")
-        
+        print("most viewed recipes found")"""
+    """    
+    # Ensure the most all recipes page can be reached.
     def test_all_recipes(self):
         response = app.test_client(self).get('/all_recipes', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("all recipes found")
+        print("all recipes found") """
         
-    # FAILING pymongo.errors.OperationFailure: $regex has to be a string
-    """def test_find_ingredient(self):
-        response = app.test_client(self).post('/find_ingredient', follow_redirects=True)
+    """
+    # Ensure find ingredients can be reached and that it searches for the correct criteria.
+    def test_find_ingredient(self):
+        data=dict(
+        ingredient_category="mushroom"
+        )   
+        response = app.test_client(self).post('/find_ingredient', content_type='multipart/form-data', data=data, follow_redirects=False)
         self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Yaki Udon",response.data)
+        self.assertNotIn(b"Dal fry",response.data)
         print("find ingredient found")"""
         
-    # FAILING {"cuisine": request.form.get("cuisine_category").title()})
-    # AttributeError: 'NoneType' object has no attribute 'title'
-    """ def test_find_cuisine(self):
-        response = app.test_client(self).post('/find_cuisine', follow_redirects=True)
+    """
+    # Ensure find cuisine can be reached and that it searches for the correct criteria.
+    def test_find_cuisine(self):
+        data=dict(
+        cuisine_category="american"
+        )  
+        response = app.test_client(self).post('/find_cuisine', content_type='multipart/form-data', data=data, follow_redirects=False)
         self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Pumpkin Pie",response.data)
+        self.assertNotIn(b"Rock Cakes",response.data)
         print("find cuisine found") """
     
+    """
+    # Ensure find allergens can be reached and that it searches for the correct criteria.
     def test_find_allergen(self):
-        response = app.test_client(self).post('/find_allergen', follow_redirects=True)
+        data=dict(
+        allergen_category="wheat"
+        ) 
+        response = app.test_client(self).post('/find_allergen', content_type='multipart/form-data', data=data, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("find allergen found")
+        self.assertIn(b"Eton Mess",response.data)
+        self.assertNotIn(b"Pancakes",response.data)
+        print("find allergen found") """
         
         
-    # FAILING {"cuisine": request.form.get("cuisine_category").title()})
-    # AttributeError: 'NoneType' object has no attribute 'title'
-    """def test_find_multiple_categories(self):
-        response = app.test_client(self).post('/find_multiple_categories', follow_redirects=True)
+    """
+    # Ensure find multiple categories can be reached and that it searches for the correct criteria.
+    def test_find_multiple_categories(self):
+        data=dict(
+        find_cuisine="british",
+        find_ingredient="flour",
+        find_allergen="eggs"
+        ) 
+        response = app.test_client(self).post('/find_multiple_categories', content_type='multipart/form-data', data=data, follow_redirects=False)
         self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Fish pie",response.data)
+        self.assertNotIn(b"Carrot Cake",response.data)
         print("find multiple categories found")"""
-        
+    """    
+    # Ensure update view count can be reached.
     def test_update_view_count(self):
         response = app.test_client(self).get('/update_view_count/5bd1616413092517e8e05062', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("update view found")
-        
+        print("update view found")"""
+    """    
+    # Ensure update like count can be reached.
     def test_update_like(self):
         response = app.test_client(self).get('/update_like/5bd1616413092517e8e05062', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("update like found")
+        print("update like found") """
  
 if __name__ == "__main__":
     
