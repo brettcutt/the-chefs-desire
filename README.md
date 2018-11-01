@@ -103,11 +103,11 @@ ___
 ___
 
 ### Testing
-#### Manual testing
-Click [here](https://github.com/brettcutt/the-chefs-desire/blob/master/tests/testing.md) for manual testing
+##### Manual testing
+- Click [here](https://github.com/brettcutt/the-chefs-desire/blob/master/tests/testing.md) for manual testing 
 
-#### Automated Tests
-Click [here](https://github.com/brettcutt/the-chefs-desire/blob/master/test_basic.py) for automated testing
+##### Automated Tests   
+- Click [here](https://github.com/brettcutt/the-chefs-desire/blob/master/test_basic.py) for automated testing
 
 #### Testing Issues
 - jinja for loop problem:   
