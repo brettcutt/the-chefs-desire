@@ -187,22 +187,25 @@ def recipes():
         usernames=usernames)
 
 
-# ////////////////////////////////// MY RECIPES( USERS PERSONALLY ADDED RECIPES)
+# ////////////////////////////////////////////////////////////////////MY RECIPES
 @app.route('/my_recipes/<username>')
 def my_recipes(username):
-
-    user = mongo.db.user_details.find_one({"username": username})
-    user_recipes = mongo.db.recipe.find({"username": session['user']})
-    recipe_count = user_recipes.count()
-
-    return render_template(
-        'my_recipes.html',
-        user=user,
-        user_recipes=user_recipes,
-        cuisines_json=cuisines_json,
-        allergens_json=allergens_json,
-        recipe_count=recipe_count)
-
+    if session['user'] == username:
+        user = mongo.db.user_details.find_one({"username": username})
+        user_recipes = mongo.db.recipe.find({"username": session['user']})
+        recipe_count = user_recipes.count()
+        
+        return render_template(
+            'my_recipes.html',
+            user=user,
+            user_recipes=user_recipes,
+            cuisines_json=cuisines_json,
+            allergens_json=allergens_json,
+            recipe_count=recipe_count)
+    
+    else:
+        session.pop('user')
+        return redirect(url_for('index'))
 # ///////////////////////////////////////////////////// UPDATE THE RECIPE VIEWS
 
 
