@@ -163,24 +163,24 @@ statements to cover each outcome of the search possibilities.
    
 - In app.py set the app.config variables so heroku can find them.
    ```
-   app.secret_key = os.environ.get(<mark>'SECRET_KEY'</mark>)
-   app.config["MONGO_DBNAME"] = os.environ.get(<mark>"MONGO_DBNAME"</mark>)
-   app.config["MONGO_URI"] = os.environ.get(<mark>"MONGO_URI"</mark>)
+   app.secret_key = os.environ.get('SECRET_KEY')
+   app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
+   app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
    ```
 - In the terminal line entered:
   
   - `git add`
   - `git commit -m "message"`
-  -  `git push -u heroku master` pushes the project to Heroku.
+  - `git push -u heroku master` pushes the project to Heroku.
  
 - In heroku:
    - Go to the project > setting > config vars
    ```
    IP = `0.0.0.0`
    PORT =  `8080`
-   <mark>SECRET_KEY</mark> = |secret key|
-   <mark>MONGO_DBNAME</mark> = |database name|
-   <mark>MONGO_URI</mark> = mongodb://|username|:|password|@ds249233.mlab.com:49233/|database name|
+   SECRET_KEY = |secret key|
+   MONGO_DBNAME = |database name|
+   MONGO_URI = mongodb://|username|:|password|@ds249233.mlab.com:49233/|database name|
    ```
    - More > restart all dynos
 
@@ -204,18 +204,18 @@ statements to cover each outcome of the search possibilities.
    1. In the terminal line enter `echo 'config.py' > gitignore` to hide the `config.py` file.
    2. In the config.py file enter the following: 
     ```
-    <span style="background-color: orange"> DB_CONFIG </span>= {   
-        '<mark> MONGO_DBNAME </mark>':'|database name|',
-        '<mark> MONGO_URI </mark>': 'mongodb://|username|:|password|@ds249233.mlab.com:49233/|database name|'
-        '<mark> SECRET_KEY </mark>': '|secret key|'
+     DB_CONFIG = {   
+        ' MONGO_DBNAME ':'|database name|',
+        ' MONGO_URI ': 'mongodb://|username|:|password|@ds249233.mlab.com:49233/|database name|'
+        ' SECRET_KEY ': '|secret key|'
     }
     ```
-    3. In app.py, set the app.config variables to the variables set in the <span style="background-color: lightgreen">config</span>.py file
+    3. In app.py, set the app.config variables to the variables set in the config.py file
     ```
-    import <span style="background-color: lightgreen">config</span>
-    app.config["MONGO_DBNAME"] = <span style="background-color: lightgreen">config</span>.<span style="background-color: orange">DB_CONFIG</span>['<mark>MONGO_DBNAME</mark>']
-    app.config["MONGO_URI"] = <span style="background-color: lightgreen">config</span>.<span style="background-color: orange">DB_CONFIG</span>['<mark>MONGO_URI</mark>']
-    app.secret_key = <span style="background-color: lightgreen">config</span>.<span style="background-color: orange">DB_CONFIG</span>['<mark>SECRET_KEY</mark>']
+    import config
+    app.config["MONGO_DBNAME"] = config.DB_CONFIG['MONGO_DBNAME']
+    app.config["MONGO_URI"] = config.DB_CONFIG['MONGO_URI']
+    app.secret_key = config.DB_CONFIG['SECRET_KEY']
     ```
 - In the terminal line enter:
   - `python3 app.py` to run the app.
@@ -264,7 +264,7 @@ ___
    - plus and remove button icons
    - timer and cutlery icons
 
-###Acknowledgements
+### Acknowledgements
 - My mentor Mossa Hassan
    - Credit is due to my mentor when it came to the unit testing. There were alot emails trying to get particular tests to pass, The following is that code that is implementd in basic_test.py.
    - content_type='multipart/form-data'
@@ -275,3 +275,4 @@ ___
 - Slack Forum (Code Institute Student)
    - Thanks to a discussion in the forum it allowed me to follow along to the idea of setting my app config variables
    in a config.py file and importing that into the app.py file.
+
