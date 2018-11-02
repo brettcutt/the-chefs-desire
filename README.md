@@ -2,7 +2,14 @@
 - This is the fourth milestone project for the Full-Stack software development course through Code Institute. I decided to base my project on the example brief given to the
 the students of this course, which is to create a cookbook. The module before the project focused on creating databases following CRUD operations in MySql and NoSql. I decided
 to use Mongodb(NoSql) as it had a more flexible and rich approach to storing and accessing key/ values.
+
+
+# Table of Contents
+1. [UX](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#ux)
+2. [Technologies, Libraries and Languages](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#technologies,-libraries-and-languages)
+3. [Third Example](#third-example)
 ___
+
 ## UX
 ### Strategy
 - As a user I would expect to be able to view various recipes based on different categories e.g.(cuisine, allergens, ingredient) 
@@ -59,10 +66,13 @@ a register button and a close button.
 - These pages have the form inputs for the information of the recipe the user is adding or editing.
 - When adding a recipe, the users unique username is also added to the recipe document and this is how these recipes are accessed in the my recipes page.
 
+
+
 ##### Delete Recipe
 - A button displayed on the users recipe to delete it from the collection.
 ___
-### Technologies, Libraries and Languages
+
+## Technologies, Libraries and Languages
 - Python
   - Implement the logic, functionality and responses of the project.
   - https://www.python.org/
@@ -137,11 +147,11 @@ The main problem I think was that the select tag is always giving a value, even 
 statements to cover each outcome of the search possibilities.
 
 #### Validation
-- HTML
+- **HTML**
   - Checked with W3C validator. Only Jinja related errors due to the validation not programmed to read them. 
-- css
+- **css**
    - Checked with Jigsaw validator and received no errors.
-- python
+- **python**
   - Formatted with autopep8 and checked with flake8. I still have lines that are too long but left them that way for my own readibility at the moment.
   - sudo pip install --upgrade autopep8
   - autopep8 --in-place --aggressive --aggressive app.py
@@ -153,7 +163,7 @@ statements to cover each outcome of the search possibilities.
 ### Deployment
 - In heroku
    - Created a new app
-- In the terminal command line entered:
+- **In the terminal command line entered:**
    - `heroku login` Entered username and password.   
    - `git init` to Intilised a git repository.
    - `git remote add heroku https://the-chefs-desire.herokuapp.com/` to link the GitHub repository to the Heroku app.
@@ -161,19 +171,19 @@ statements to cover each outcome of the search possibilities.
    - `echo web: python run.py >procfile` Tells Heroku that this project is a web app and that "app.py" is going the run it.
    - `ps:scale web=1`
    
-- In app.py set the app.config variables so heroku can find them.
-   ```
+- **In app.py set the app.config variables so heroku can find them.**
+   ```python
    app.secret_key = os.environ.get('SECRET_KEY')
    app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
    app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
    ```
-- In the terminal line entered:
+- **In the terminal line entered:**
   
   - `git add`
   - `git commit -m "message"`
   - `git push -u heroku master` pushes the project to Heroku.
  
-- In heroku:
+- **In heroku:**
    - Go to the project > setting > config vars
    ```
    IP = `0.0.0.0`
@@ -188,36 +198,36 @@ statements to cover each outcome of the search possibilities.
    - https://the-chefs-desire.herokuapp.com/
 
 ### Running the code locally
-- In the terminal command line enter:
-   1. `git clone https://github.com/brettcutt/the-chef-desire.git`
-   2. `sudo pip3 install flask`
-   3. `sudo pip3 install pymongo`
-   4. `sudo pip3 install flask_pymongo`
-- Set up a database in mlabs
-   1. Create an account.
-   2. Create a new deployment (database). The name of the database will be the name entered into the `|database name|` in steps below.
-   3. Create a new user. Set a username and password for that database.
-   4. Take note of the MongoDB URI after creating a user e.g. `mongodb://|yourusername|:|yourpassword|@ds249233.mlab.com:49233/|yourdatabasename|`. This will be entered in steps below.
-   4. Create 4 collections called `'recipe', 'allergens', 'cuisines' `and` 'user_details'`.
-   5. In `the-meal-ponderer/data` directory copy the data from `allergen_category.json` and `allergen_category.json` and paste it into the `allergens` and `cuisines` collection as a document.
-- In the project folder create a `config.py` file.
-   1. In the terminal line enter `echo 'config.py' > gitignore` to hide the `config.py` file.
-   2. In the config.py file enter the following: 
-    ```
+- **In the terminal command line enter:**
+   - `git clone https://github.com/brettcutt/the-chef-desire.git`
+   - `sudo pip3 install flask`
+   - `sudo pip3 install pymongo`
+   - `sudo pip3 install flask_pymongo`
+- **Set up a database in mlabs**
+   - Create an account.
+   - Create a new deployment (database). The name of the database will be the name entered into the `|database name|` in steps below.
+   - Create a new user. Set a username and password for that database.
+   - Take note of the MongoDB URI after creating a user e.g. `mongodb://|yourusername|:|yourpassword|@ds249233.mlab.com:49233/|yourdatabasename|`. This will be entered in steps below.
+   - Create 4 collections called `'recipe', 'allergens', 'cuisines' `and` 'user_details'`.
+   - In `the-meal-ponderer/data` directory copy the data from `allergen_category.json` and `allergen_category.json` and paste it into the `allergens` and `cuisines` collection as a document.
+- **In the project folder create a** `config.py` **file**.
+   - In the terminal line enter `echo 'config.py' > gitignore` to hide the `config.py` file.
+   - In the config.py file enter the following: 
+    ```python
      DB_CONFIG = {   
         ' MONGO_DBNAME ':'|database name|',
         ' MONGO_URI ': 'mongodb://|username|:|password|@ds249233.mlab.com:49233/|database name|'
         ' SECRET_KEY ': '|secret key|'
     }
     ```
-    3. In app.py, set the app.config variables to the variables set in the config.py file
-    ```
+    - **In app.py, set the app.config variables to the variables set in the config.py file**
+    ```python
     import config
     app.config["MONGO_DBNAME"] = config.DB_CONFIG['MONGO_DBNAME']
     app.config["MONGO_URI"] = config.DB_CONFIG['MONGO_URI']
     app.secret_key = config.DB_CONFIG['SECRET_KEY']
     ```
-- In the terminal line enter:
+- **In the terminal line enter:**
   - `python3 app.py` to run the app.
 ___
 ### Credits
