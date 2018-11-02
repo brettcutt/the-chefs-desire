@@ -15,8 +15,8 @@ if app.debug == True:
     app.config["MONGO_URI"] = config.DB_CONFIG['MONGO_URI']
 else:
     app.secret_key = os.environ.get('SECRET_KEY')
-    app.config["MONGO_DBNAME"] = os.environ.get("DBS_NAME")
-    app.config["MONGO_URI"] = os.environ.get("MONGODB_URI")
+    app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
+    app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
     
 mongo = PyMongo(app)
 
