@@ -6,8 +6,15 @@ to use Mongodb(NoSql) as it had a more flexible and rich approach to storing and
 
 # Table of Contents
 1. [UX](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#ux)
-2. [Technologies, Libraries and Languages](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#technologies,-libraries-and-languages)
-3. [Third Example](#third-example)
+   - [Strategy](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#strategy)
+   - [Scope](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#scope)
+       - [User registration and account](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#user-registration-and-account)
+       - [Header and Footer](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#header-and-footer)
+2. [Technologies, Libraries and Languages](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#technologies-libraries-and-languages)
+3. [Testing](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#testing)
+4. [Deployment](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#deployment)
+5. [Running the code locally](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#running-the-code-locally)
+6. [Credits](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#credits)
 ___
 
 ## UX
@@ -160,7 +167,7 @@ statements to cover each outcome of the search possibilities.
   
   ___
 
-### Deployment
+## Deployment
 - In heroku
    - Created a new app
 - **In the terminal command line entered:**
@@ -197,7 +204,7 @@ statements to cover each outcome of the search possibilities.
 - Find the code running here:
    - https://the-chefs-desire.herokuapp.com/
 
-### Running the code locally
+## Running the code locally
 - **In the terminal command line enter:**
    - `git clone https://github.com/brettcutt/the-chef-desire.git`
    - `sudo pip3 install flask`
