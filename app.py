@@ -3,14 +3,21 @@ import json
 from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-import config
+
 
 app = Flask(__name__)
 
-app.secret_key = config.DB_CONFIG['SECRET_KEY']
-app.config["MONGO_DBNAME"] = config.DB_CONFIG['MONGO_DBNAME']
-app.config["MONGO_URI"] = config.DB_CONFIG['MONGO_URI']
-
+app.debug = False
+if app.debug == True:
+    import config
+    app.secret_key = config.DB_CONFIG['SECRET_KEY']
+    app.config["MONGO_DBNAME"] = config.DB_CONFIG['MONGO_DBNAME']
+    app.config["MONGO_URI"] = config.DB_CONFIG['MONGO_URI']
+else:
+    app.secret_key = os.environ.get('SECRET_KEY')
+    app.config["MONGO_DBNAME"] = os.environ.get("DBS_NAME")
+    app.config["MONGO_URI"] = os.environ.get("MONGODB_URI")
+    
 mongo = PyMongo(app)
 
 
@@ -659,4 +666,4 @@ if __name__ == '__main__':
         host=os.environ.get("IP"),
         port=int(
             os.environ.get('PORT')),
-        debug=True)
+        debug=False)
