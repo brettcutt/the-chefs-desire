@@ -510,8 +510,12 @@ table {
 
 @media (max-width: 767px) {
     .triggered_search_box {
-        top: 0px;
+        top: 5vh;
     }
+    .inner-box {
+    height: 90vh;
+    overflow: scroll;
+}
 }
 
 .margin-top-20 {
