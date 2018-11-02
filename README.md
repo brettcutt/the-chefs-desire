@@ -14,6 +14,8 @@ ___
 
 ### Scope
 #### Features
+##### User registration and account
+- A user can create an account and have their own unique username. This username will be used to identify a recipe belonging to that user.
 
 ##### Header and Footer
 - The site name is displayed in the upper left hand corner of the page as a clickable logo that redirects to the home page.
@@ -54,7 +56,11 @@ a register button and a close button.
 - Any created recipes will be displayed on this view.
 
 ##### Add and Edit Recipe
-- These pages only have the form inputs for the information of the recipe the user is adding or editing.
+- These pages have the form inputs for the information of the recipe the user is adding or editing.
+- When adding a recipe, the users unique username is also added to the recipe document and this is how these recipes are accessed in the my recipes page.
+
+##### Delete Recipe
+- A button displayed on the users recipe to delete it from the collection.
 ___
 ### Technologies, Libraries and Languages
 - Python
@@ -146,23 +152,73 @@ statements to cover each outcome of the search possibilities.
 
 ### Deployment
 - In heroku
-   -Created a new app
-- In the terminal command line enter:
+   - Created a new app
+- In the terminal command line entered:
    - `heroku login` Entered username and password.   
    - `git init` to Intilised a git repository.
    - `git remote add heroku https://the-chefs-desire.herokuapp.com/` to link the GitHub repository to the Heroku app.
    - `pip3 freeze --local > requirements.txt` Creates a .txt file which tells Heroku what dependencies the project is using.
    - `echo web: python run.py >procfile` Tells Heroku that this project is a web app and that "app.py" is going the run it.
    - `ps:scale web=1`
-   - `git add`
-   - `git commit -m "message"`
+   
+- In app.py set the app.config variables so heroku can find them.
+   ```
+   app.secret_key = os.environ.get(<mark>'SECRET_KEY'</mark>)
+   app.config["MONGO_DBNAME"] = os.environ.get(<mark>"MONGO_DBNAME"</mark>)
+   app.config["MONGO_URI"] = os.environ.get(<mark>"MONGO_URI"</mark>)
+   ```
+- In the terminal line entered:
+  
+  - `git add`
+  - `git commit -m "message"`
   -  `git push -u heroku master` pushes the project to Heroku.
-- In heroku
+ 
+- In heroku:
    - Go to the project > setting > config vars
-   - IP = `0.0.0.0`
-   - PORT =  `8080`
+   ```
+   IP = `0.0.0.0`
+   PORT =  `8080`
+   <mark>SECRET_KEY</mark> = |secret key|
+   <mark>MONGO_DBNAME</mark> = |database name|
+   <mark>MONGO_URI</mark> = mongodb://|username|:|password|@ds249233.mlab.com:49233/|database name|
+   ```
    - More > restart all dynos
 
+- Find the code running here:
+   - https://the-chefs-desire.herokuapp.com/
+
+### Running the code locally
+- In the terminal command line enter:
+   1. `git clone https://github.com/brettcutt/the-chef-desire.git`
+   2. `sudo pip3 install flask`
+   3. `sudo pip3 install pymongo`
+   4. `sudo pip3 install flask_pymongo`
+- Set up a database in mlabs
+   1. Create an account.
+   2. Create a new deployment (database). The name of the database will be the name entered into the `|database name|` in steps below.
+   3. Create a new user. Set a username and password for that database.
+   4. Take note of the MongoDB URI after creating a user e.g. `mongodb://|yourusername|:|yourpassword|@ds249233.mlab.com:49233/|yourdatabasename|`. This will be entered in steps below.
+   4. Create 4 collections called `'recipe', 'allergens', 'cuisines' `and` 'user_details'`.
+   5. In `the-meal-ponderer/data` directory copy the data from `allergen_category.json` and `allergen_category.json` and paste it into the `allergens` and `cuisines` collection as a document.
+- In the project folder create a `config.py` file.
+   1. In the terminal line enter `echo 'config.py' > gitignore` to hide the `config.py` file.
+   2. In the config.py file enter the following: 
+    ```
+    <span style="background-color: orange"> DB_CONFIG </span>= {   
+        '<mark> MONGO_DBNAME </mark>':'|database name|',
+        '<mark> MONGO_URI </mark>': 'mongodb://|username|:|password|@ds249233.mlab.com:49233/|database name|'
+        '<mark> SECRET_KEY </mark>': '|secret key|'
+    }
+    ```
+    3. In app.py, set the app.config variables to the variables set in the <span style="background-color: lightgreen">config</span>.py file
+    ```
+    import <span style="background-color: lightgreen">config</span>
+    app.config["MONGO_DBNAME"] = <span style="background-color: lightgreen">config</span>.<span style="background-color: orange">DB_CONFIG</span>['<mark>MONGO_DBNAME</mark>']
+    app.config["MONGO_URI"] = <span style="background-color: lightgreen">config</span>.<span style="background-color: orange">DB_CONFIG</span>['<mark>MONGO_URI</mark>']
+    app.secret_key = <span style="background-color: lightgreen">config</span>.<span style="background-color: orange">DB_CONFIG</span>['<mark>SECRET_KEY</mark>']
+    ```
+- In the terminal line enter:
+  - `python3 app.py` to run the app.
 ___
 ### Credits
 #### Bits and pieces of code that helped me along the way.
@@ -207,3 +263,15 @@ ___
    - GitHub icon
    - plus and remove button icons
    - timer and cutlery icons
+
+###Acknowledgements
+- My mentor Mossa Hassan
+   - Credit is due to my mentor when it came to the unit testing. There were alot emails trying to get particular tests to pass, The following is that code that is implementd in basic_test.py.
+   - content_type='multipart/form-data'
+   - data=dict( "list" )
+   - register_username='m' + str(random.randint(1,1000))
+   - print(dir(response))
+   - 
+- Slack Forum (Code Institute Student)
+   - Thanks to a discussion in the forum it allowed me to follow along to the idea of setting my app config variables
+   in a config.py file and importing that into the app.py file.
