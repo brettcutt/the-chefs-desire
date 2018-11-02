@@ -6,8 +6,18 @@ from flask_testing import TestCase
 from app import app
 import random
 
+
 class finding_views(unittest.TestCase):
-    """ This is a routing test to find the various paths the the site pages"""
+    """ This is a routing test to find the various paths to the site pages"""
+    
+    """ NOTE CREDIT IS DUE to my mentor Moosa Hassan for the following lines of helping code:
+        content_type='multipart/form-data'
+        data=dict( "list" )
+        register_username='m' + str(random.randint(1,1000))
+        print(dir(response))
+        """
+    
+    
     ############################
     #### setup and teardown ####
     ############################
@@ -46,13 +56,13 @@ class finding_views(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         print("single recipe found")"""
     
-    
+    """
     # Ensure the add_recipe page can be reached
     def test_add_recipe(self):
         response = app.test_client(self).get('/add_recipe', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         print("add recipe found//", "response location =", response.location) 
-        
+        """
     """
     # Ensure the insert_recipe page can be reached
     def test_insert_recipe(self):

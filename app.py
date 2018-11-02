@@ -3,12 +3,13 @@ import json
 from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+import config
 
 app = Flask(__name__)
-app.secret_key = os.urandom(22)
 
-app.config["MONGO_DBNAME"] = "meal-ponderer"
-app.config["MONGO_URI"] = "mongodb://admin:Mealponderer1@ds131763.mlab.com:31763/meal-ponderer"
+app.secret_key = config.DB_CONFIG['SECRET_KEY']
+app.config["MONGO_DBNAME"] = config.DB_CONFIG['MONGO_DBNAME']
+app.config["MONGO_URI"] = config.DB_CONFIG['MONGO_URI']
 
 mongo = PyMongo(app)
 
@@ -232,6 +233,7 @@ through the endpoint, that users session ends and returns them to the index
 page."""
 @app.route('/my_recipes/<username>')
 def my_recipes(username):
+    pop_flask_message() # FUNCTION 3
     if session['user'] == username:
         user = mongo.db.user_details.find_one({"username": username})
         user_recipes = mongo.db.recipe.find({"username": session['user']})

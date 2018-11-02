@@ -5,7 +5,7 @@
 
     <p class="my-recipe-heading">Hello {{ user.first_name }}</p>
     
-    
+<!--THE COUNT AS TO HOW MANY RECIPES A USER HAS ADDED--> 
 <div class="row found_recipe_row">
     <div class="col-xs-12 center margin-bottom-20">
     {% if recipe_count == 0 %}
@@ -24,7 +24,7 @@
     </div>
     
         
-    
+<!--THE ROW FOR INDIVIDUAL RECIPES--> 
 {% for recipe in user_recipes %}
     <div class="single-recipe-result col-xs-12 col-sm-4 col-md-3">
         <div class="inner_recipe_box">

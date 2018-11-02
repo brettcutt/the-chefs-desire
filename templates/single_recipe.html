@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 <main class="container main-container margin-top-20">
     <div class="single-recipe">
-        <!--SEARCH BOX-->
+        <!--FORMS FOR SEARCHING CRITERIA BY CUISINE, ALLERGEN OR INGREDIENT -->
         <div class="row center">
 
         <div class="col-xs-12 inline">
@@ -169,7 +169,8 @@
             <div class="col-xs-12 center margin-bottom-10">
                 <span><b>By {{ recipe.author }}</b></span>
             </div>
-
+            
+            <!--THE DELETES AND EDIT BUTTON IF THE USER IS ADMIN OR THE CONTRIBUTER OF THE RECIPE-->
             {% if 'user' in session %} {% if username == recipe.username or username == 'admin' %}
             <div class="col-xs-12 center margin-bottom-10">
                 <a class="signin-btn edit-btn" href="{{ url_for('edit_recipe', recipe_id=recipe._id)}}">Edit Recipe</a>
@@ -183,7 +184,7 @@
                 </div>
                 {% endif %} {% else %}
 
-
+                <!--IF A USER IS NOT IN SESSION, CLICKING THE HEART ICON TRIGGERS THIS POP UP-->
                 <div class="comfirmation">
                     <div class="inner-comfirmation center">
                         <p><b>Only registered users can like recipes.</b></p>
@@ -206,8 +207,9 @@
             </div>
         </div>
 
-        <!--MOBILE AND TABLET PICTURE-->
+        <!--IMAGE, RECIPE LIKES AND RECIPE VIEWS ON MOBILE AND TABLET-->
         <div class="row recipe_image_container hidden-md hidden-lg">
+            
             <div class="col-xs-12">
                 <img class="single-recipe_image" src="{{ recipe.image }}" alt="{{ recipe.name}}">
             </div>
@@ -231,9 +233,9 @@
 
         </div>
 
-
-
         <div class="row margin-bottom-10">
+            
+            
             <!--INGREDIENT CONTAINER-->
             <div class="col-xs-12 col-sm-12 col-md-6">
                 <div class="row recipe_image_container">
@@ -279,7 +281,7 @@
                 </div>
             </div>
 
-            <!--IMAGE CONTAINER-->
+            <!--IMAGE, LIKES AND VIEWS CONTAINER FOR DESKTOP-->
             <div class="col-xs-12 col-sm-12 col-md-6">
                 <div class="row recipe_image_container">
 
@@ -290,20 +292,28 @@
 
                         <br>
 
-                        <!--LIKES AND VIEWS DESKTOP-->
                         <div class="row center margin-bottom-10">
                             <div class="view_and_like">
                                 <i class="far fa-eye "></i> <span> <b>{{ recipe.views }} views</b></span>
                             </div>
                             <div class="view_and_like">
-                                {% if 'recipe_liked' in session %} {% if recipe_liked == 2 %}
-                                <i  class="guest-heart far fa-heart"></i> {% elif username == recipe.username %}
-                                <i class="creator-heart far fa-heart"></i> {% elif recipe_liked == 0 %}
+                                <!--IF THE USER IS NOT IN SESSION A CLICK ON THE HEART TRIGGER A POP UP
+                                    IF THE USER IS THE RECIPE CONTRIBUTER THE HEART REMAINS EMPTY
+                                    IF THE USER IS IN SESSION AND NOT CLICKED ON THE HEART, THE HEART IS EMPTY
+                                    IF THE USER IS IN SESSION AND HAS CLICKED ON THE HEART, THE HEART IS SOLID -->
+                                {% if 'recipe_liked' in session %} 
+                                {% if recipe_liked == 2 %}
+                                <i  class="guest-heart far fa-heart"></i> 
+                                {% elif username == recipe.username %}
+                                <i class="creator-heart far fa-heart"></i> 
+                                {% elif recipe_liked == 0 %}
                                 <a href="{{ url_for('update_like', recipe_id=recipe._id)}}">
-                                        <i  class="far fa-heart"></i>
-                                    </a> {% elif recipe_liked == 1 %}
-                                <i  class="fas fa-heart heart-2"></i> {% endif %} {% endif %}
-
+                                    <i  class="far fa-heart"></i>
+                                </a>
+                                {% elif recipe_liked == 1 %}
+                                <i  class="fas fa-heart heart-2"></i> 
+                                {% endif %} 
+                                {% endif %}
 
                                 <span> <b>{{ recipe.likes }} likes</b></span>
                             </div>

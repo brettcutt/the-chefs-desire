@@ -5,7 +5,7 @@
     <div class="row">
         <p class="my-recipe-heading">Recipes</p>
     </div>
-<!--SEARCH BAR-->
+<!--FORMS FOR SEARCHING CRITERIA BY CUISINE, ALLERGEN OR INGREDIENT -->
 <div class="row center margin-bottom-20">
 
         <div class="col-xs-12 inline">
@@ -171,6 +171,7 @@
     </div>
 </div>
 
+<!--THE ROW FOR THE 4 MOST POPULAR RECIPES -->
 <div class="row found_recipe_row">
 {% for recipe in most_popular_recipes %}
 
@@ -230,6 +231,7 @@
     </div>
 </div>
 
+<!--THE ROW FOR THE 4 MOST VIEWED RECIPES -->
 <div class="row found_recipe_row">
 {% for recipe in most_viewed_recipes %}
 
@@ -289,6 +291,7 @@
     </div>
 </div>
 
+<!--THE ROW FOR THE FIRST 4 RECIPES OF ALL RECIPES IN ALPHABETICAL ORDER -->
 <div class="row found_recipe_row">
 {% for recipe in all_recipes %}
 

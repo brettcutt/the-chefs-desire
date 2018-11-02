@@ -1,6 +1,7 @@
 $(document).ready(function() {
-    /*INDEX PAGE CHANGING PICTURE*/
-    /*Hover to change opacity of picture and text*/
+    /*INDEX PAGE CHANGING PICTURE HOVER*/
+    
+    /*Hovering to change opacity of the picture and text in index.html*/
     $(".displayed-image").mouseenter(function() {
         $(".overlay-image-heading").stop().animate({ "color": "#fff" }, 'slow');
         $(".displayed-image").stop().animate({ "opacity": "1" }, 'slow');
@@ -17,19 +18,26 @@ $(document).ready(function() {
         $(".overlay-image-heading").stop().animate({ "color": "color: rgba(255,255,255,.7);" }, 'slow')
         $(".displayed-image").stop().animate({ "opacity": ".9" }, 'slow');
     });
-
-    /*Adds class names to div elements so this function has something to refer to*/
+    
+    /*INDEX PAGE CHANGING PICTURE */
+    /* In index.html this adds a class "change-picture" + an incremented number by + 1 to each element that has the same "add-class" class */
     $('.add-class').each(function(i) {
         $(this).attr('class', "box change-picture" + i);
     });
 
+    /*When the page loads show "change-picture0" straight away*/
     $('.change-picture0').show('fade', 500).delay(6000)
     $('.change-picture0').hide('fade', 500)
+    
+    
+    /*When change-picture0 hides after the time delay, the change-picture1 time delay to show will happen*/
+    /*After change-picture1 hides the count will increment by 1 starting the new 'changepicturei' class */
     var count = 1
     setInterval(function() {
         $('.change-picture' + count).show('fade', 500).delay(6000)
         $('.change-picture' + count).hide('fade', 500)
 
+    /*Once the count gets to 4 reset the count to 0*/
         if (count == 4) {
             count = 0
         }
@@ -39,20 +47,23 @@ $(document).ready(function() {
         }
     }, 7000);
 
-    /*RECIPE DELETE BUTTON*/
+    var current = $(window).scrollTop();
+    /*SHOW DELETE CONFIRMATION POP UP WHEN DELETE BUTTON CLICKED*/
     $(".delete-btn").click(function() {
         $(".comfirmation").show('fade', 500)
     });
-
+    
+    /*SHOW POP UP FOR CHOICE TO REGISTER AFTER GUEST CLICKING EMPTY HEART*/
     $(".guest-heart").click(function() {
         $(".comfirmation").show('fade', 500)
     });
-
+    
+    /*DELETE OR REGISTER CHOICE POP UP CLOSE ENABLE SCROLLING*/
     $(".comfirmation-no").click(function() {
         $(".comfirmation").hide('fade', 500)
         $(window).off('scroll');
     })
-
+    /*CLOSE LIKE POPUP WHEN REGISTER BUTTON CLICKED*/
     $(".like-register").click(function() {
         $(".comfirmation").hide('fade', 500)
     });
@@ -77,7 +88,7 @@ $(document).ready(function() {
             scrollTop: 0
         }, 800);
         $(window).scroll(function() {
-            $(window).scrollTop();
+            $(window).scrollTop(current);
         });
 
     });
@@ -86,7 +97,7 @@ $(document).ready(function() {
         $(".register-page").hide('fade')
         $(".signin-page").show('fade', 500)
         $(window).scroll(function() {
-            $(window).scrollTop();
+            $(window).scrollTop(current);
         });
 
     });

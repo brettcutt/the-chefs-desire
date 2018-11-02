@@ -1,7 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
 <main class="container main-container margin-top-20">
-    <!--SEARCH BAR-->
     <div class="row">
         {% if 'search_title' in session %}
             {% if search_title == 1 %}
@@ -17,6 +16,7 @@
         {% endif %}
         
     </div>
+    <!--FORMS FOR SEARCHING CRITERIA BY CUISINE, ALLERGEN OR INGREDIENT -->
     <div class="row center margin-bottom-20">
 
         <div class="col-xs-12 inline">
@@ -174,6 +174,7 @@
         </div>
     </div>
     
+    <!--THE COUNT AS TO HOW MANY RECIPES WERE FOUND--> 
     <div class="row">
         <div class="col-xs-12 center">
                 
@@ -196,13 +197,11 @@
         </div>
     </div>
 
-
+<!--THE ROW FOR INDIVIDUAL RECIPES--> 
 
     <div class="row found_recipe_row">
 
         {% for recipe in recipe_category %}
-
-
 
         <div class="single-recipe-result col-xs-12 col-sm-4 col-md-3">
             <div class="inner_recipe_box">
