@@ -18,6 +18,7 @@ to use Mongodb(NoSql) as it had a more flexible and rich approach to storing and
        - [Add and Edit Recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#add-and-edit-recipe)
        - [Delete Recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#delete-recipe)
     - [Features left to implement](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#features-left-to-implement)
+    - [Wire Frames](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#wire-frames)
 2. [Technologies, Libraries and Languages](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#technologies-libraries-and-languages)
    - [Manual Testing](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#manual-testing)
    - [Automated Tests](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#automated-tests)
@@ -91,6 +92,9 @@ a register button and a close button.
 
 ### Features left to implement
 - Reicpe reviews, so a user can leave a comment at the bottom of the recipe page.
+
+### Wire Frames
+- Click [here](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/wireframes/wireframes.md) for wireframe images.
 ___
 
 ## Technologies, Libraries and Languages
