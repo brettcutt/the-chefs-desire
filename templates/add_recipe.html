@@ -4,14 +4,14 @@
     <div class="col-xs-12">
         <p class="my-recipe-heading">Add a Recipe</p>
     </div>
-<div class=" col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+<div class=" center col-xs-12">
     <form class="" action="{{url_for('insert_recipe')}}" method="POST">
         
 <!--recipe name-->
 
         <fieldset>
             <legend>Recipe Name</legend>
-            <input type="text" name="name" id="name" placeholder="Name" class="" />
+            <input required type="text" name="name" id="name" placeholder="Name" class="" />
         </fieldset>
         
 <!--cuisine-->
@@ -19,7 +19,7 @@
         <fieldset id="cuisine_fieldset">
             <legend>Cuisine</legend>
             <div class="cuisine_container">
-            <select name="cuisine" class="cuisine" id="cuisine">
+            <select required name="cuisine" class="cuisine" id="cuisine">
                 <option disabled selected value="">Choose your option</option>
                 {% for item in cuisines_json.cuisine|sort %}
                 <option value="{{ item }}">{{ item }}</option>
@@ -39,8 +39,8 @@
                 
                     {% for item in allergens_json.allergen %}
                 <div class='allergen_checkbox'>
-                    <input class="{{ item }}"  name="allergens" type="checkbox" value="{{ item }}">
-                    <p class="{{ item }}1">{{ item }}</p>
+                        <input class="{{ item }}"  name="allergens" type="checkbox" value="{{ item }}">
+                        <p class="{{ item }}1">{{ item }}</p>
                 </div>
                 {% endfor%}
                 
@@ -52,14 +52,14 @@
 
         <fieldset>
             <legend>Recipe Description</legend>
-            <textarea name="description"  id="description" placeholder="Recipe Description" class=""></textarea>
+            <textarea required name="description"  id="description" placeholder="Recipe Description" class=""></textarea>
         </fieldset>
         
 <!--Ingredients-->
 
         <fieldset id="ingredients_fieldset">
             <legend>Ingredients</legend>
-            <input type="text" name="ingredients" class="ingredients inline" id="ingredients" placeholder="Ingredient" />
+            <input required type="text" name="ingredients" class="ingredients" id="ingredients" placeholder="Ingredient" /><br>
             <div class="spacer inline"></div>
             <i id="firsta" class="material-icons first-add duplicate pointer">add</i>
         </fieldset>
@@ -69,7 +69,7 @@
         <fieldset id="instructions_fieldset">
             <legend>Instructions</legend>
             
-            <input type="text" name="instructions" class="instructions" id="instructions" placeholder="Instruction" />
+            <input required type="text" name="instructions" class="instructions" id="instructions" placeholder="Instruction" /><br>
             <div class="spacer inline"></div>
             <i id="firstb" class="material-icons first-add duplicate pointer">add</i>
         </fieldset>
@@ -78,35 +78,35 @@
 
         <fieldset>
             <legend>Prep Time</legend>
-            <input type="text" name="prep_time" id="prep_time" placeholder="Prep Time" />
+            <input required type="text" name="prep_time" id="prep_time" placeholder="Prep Time" />
         </fieldset>
         
 <!--Cook time--> 
 
         <fieldset>
             <legend>Cook Time</legend>
-            <input type="text" name="cook_time" id="cook_time" placeholder="Cook Time" />
+            <input required type="text" name="cook_time" id="cook_time" placeholder="Cook Time" />
         </fieldset>
         
 <!--recipe yield-->
 
         <fieldset>
             <legend>Recipe Yield</legend>
-            <input type="number" name="recipe_yield" id="recipe_yield" placeholder="Servings" />
+            <input required type="number" name="recipe_yield" id="recipe_yield" placeholder="Servings" />
         </fieldset>
         
 <!--Author-->
 
         <fieldset>
             <legend>Author</legend>
-            <input type="text" name="author" id="author" placeholder="Author" />
+            <input required type="text" name="author" id="author" placeholder="Author" />
         </fieldset>
         
 <!--Image-->
 
         <fieldset>
             <legend>Image</legend>
-            <input type="text" name="image" id="image" placeholder="http://url" />
+            <input required type="text" name="image" id="image" placeholder="http://url" />
         </fieldset>
         
 <!--Submit-->

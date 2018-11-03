@@ -75,8 +75,16 @@ body {
     top: 5px;
 }
 
+.remove-width {
+    width: 15px;
+}
+
+.remove_select {
+    width:15px;
+}
+
 .add-fourpx {
-    left: 4px;
+    left: 5.5px;
 }
 
 /* ///////////////////////////////////////default settings*/
@@ -117,12 +125,12 @@ h1 {
 h2,
 h3,
 h4 {
-    font-family: 'Indie Flower', cursive;
+    
     font-weight: bold;
 }
 
 .logo {
-    font-family: 'Josefin Slab', serif;
+    
     color: #fff;
     z-index: 2;
 }
@@ -136,7 +144,15 @@ h4 {
 }
 
 /* //////////////////////////////////////FORM, INPUTS AND BUTTONS*/
+input[type=checkbox] {
+    height: 17px;
+  width: 17px;
+  
+}
 
+input:not([type=checkbox]):not([type=submit]) {
+    border-radius: 7.5px;
+}
 form fieldset {
     margin-bottom: 20px;
 }
@@ -148,7 +164,6 @@ form legend {
 
 fieldset select,
 fieldset input:not([type=checkbox]):not([type=submit]) {
-    display: inline-block;
     height: 30px;
     width: 500px;
 }
@@ -157,76 +172,105 @@ textarea {
     display: inline-block;
     width: 500px;
     height: 150px;
+    border-radius: 7.5px;
 }
 
 .allergens_container {
     display: flex;
     flex-wrap: wrap;
     width: 500px;
+    text-align: center;
+    margin: 0 auto;
 }
 
 .allergen_checkbox {
     width: 33%;
+    display: flex;
 }
 
+.allergen_checkbox div {
+}
+.allergen_checkbox input {
+    flex: 2;
+}
+
+.allergen_checkbox p {
+    flex: 3;
+    text-align: left;
+}
+
+.cuisine, .ingredients, .instructions {
+    margin-left: 30px;
+    margin-bottom: 3px;
+    
+}
+.ingredients, .instructions {
+    display: inline-block;
+    margin: 0 auto;
+    margin-bottom: 3px;
+}
+
+.margin-left {
+    margin-left: 50px;
+}
+
+.margin-left-45 {
+    margin-left: 45.5px;
+    margin-bottom: 3px;
+}
 .spacer{
-        width: 500px;
+    display: inline-block;
+        width: 520px;
         height: 20px
     }
-
 @media (max-width: 767px) {
     fieldset select,
     fieldset input:not([type=checkbox]):not([type=submit]) {
-        width: 180px;
-        margin-left: 17%;
+        width: 60%;
     }
 
     textarea {
-        width: 180px;
-        margin-left: 17%;
+        width: 60%;
     }
     .allergens_container {
         display: block;
-        width: 180px;
-        margin-left: 17%;
+        width: 60%;
     }
     .allergen_checkbox {
         width: 100%;
 
     }
     .spacer{
-        margin-left: 17%;
-        width: 180px;
-        height: 20px
+        width: 60%;
+        height: 20px;
+        margin-left: 30px;
     }
-.first-add {
+    .margin-left {
+    margin-left: 50px;
+    
 }
+.first-add {
+    left: -2.5px;
+}
+    
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
     fieldset select,
     fieldset input:not([type=checkbox]) {
-        width: 370px;
+        width: 500px;
     }
 
     textarea {
-        width: 370px;
-    }
-    .allergens_container {
-        display: block;
-        width: 370px;
-    }
-    .allergen_checkbox {
-        width: 100%;
-        margin-left: 10px;
+        width: 500px;
     }
     
-
 }
 
 input[type=checkbox] {
     float: left;
 }
+
 
 
 .close-btn,
@@ -248,9 +292,8 @@ input[type=submit] {
     cursor: pointer;
 }
 
-.allergens,
-.instructions,
-.ingredients {
+.allergens
+ {
     display: inline-block;
 }
 
@@ -309,11 +352,15 @@ table {
     background-color: rgba(255, 255, 255, .95);
     margin: 0 auto;
     border-radius: 10px;
+    border: 2px solid rgba(255,165,0,1)
 }
 
 .inner-register-page h2,
 .inner-signin-page h2 {
-    font-family: 'Josefin Slab', serif;
+    
+    border-bottom:1px solid #000;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .inner-register-page div,
@@ -453,7 +500,10 @@ table {
 
 
 /* ////////////////////////////////////////////// DEFINE SEARCH */
-
+#find_cuisine, #cuisine_category, .cuisine {
+    height: 27px;
+    border-radius: 7.5px;
+}
 .search-box {
     display: inline-block;
     background-color: rgba(255, 255, 255, .0);
@@ -506,14 +556,15 @@ table {
     text-align: left;
     border-radius: 10px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+    border:2px solid rgba(255, 165, 0,1);
 }
 
 @media (max-width: 767px) {
     .triggered_search_box {
-        top: 5vh;
+        top: 0vh;
     }
     .inner-box {
-    height: 90vh;
+    height: 100vh;
     overflow: scroll;
 }
 }
@@ -580,7 +631,7 @@ table {
 
 .index-tagline-p {
     color: #fff;
-    font-family: 'Josefin Slab', serif;
+    
     font-size: 25px;
     margin: 0;
 }
@@ -714,7 +765,7 @@ table {
     width: 300px;
     margin: 0 auto;
     color: rgba(255, 255, 255, .7);
-    font-family: 'Josefin Slab', serif;
+    
 }
 
 .overlay-hover {
@@ -729,7 +780,7 @@ table {
 
 .my-recipe-heading {
     color: #000;
-    font-family: 'Josefin Slab', serif;
+    
     font-size: 40px;
     font-weight: bolder;
     text-align: center;
@@ -915,7 +966,7 @@ ol li p {
     background-color: rgba(255, 165, 0, .7);
     border-radius: 20px;
     padding: 2.5px 7px;
-    font-family: 'Indie Flower', cursive;
+    
     font-weight: bold;
 }
 

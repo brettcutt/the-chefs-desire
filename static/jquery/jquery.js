@@ -155,16 +155,16 @@ $(document).ready(function() {
 
         if ($(this).attr('id') == 'firsta' || $(this).attr('id') == 'firstb' ) {
             $(this).append().prev().before(
-                '<br><input type="text" name="' + id_name + '" class="' + id_name + '" placeholder=""/>' +
-                ' <i class="material-icons duplicate pointer">add</i>' +
-                ' <i class="material-icons remove_duplicate pointer">remove</i>');
+                '<input type="text" name="' + id_name + '" class="margin-left-45 inline" placeholder=""/>' +
+                ' <i class="material-icons inline duplicate pointer">add</i>' +
+                ' <i class="material-icons inline remove_duplicate pointer">remove</i><br>');
         }
 
         else {
-            $(this).prev().prev().prev().append().after(
-                '<br><input type="text" name="' + id_name + '" class="' + id_name + '" placeholder=""/>' +
-                ' <i class="material-icons duplicate pointer">add</i>' +
-                ' <i class="material-icons remove_duplicate pointer">remove</i>');
+            $(this).prev().append().before(
+                '<input type="text" name="' + id_name + '" class="margin-left-45 inline" placeholder=""/>' +
+                ' <i class="inline material-icons duplicate pointer">add</i>' +
+                ' <i class="inline material-icons remove_duplicate pointer">remove</i><br>');
         }
 
     });
@@ -185,6 +185,7 @@ $(document).ready(function() {
             $(this).prev().clone().appendTo(".cuisine_container").before(select_remove_button)
             $(this).appendTo(".cuisine_container")
             $('.duplicate_select').addClass("add-fourpx")
+            $('.duplicate_select').removeClass("remove-width")
         }
     });
 
