@@ -1,4 +1,12 @@
 # Manual Testing
+Table Of Contents
+1. [Manual Tests](https://github.com/brettcutt/the-chefs-desire/blob/master/tests/testing.md#manual-tests)
+   - [Test descriptions](https://github.com/brettcutt/the-chefs-desire/blob/master/tests/testing.md#test-descriptions)
+   - [Manual Test check list](https://github.com/brettcutt/the-chefs-desire/blob/master/tests/testing.md#manual-test-checklist)
+       - [Notes](https://github.com/brettcutt/the-chefs-desire/blob/master/tests/testing.md#notes)
+2. [Form Testing](https://github.com/brettcutt/the-chefs-desire/blob/master/tests/testing.md#form-testing)
+## Manual Tests
+### Test descriptions
 - A. Base.html(header and footer)
   1. Checking all navigation buttons redirect to the appropriate pages.
   2. Non signed in users navbar displays 'register' and 'sign in' buttons.
@@ -62,6 +70,8 @@ of the page and opens the register form.
   2. The Add and Remove buttons work on their input fields.
   3. On submission all the correct values are stored or deleted from the database.
   4. On submission the page is redirected to that recipes 'single recipe' page.
+
+### Manual Test checklist
 
 |Pass|Fail|
 |:--:|:--:|

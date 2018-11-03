@@ -5,16 +5,32 @@ to use Mongodb(NoSql) as it had a more flexible and rich approach to storing and
 
 
 # Table of Contents
+
 1. [UX](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#ux)
    - [Strategy](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#strategy)
-   - [Scope](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#scope)
+   - [Existing Features](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#existing-features)
        - [User registration and account](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#user-registration-and-account)
        - [Header and Footer](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#header-and-footer)
+       - [index](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#index)
+       - [Recipes](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#recipes)
+       - [Single Recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#single-recipe)
+       - [My recipes](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#my-recipes)
+       - [Add and Edit Recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#add-and-edit-recipe)
+       - [Delete Recipe](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#delete-recipe)
+    - [Features left to implement](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#features-left-to-implement)
 2. [Technologies, Libraries and Languages](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#technologies-libraries-and-languages)
+   - [Manual Testing](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#manual-testing)
+   - [Automated Tests](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#automated-tests)
+   - [Testing Issues](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#testing-issues)
+   - [Validation](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#validation)
 3. [Testing](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#testing)
 4. [Deployment](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#deployment)
 5. [Running the code locally](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#running-the-code-locally)
 6. [Credits](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#credits)
+   - [Bits and pieces of code that helped me along the way](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#bits-and-pieces-of-code-that-helped-me-along-the-way)
+   - [Information for the recipes](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#information-for-the-recipes)
+   - [media](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#media)
+   - [Acknowledgements](https://github.com/brettcutt/the-chefs-desire/blob/master/README.md#acknowledgements)
 ___
 
 ## UX
@@ -25,9 +41,7 @@ ___
 - As a user I would expect a recipe to display atleast a picture, its ingredients and instructions of how to make the recipe. 
 - As a user I would like to judge the quality of a recipe on other users decisions.
 
-
-### Scope
-#### Features
+### Existing Features
 ##### User registration and account
 - A user can create an account and have their own unique username. This username will be used to identify a recipe belonging to that user.
 
@@ -77,6 +91,9 @@ a register button and a close button.
 
 ##### Delete Recipe
 - A button displayed on the users recipe to delete it from the collection.
+
+### Features left to implement
+- Reicpe reviews, so a user can leave a comment at the bottom of the recipe page.
 ___
 
 ## Technologies, Libraries and Languages
@@ -126,10 +143,10 @@ ___
 ___
 
 ### Testing
-##### Manual testing
+#### Manual testing
 - Click [here](https://github.com/brettcutt/the-chefs-desire/blob/master/tests/testing.md) for manual testing 
 
-##### Automated Tests   
+#### Automated Tests   
 - Click [here](https://github.com/brettcutt/the-chefs-desire/blob/master/test_basic.py) for automated testing
 
 #### Testing Issues
@@ -237,6 +254,7 @@ statements to cover each outcome of the search possibilities.
 - **In the terminal line enter:**
   - `python3 app.py` to run the app.
 ___
+
 ### Credits
 #### Bits and pieces of code that helped me along the way.
 - jquery function to add input fields   
@@ -266,7 +284,14 @@ ___
 - Return documents without specific attribute
    - https://docs.mongodb.com/manual/reference/operator/query/nin/
 
-#### The information of the recipes
+- creating a table of content in the README.md
+   - https://www.setcorrect.com/portfolio/work11/
+
+- Finding my local datetime to implement added recipe date.
+   - https://stackoverflow.com/questions/25837452/python-get-current-time-in-right-timezone
+   
+
+#### Information for the recipes
 - the recipe: name, cuisine, ingredients, instructions and images came from `https://www.themealdb.com/api.php`
 - The recipe: prep time, cook time and servings came from external recipe sites.  
 - the recipe descriptions were googled by their recipe name and obtained from wikipedia 
