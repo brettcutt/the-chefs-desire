@@ -8,7 +8,7 @@ import pytz
 
 app = Flask(__name__)
 
-app.debug = True
+app.debug = False
 if app.debug == True:
     import config
     app.secret_key = config.DB_CONFIG['SECRET_KEY']
@@ -673,4 +673,4 @@ if __name__ == '__main__':
         host=os.environ.get("IP"),
         port=int(
             os.environ.get('PORT')),
-        debug=True)
+        debug=False)

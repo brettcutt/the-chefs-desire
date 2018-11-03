@@ -17,14 +17,12 @@ class finding_views(unittest.TestCase):
         print(dir(response))
         """
     
-    
     ############################
     #### setup and teardown ####
     ############################
  
     # executed prior to each test
     def setUp(self):
-        
         app = Flask(__name__)
         app.app_context().push()
         app.config['SERVER_NAME'] 
@@ -98,8 +96,11 @@ class finding_views(unittest.TestCase):
         response = app.test_client(self).post('/update_recipe/5bd1616413092517e8e05062', follow_redirects=False)
         self.assertEqual(response.status_code, 302)
         print("update recipe found")"""
+    
+    
     """
-    # Ensure the registration page can be reached and that it sends the correct data.
+    # Ensure the registration page can be reached and that it sends the correct data. For the purpose of 
+    this test change the register_username to something that can also be used to test the login.
     def test_registration(self):
         data=dict(
         register_first_name="testuserfirstname",
@@ -112,21 +113,32 @@ class finding_views(unittest.TestCase):
         response = app.test_client(self).post('/register', content_type='multipart/form-data', data=data, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Hello testuserfirstname", response.data)
-        print("register found//", "response location =", response.location) """
-        
-    """  
+        print("register found//", "response location =", response.location) 
+        """
+    """
     # Ensure the sign in page can be reached and that it sends the correct data.
     def test_login(self):
         data=dict(
-        signin_username="testuser123",
-        signin_password="t1"
+        signin_username="m496",
+        signin_password="testpassword"
         )
         response = app.test_client(self).post('/signin', content_type='multipart/form-data', data=data, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b"Hello testuser123", response.data)
+        self.assertIn(b"Hello testuserfirstname", response.data)
         self.assertNotIn(b"Hello admin", response.data)
         print(dir(response))
         print(response.status)"""
+    """ 
+    # Ensure the user hasn't been signed in with an incorrect password. 
+    def test_login_wrong_password(self):
+        data=dict(
+        signin_username="m496",
+        signin_password="wrongpassword"
+        )
+        response = app.test_client(self).post('/signin', content_type='multipart/form-data', data=data, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn(b"Hello testuserfirstname", response.data)
+        print(response.location)"""
         
     """   
     # Ensure the recipes page can be reached.
