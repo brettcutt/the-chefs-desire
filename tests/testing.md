@@ -17,20 +17,20 @@ Table Of Contents
   7. The GitHub icon opens a new page to my GitHub repository.
 
 - B. Registration form
-  1. The registration form records all user data and sends to the MongoDB database in the 'users_details' collection. 
+  1. The registration form records all user data and sends it to the MongoDB database in the 'users_details' collection. 
   2. After filling out the form the user is redirected to a personal 'my recipes' page.
   3. If the requested username is already in the database, the form will not submit and a flash message will display telling the user.
-  4. If the two password input fields don't match, the form won't be submitted and a flash message will display letting the user know.
+  4. If the two password input fields don't match, the form won't be submitted and a message will display letting the user know.
   5. The close button closes the registration form.
 
 - C. Sign In Form
   1. An incorrect username, password or both displays a flash message telling the user.
-  2. Successful input of a username and password redirect to the users to the 'my recipes' page.
+  2. Successful input of a username and password redirect users to the 'my recipes' page.
   3. The close button closes the sign in form.
 
 - D. Search forms/ buttons
   1. Each search button opens the appropriate search form.
-  2. The same button becomes highlighted on click and unhighlight on form close or other button click.
+  2. The same button becomes highlighted on click and unhighlight on form close or other button clicks.
   3. When criteria is searched, the page is redirected to the 'search results' page.
   4. The appropriate search criteria was found.
   5. The close button closes the search form.
@@ -42,7 +42,7 @@ Table Of Contents
   3. Signed in users have only the 'enter' button displaying under the tagline.
 
 - F. Recipes
-  1. All Images that are clicked on redirect to that recipes 'single recipe' page.
+  1. Images that are clicked redirect to that recipes 'single recipe' page.
   2. The 'See All' button redirect to more recipes of that sub category.
 
 - G. My Recipes
@@ -54,10 +54,10 @@ Table Of Contents
 - H. Single Recipe
   1. All the correct information is displayed.
   2. If the user is also the one who added the recipe, 'delete' and 'edit' buttons appear on the page.
-  3. Per session if the recipes is visited the view count goes up one point.
+  3. Per session if the recipes is visited the view count increses by one.
   4. A non account holder cannot like a recipe but will receive a message telling them that if they want to like a recipe, they need
 to register. Under the message is a 'register' and 'close' button. A click on the register button smooth scrolls to the top
-of the page and opens the register form.
+of the page and open the register form.
   5. An account holder can only like a recipe once and if the recipe is liked, the heart is disabled and remains solid red.
   6. If the user is also the one who added the recipe, The like button is disabled and the view count remains the same.
 
@@ -124,10 +124,10 @@ of the page and opens the register form.
 
 ##### Notes:
 - Safari:
-  - I'm running safari on windows, which the last update was back in 2012. This would suggest that this version of browser doesn't support some css or jquery attributes the same as other browsers.   
+  - I'm running safari on windows. The last version update was back in 2012. This would suggest that this version of browser doesn't support some css or jquery attributes the same as other browsers.   
   - The jquery add and remove buttons in the add and edit pages didn't work. I couldn't add more input fields to the cuisine, ingredient and instruction categories. 
   - The font-size was bigger than usual, which made the containers larger and out of place.
-  - This font awesome hearts also were not supported amd didn't show.
+  - The font awesome hearts also were not supported and didn't show.
 
 ### Form Testing
 - Creating a user account.

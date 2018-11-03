@@ -1,5 +1,5 @@
 # The Chefs Desire
-- This is the fourth milestone project for the Full-Stack software development course through Code Institute. I decided to base my project on the example brief given to the
+This is the fourth milestone project for the Full-Stack software development course through Code Institute. I decided to base my project on the example brief given to the
 the students of this course, which is to create a cookbook. The module before the project focused on creating databases following CRUD operations in MySql and NoSql. I decided
 to use Mongodb(NoSql) as it had a more flexible and rich approach to storing and accessing key/ values.
 
@@ -36,14 +36,14 @@ ___
 ## UX
 ### Strategy
 - As a user I would expect to be able to view various recipes based on different categories e.g.(cuisine, allergens, ingredient) 
-- As a user I would want to be able to create an account with my own username and password.
-- As an account holder I would be expect to have a personal page where they can add my own recipes, see the recipes and delete or edit them. 
+- As a user I would want to be able to create an account with my own unique username and password.
+- As an account holder I would be expect to have a personal page where they can add my own recipes, see the recipes, edit the recipes and delete them. 
 - As a user I would expect a recipe to display atleast a picture, its ingredients and instructions of how to make the recipe. 
 - As a user I would like to judge the quality of a recipe on other users decisions.
 
 ### Existing Features
 ##### User registration and account
-- A user can create an account and have their own unique username. This username will be used to identify a recipe belonging to that user.
+- A user can create an account and have their own unique username. This username will be used to log in and identify a recipe belonging to that user.
 
 ##### Header and Footer
 - The site name is displayed in the upper left hand corner of the page as a clickable logo that redirects to the home page.
@@ -52,16 +52,15 @@ ___
 - A GitHub icon in the footer redirects to my GitHub repository.
 
 ##### Index
-- This is the home page featuring a larger title to the whole site.
+- This is the home page featuring a larger title for the whole site.
 - There are appearing and disappearing images based on 5 random recipes images in the database.
 - A tagline is under the image to give knowledge to the user that they can create an account.
 - Under the tagline are two buttons. One to open a registration form and the other to redirect to more recipes.
 If an account holder is in session, the register button won't be on the home screen.
 
 ##### Recipes
-- There is a search bar that allows the user to define a search by cuisine, allergen, ingredient or by multiple options. This redirect to a new page with the
-search results.
-- This features three sub category sections with four different recipes in each. Each section has a 'see all' button to by directed to a page that 
+- There is a search bar that allows the user to define a search by cuisine, allergen, ingredient or by multiple options. This redirects to a new page on submission of the search results.
+- This features three sub category sections with four different recipes for those categories. Each section has a 'see all' button to by directed to a page that 
 has more of that type of sub category.
 
 ##### Single Recipe
@@ -77,20 +76,18 @@ has more of that type of sub category.
   - views and likes
 - The like button is clickable for account holders, and for non account holders a message displays stating they need to register to like the recipe. The message also contains
 a register button and a close button.
--An account holder which is also the creator of the recipe will have additional delete and edit buttons.
+- An account holder which is also the creator of the recipe will have additional delete and edit button.
 
 ##### My Recipes 
 - This section is for an account holder, where the user can add a recipes to contribute to the site.
-- Any created recipes will be displayed on this view.
+- Any created recipes will be displayed on this page.
 
 ##### Add and Edit Recipe
 - These pages have the form inputs for the information of the recipe the user is adding or editing.
 - When adding a recipe, the users unique username is also added to the recipe document and this is how these recipes are accessed in the my recipes page.
 
-
-
 ##### Delete Recipe
-- A button displayed on the users recipe to delete it from the collection.
+- A button is displayed on a recipe page if the user is also the page contributer. This will delete the recipe from the ddatabase collection.
 
 ### Features left to implement
 - Reicpe reviews, so a user can leave a comment at the bottom of the recipe page.
@@ -106,12 +103,12 @@ ___
   - https://www.mongodb.com/
 
 - Pymongo
-- The PyMongo distribution contains tools for interacting with MongoDB database from Python
-- https://api.mongodb.com/python/current/
+  - The PyMongo distribution contains tools for interacting with MongoDB database from Python
+  - https://api.mongodb.com/python/current/
 
 - Jquery was used on the following:
   - The changing image on the index page. 
-  - pop up registration, sign in, like message, mobile nav menu and search form.
+  - pop up registration, sign in, like message, mobile nav menu and the search form.
   - Adding and removing inputs in the add and edit pages.
   - https://jquery.com/
   
@@ -123,14 +120,14 @@ ___
   - Implement python code into html 5
 
 - Flask
-  - Redirecting and rendering of page views through python
+  - Redirecting and rendering of page route through python
   - http://flask.pocoo.org/
   - 
 - HTML 5
   - positioning and format of html elements.
 
 - CSS 3
-  - Style the HTML elements.
+  - Styling the HTML elements.
   
 - Font Awesome
   - the GitHub icon on the footer.
@@ -167,7 +164,7 @@ added the cuisine category as a json format to a separate py file.
 } )
 
    - After many different approaches and alterations to this code I just couldn't get it to work in a way that searched the different outcomes.
-The main problem I think was that the select tag is always giving a value, even if nothing is selected. To fix this I wrote if else
+The main problem I think was that the select tag was always giving a value, even if nothing was selected. To fix this I wrote if else
 statements to cover each outcome of the search possibilities.
 
 #### Validation
@@ -176,17 +173,17 @@ statements to cover each outcome of the search possibilities.
 - **css**
    - Checked with Jigsaw validator and received no errors.
 - **python**
-  - Formatted with autopep8 and checked with flake8. I still have lines that are too long but left them that way for my own readibility at the moment.
-  - sudo pip install --upgrade autopep8
-  - autopep8 --in-place --aggressive --aggressive app.py
-  - sudo pip install flake8
-  - flake8 app.py
+  - Formatted with autopep8 and checked with flake8. I still have lines that are too long but left them that way for my own readibility at the moment.   
+  `sudo pip install --upgrade autopep8`   
+  `autopep8 --in-place --aggressive --aggressive app.py`   
+  `sudo pip install flake8`   
+   `flake8 app.py`
   
   ___
 
 ## Deployment
 - In heroku
-   - Created a new app
+   - Created a new app and called it `the-chefs-desire`
 - **In the terminal command line entered:**
    - `heroku login` Entered username and password.   
    - `git init` to Intilised a git repository.
@@ -228,6 +225,7 @@ statements to cover each outcome of the search possibilities.
    - `sudo pip3 install pymongo`
    - `sudo pip3 install flask_pymongo`
 - **Set up a database in mlabs**
+   - https://mlab.com/welcome/
    - Create an account.
    - Create a new deployment (database). The name of the database will be the name entered into the `|database name|` in steps below.
    - Create a new user. Set a username and password for that database.
@@ -257,44 +255,50 @@ ___
 
 ### Credits
 #### Bits and pieces of code that helped me along the way.
-- jquery function to add input fields   
-   - https://www.youtube.com/watch?v=jSSRMC0F6u8
    
-- how to order a collection by a specific field.
+- Mongo how to order a collection by a specific field.
    - https://docs.mongodb.com/manual/reference/operator/meta/orderby/
 
-- Finding an ingredient by upper or lower case 
+- Mongo Finding an ingredient by upper or lower case .
    - https://stackoverflow.com/questions/10700921/case-insensitive-search-with-in
 
-- validate that at least one field is filled out in the advanced search
-   - https://www.sitepoint.com/community/t/validation-check-to-make-sure-at-least-one-field-is-filled-out/2329
-
-- request.referrer
-   - https://stackoverflow.com/questions/45040365/flask-redirect-to-page-then-come-back
-
-- multiple pymongo queries: find with "and" and "or"  
+- Mongo Return documents without a specific value.
+   - https://docs.mongodb.com/manual/reference/operator/query/nin/
+   
+- mongo multiple pymongo queries: find with "and" and "or"  .
    - https://stackoverflow.com/questions/40388657/query-mongodb-with-and-and-multiple-or
 
-- This helped me to disable scrolling when the search form appears.
+- Javascript validate that at least one field is filled out in the advanced search
+   - https://www.sitepoint.com/community/t/validation-check-to-make-sure-at-least-one-field-is-filled-out/2329
+   
+- jquery function to add input fields.   
+   - https://www.youtube.com/watch?v=jSSRMC0F6u8
+   
+- Jquery disable scrolling when the search form appears.
    - https://stackoverflow.com/questions/3656592/how-to-programmatically-disable-page-scrolling-with-jquery
 
-- Scroll to top
+- Jquery scroll to top.
    - https://stackoverflow.com/questions/5580350/jquery-cross-browser-scroll-to-top-with-animation
+   
+- Flask request.referrer.
+   - https://stackoverflow.com/questions/45040365/flask-redirect-to-page-then-come-back
+   
+- markdown commands.
+  - https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
-- Return documents without specific attribute
-   - https://docs.mongodb.com/manual/reference/operator/query/nin/
-
-- creating a table of content in the README.md
+- markdown creating a table of content in the README.md.
    - https://www.setcorrect.com/portfolio/work11/
 
-- Finding my local datetime to implement added recipe date.
+- python Finding my local datetime to implement added recipe date.
    - https://stackoverflow.com/questions/25837452/python-get-current-time-in-right-timezone
    
 
 #### Information for the recipes
 - the recipe: name, cuisine, ingredients, instructions and images came from `https://www.themealdb.com/api.php`
 - The recipe: prep time, cook time and servings came from external recipe sites.  
-- the recipe descriptions were googled by their recipe name and obtained from wikipedia 
+- the recipe descriptions were googled by their recipe name and obtained from wikipedia.
+- I used the free test api key from `https://www.themealdb.com/api.php` and no attribution was stated.
+- **All the information collect is for learning purposes.**
 
 
 #### media
@@ -308,13 +312,16 @@ ___
 
 ### Acknowledgements
 - My mentor Mossa Hassan
-   - Credit is due to my mentor when it came to the unit testing. There were alot emails trying to get particular tests to pass, The following is that code that is implementd in basic_test.py.
-   - content_type='multipart/form-data'
-   - data=dict( "list" )
-   - register_username='m' + str(random.randint(1,1000))
-   - print(dir(response))
-   - 
+   - Credit is due to my mentor when it came to the unit testing. There were alot emails trying to get particular tests to pass.
+  The following code came from Moosa and was implemented in basic_test.py.
+        ```
+        content_type='multipart/form-data'
+        data=dict( "list" )
+        register_username='m' + str(random.randint(1,1000))
+        print(dir(response))
+        ```
+    
 - Slack Forum (Code Institute Student)
-   - Thanks to a discussion in the forum it allowed me to follow along to the idea of setting my app config variables
-   in a config.py file and importing that into the app.py file.
+   - Thanks to a discussion in the forum it allowed me to follow along to the idea of setting up my apps config variables
+   in a config.py file and import that into the app.py file.
 
