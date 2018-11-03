@@ -3,11 +3,12 @@ import json
 from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-
+from datetime import date, datetime
+import pytz
 
 app = Flask(__name__)
 
-app.debug = False
+app.debug = True
 if app.debug == True:
     import config
     app.secret_key = config.DB_CONFIG['SECRET_KEY']
@@ -206,7 +207,7 @@ def logout():
 
 # ///////////////////////////////////////////////////////////// RECIPES (render)
 """ Returns three different recipe categories. The top 4 most liked recipes,
-The top 4 most viewed recipes and the first 4 recipes starting in 
+The 4 most recently added recipes and the first 4 recipes starting in 
 alphabetical order."""
 
 @app.route("/recipes")
@@ -214,8 +215,8 @@ def recipes():
     usernames = current_usernames() # FUNCTION 4
     most_popular_recipes = mongo.db.recipe.find(
         {"$query": {}, "$orderby": {"likes": -1}}).limit(4)
-    most_viewed_recipes = mongo.db.recipe.find(
-        {"$query": {}, "$orderby": {"views": -1}}).limit(4)
+    new_recipes = mongo.db.recipe.find(
+        {"$query": {}, "$orderby": {"submit_date": -1}}).limit(4)
     all_recipes = mongo.db.recipe.find(
         {"$query": {}, "$orderby": {"name": 1}}).limit(4)
 
@@ -224,7 +225,7 @@ def recipes():
     return render_template(
         'recipes.html',
         all_recipes=all_recipes,
-        most_viewed_recipes=most_viewed_recipes,
+        new_recipes=new_recipes,
         most_popular_recipes=most_popular_recipes,
         cuisines_json=cuisines_json,
         allergens_json=allergens_json,
@@ -415,14 +416,14 @@ def most_popular_recipes():
         recipe_count=recipe_count,
         usernames=usernames)
 
-""" Returns the top 10 documents with the most recipe views """
-@app.route("/most_viewed_recipes")
-def most_viewed_recipes():
+""" Returns the 10 most recently add recipes """
+@app.route("/new_recipes")
+def new_recipes():
     pop_flask_message() # FUNCTION 3
     usernames = current_usernames() # FUNCTION 4
     session["search_title"] = 2
     recipe_category = mongo.db.recipe.find(
-        {"$query": {}, "$orderby": {"views": -1}}).limit(10)
+        {"$query": {}, "$orderby": {"submit_date": -1}}).limit(10)
     recipe_count = None
     return render_template(
         'search_results.html',
@@ -569,6 +570,8 @@ infomation is inserted into a document and into the recipe collection."""
 
 @app.route("/insert_recipe", methods=['POST'])
 def insert_recipe():
+    local_time = pytz.timezone('Australia/Adelaide')
+    adelaide_now = str(datetime.now(local_time).strftime('%Y-%m-%d %H:%M:%S'))
     doc = recipe_database()
 
     username = if_user_in_session()  # FUNCTION 2
@@ -576,7 +579,7 @@ def insert_recipe():
     mongo.db.recipe.insert_one(doc)
     id_num = mongo.db.recipe.find_one(
         {'name': request.form.get('name'), 'username': username})
-
+    
     recipe_id = ""
     for key, value in id_num.items():
         if key == "_id":
@@ -585,6 +588,10 @@ def insert_recipe():
         "$set": {"views": 0}}, upsert=True)
     mongo.db.recipe.update_one({'_id': ObjectId(recipe_id)}, {
         "$set": {"likes": 0}}, upsert=True)
+        
+    mongo.db.recipe.update_one({'_id': ObjectId(recipe_id)}, {
+        "$set": {"submit_date":adelaide_now}}, upsert=True)
+        
     return redirect(url_for('single_recipe', recipe_id=recipe_id))
 
 # /////////////////////////////////////////////// EDIT RECIPE AND UPDATE RECIPE
@@ -666,4 +673,4 @@ if __name__ == '__main__':
         host=os.environ.get("IP"),
         port=int(
             os.environ.get('PORT')),
-        debug=False)
+        debug=True)

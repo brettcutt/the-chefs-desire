@@ -226,14 +226,14 @@
 
 <div class="row ordered-by-row">
     <div class="col-xs-12 col-sm-5">
-        <p class="ordered-by-title">Most Viewed Recipes</p>
-        <a href="{{url_for('most_viewed_recipes')}}" class="see-all">See All</a>
+        <p class="ordered-by-title">New Recipes</p>
+        <a href="{{url_for('new_recipes')}}" class="see-all">See All</a>
     </div>
 </div>
 
 <!--THE ROW FOR THE 4 MOST VIEWED RECIPES -->
 <div class="row found_recipe_row">
-{% for recipe in most_viewed_recipes %}
+{% for recipe in new_recipes %}
 
     <div class="single-recipe-result col-xs-12 col-sm-4 col-md-3">
         <div class="inner_recipe_box">
