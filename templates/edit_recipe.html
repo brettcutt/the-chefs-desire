@@ -1,11 +1,11 @@
 {% extends 'base.html' %} {% block content %}
-<main class="container main-container">
+<main class="container main-container margin-top-20">
 <div class="row">
     <div class="col-xs-12">
         <p class="my-recipe-heading">Edit Recipe</p>
     </div>
 <div class="center col-xs-12">
-    <form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" >
+    <form name="add_form" onSubmit="return valid_image()" action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" >
         
 <!--Recipe name-->
         <fieldset>
@@ -78,6 +78,13 @@
             <legend>Recipe Description</legend>
             <textarea required name="description" id="description" class="">{{ recipe.description }}</textarea>
         </fieldset>
+<!--Image-->
+
+        <fieldset>
+            <legend>Image</legend>
+            
+            <input required oninput="return checkImageExists()" type="text" name="image" id="image" value="{{ recipe.image }}" />
+        </fieldset>
         
 <!--Ingredients-->
 
@@ -85,10 +92,10 @@
             <legend>Ingredients</legend>
             {% for ingredient in recipe.ingredients %}
                 {% if loop.index == 1%}
-                <br><input required type="text" name="ingredients" class=" ingredients inline" value="{{ ingredient }}" />
+                <br><input required type="text" name="ingredient" class=" ingredients inline" value="{{ ingredient }}" />
                 
                 {% elif loop.index > 1%}
-                <br><input required type="text" name="ingredients" class="margin-left ingredients inline" value="{{ ingredient }}" />
+                <br><input required type="text" name="ingredient" class="margin-left ingredients inline" value="{{ ingredient }}" />
                 <i class="material-icons duplicate pointer">add</i>
                 <i class="material-icons remove_duplicate pointer">remove</i>
                 {% endif %}
@@ -105,9 +112,9 @@
             <legend>Instructions</legend>
             {% for instruction in recipe.instructions %}
                 {% if loop.index == 1%}
-                <br><input type="text" name="instructions" class="instructions inline"  value="{{ instruction }}" />
+                <br><input type="text" name="instruction" class="instructions inline"  value="{{ instruction }}" />
                 {% elif loop.index > 1%}
-                <br><input type="text" name="instructions" class="margin-left instructions inline"  value="{{ instruction }}" />
+                <br><input type="text" name="instruction" class="margin-left instructions inline"  value="{{ instruction }}" />
                 <i class="material-icons duplicate pointer">add</i>
                 <i class="material-icons remove_duplicate pointer">remove</i>
                 {% endif %}
@@ -145,16 +152,11 @@
             <input required type="text" name="author" id="author" value="{{ recipe.author }}" />
         </fieldset>
         
-<!--Image-->
-
-        <fieldset>
-            <legend>Image</legend>
-            <input required type="text" name="image" id="image" value="{{ recipe.image }}" />
-        </fieldset>
         
 <!--Submit-->
 
         <div class="center margin-bottom-20">
+            <p id="image-validation"></p>
             <input class="inline" type="submit" value="Save" />
         </div>
         

@@ -1,11 +1,11 @@
 {% extends 'base.html' %} {% block content %}
-<main class="container main-container">
+<main class="container main-container margin-top-20">
 <div class="row">
     <div class="col-xs-12">
         <p class="my-recipe-heading">Add a Recipe</p>
     </div>
 <div class=" center col-xs-12">
-    <form class="" action="{{url_for('insert_recipe')}}" method="POST">
+    <form name="add_form" onSubmit="return valid_image()" class="" action="{{url_for('insert_recipe')}}" method="POST">
         
 <!--recipe name-->
 
@@ -22,7 +22,7 @@
             <select required name="cuisine" class="cuisine" id="cuisine">
                 <option disabled selected value="">Choose your option</option>
                 {% for item in cuisines_json.cuisine|sort %}
-                <option value="{{ item }}">{{ item }}</option>
+                <option value="{{ item }}">{{ item| title }}</option>
                 {% endfor %}
                 
             </select>
@@ -55,11 +55,19 @@
             <textarea required name="description"  id="description" placeholder="Recipe Description" class=""></textarea>
         </fieldset>
         
+<!--Image-->
+
+        <fieldset>
+            <legend>Image</legend>
+            
+            <input required oninput="return checkImageExists()" type="url" name="image" id="image" placeholder="http://url" />
+        </fieldset>
+        
 <!--Ingredients-->
 
         <fieldset id="ingredients_fieldset">
             <legend>Ingredients</legend>
-            <input required type="text" name="ingredients" class="ingredients" id="ingredients" placeholder="Ingredient" /><br>
+            <input required type="text" name="ingredient" class="ingredients" id="ingredients" placeholder="Ingredient" /><br>
             <div class="spacer inline"></div>
             <i id="firsta" class="material-icons first-add duplicate pointer">add</i>
         </fieldset>
@@ -69,7 +77,7 @@
         <fieldset id="instructions_fieldset">
             <legend>Instructions</legend>
             
-            <input required type="text" name="instructions" class="instructions" id="instructions" placeholder="Instruction" /><br>
+            <input required type="text" name="instruction" class="instructions" id="instructions" placeholder="Instruction" /><br>
             <div class="spacer inline"></div>
             <i id="firstb" class="material-icons first-add duplicate pointer">add</i>
         </fieldset>
@@ -99,18 +107,13 @@
 
         <fieldset>
             <legend>Author</legend>
-            <input required type="text" name="author" id="author" placeholder="Author" />
+            <input required type="text" value="" name="author" id="author" placeholder="Author" />
         </fieldset>
         
-<!--Image-->
-
-        <fieldset>
-            <legend>Image</legend>
-            <input required type="text" name="image" id="image" placeholder="http://url" />
-        </fieldset>
         
 <!--Submit-->
         <div class="center margin-bottom-20">
+            <p id="image-validation"></p>
             <input class="inline" type="submit" value="Save" />
         </div>
     </form>
