@@ -2,6 +2,7 @@ import os
 import json
 from flask import Flask, render_template, redirect, request, url_for, session, flash
 from flask_pymongo import PyMongo
+import pymongo
 from bson.objectid import ObjectId
 from datetime import date, datetime
 import pytz
@@ -45,8 +46,8 @@ def recipe_database():
         "cuisine": request.form.getlist('cuisine'),
         "allergens": request.form.getlist('allergens'),
         "description": request.form.get('description'),
-        "ingredients": request.form.getlist('ingredients'),
-        "instructions": request.form.getlist('instructions'),
+        "ingredients": request.form.getlist('ingredient'),
+        "instructions": request.form.getlist('instruction'),
         "prep_time": request.form.get('prep_time'),
         "cook_time": request.form.get('cook_time'),
         "recipe_yield": request.form.get('recipe_yield'),
@@ -454,14 +455,14 @@ def all_recipes():
         usernames=usernames)
 
 """ Returns any document by a word matching a value inside a recipes ingredients
-list. """
+list and sort by most popular """
 @app.route("/find_ingredient", methods=['POST'])
 def find_ingredient():
     pop_flask_message() # FUNCTION 3
     usernames = current_usernames()# FUNCTION 4
     session["search_title"] = 0
     recipe_category = mongo.db.recipe.find(
-        {"ingredients": {"$regex": request.form.get("ingredient_category"), "$options": 'i'}})
+        {"ingredients": {"$regex": request.form.get("ingredient_category"), "$options": 'i'}}).sort("likes",pymongo.DESCENDING)
     recipe_count = recipe_category.count()
     return render_template(
         'search_results.html',
@@ -471,14 +472,15 @@ def find_ingredient():
         recipe_count=recipe_count,
         usernames=usernames)
 
-""" Returns any document by a cuisine selection in the search model """
+""" Returns any document by a cuisine selection in the search model
+and sort by most popular"""
 @app.route("/find_cuisine", methods=['POST'])
 def find_cuisine():
     pop_flask_message() # FUNCTION 3
     usernames = current_usernames()# FUNCTION 4
     session["search_title"] = 0
     recipe_category = mongo.db.recipe.find(
-        {"cuisine": request.form.get("cuisine_category").title()})
+        {"cuisine": request.form.get("cuisine_category").title()}).sort("likes",pymongo.DESCENDING)
     recipe_count = recipe_category.count()
     return render_template(
         'search_results.html',
@@ -488,7 +490,8 @@ def find_cuisine():
         recipe_count=recipe_count,
         usernames=usernames)
 
-""" Returns any document not containing the allergen value in the search model 
+""" Returns any document not containing the allergen value in the search model
+and sort by most popular
 """
 @app.route("/find_allergen", methods=['POST'])
 def find_allergen():
@@ -496,7 +499,7 @@ def find_allergen():
     usernames = current_usernames()# FUNCTION 4
     session["search_title"] = 0
     recipe_category = mongo.db.recipe.find(
-        {"allergens": {"$nin": request.form.getlist("allergen_category")}})
+        {"allergens": {"$nin": request.form.getlist("allergen_category")}}).sort("likes",pymongo.DESCENDING)
     recipe_count = recipe_category.count()
     return render_template(
         'search_results.html',
@@ -507,7 +510,7 @@ def find_allergen():
         usernames=usernames)
 
 """ Returns any document by the combination of ingredient, 
-cuisine and or allergen values."""
+cuisine and or allergen values and sort by most popular"""
 @app.route("/find_multiple_categories", methods=['POST'])
 def find_multiple_categories():
     pop_flask_message() # FUNCTION 3
@@ -519,31 +522,31 @@ def find_multiple_categories():
 
     if cuisine == "" and not ingredient:
         recipe_category = mongo.db.recipe.find(
-            {"allergens": {"$nin": allergens}})
+            {"allergens": {"$nin": allergens}}).sort("likes",pymongo.DESCENDING)
 
     elif cuisine == "" and not allergens:
         recipe_category = mongo.db.recipe.find(
-            {"ingredients": {"$regex": ingredient, "$options": 'i'}})
+            {"ingredients": {"$regex": ingredient, "$options": 'i'}}).sort("likes",pymongo.DESCENDING)
 
     elif not ingredient and not allergens:
-        recipe_category = mongo.db.recipe.find({"cuisine": cuisine})
+        recipe_category = mongo.db.recipe.find({"cuisine": cuisine}).sort("likes",pymongo.DESCENDING)
 
     elif not ingredient and cuisine and allergens:
         recipe_category = mongo.db.recipe.find(
-            {"$and": [{"cuisine": cuisine}, {"allergens": {"$nin": allergens}}]})
+            {"$and": [{"cuisine": cuisine}, {"allergens": {"$nin": allergens}}]}).sort("likes",pymongo.DESCENDING)
 
     elif ingredient and cuisine == "" and allergens:
         recipe_category = mongo.db.recipe.find({"$and": [{"allergens": {"$nin": allergens}}, {
-                                               "ingredients": {"$regex": ingredient, "$options": 'i'}}]})
+                                               "ingredients": {"$regex": ingredient, "$options": 'i'}}]}).sort("likes",pymongo.DESCENDING)
 
     elif ingredient and cuisine and not allergens:
         recipe_category = mongo.db.recipe.find({"$and": [{"cuisine": cuisine}, {
-                                               "ingredients": {"$regex": ingredient, "$options": 'i'}}]})
+                                               "ingredients": {"$regex": ingredient, "$options": 'i'}}]}).sort("likes",pymongo.DESCENDING)
 
     elif ingredient and cuisine and allergens:
         recipe_category = mongo.db.recipe.find({"$and": [{"cuisine": cuisine},
                                                          {"allergens": {"$nin": allergens}},
-                                                         {"ingredients": {"$regex": ingredient, "$options": 'i'}}]})
+                                                         {"ingredients": {"$regex": ingredient, "$options": 'i'}}]}).sort("likes",pymongo.DESCENDING)
 
     recipe_count = recipe_category.count()
     return render_template(
