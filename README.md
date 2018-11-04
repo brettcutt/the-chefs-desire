@@ -274,7 +274,11 @@ ___
 
 - Javascript validate that at least one field is filled out in the advanced search
    - https://www.sitepoint.com/community/t/validation-check-to-make-sure-at-least-one-field-is-filled-out/2329
-   
+  
+Javascript validation of the image address
+    - https://stackoverflow.com/questions/24577534/javascript-how-to-check-if-a-typed-image-url-really-exists
+    - written by eithed
+ 
 - jquery function to add input fields.   
    - https://www.youtube.com/watch?v=jSSRMC0F6u8
    
@@ -308,6 +312,8 @@ ___
 #### media
 - background picture
    - https://pxhere.com/en/photo/1369811
+- Missing Picture
+   - https://commons.wikimedia.org/wiki/File:Missing-image-232x150.png
 
 - Font Awesome
    - GitHub icon
