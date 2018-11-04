@@ -1,6 +1,6 @@
 $(document).ready(function() {
     /*INDEX PAGE CHANGING PICTURE HOVER*/
-    
+
     /*Hovering to change opacity of the picture and text in index.html*/
     $(".displayed-image").mouseenter(function() {
         $(".overlay-image-heading").stop().animate({ "color": "#fff" }, 'slow');
@@ -18,7 +18,7 @@ $(document).ready(function() {
         $(".overlay-image-heading").stop().animate({ "color": "color: rgba(255,255,255,.7);" }, 'slow')
         $(".displayed-image").stop().animate({ "opacity": ".9" }, 'slow');
     });
-    
+
     /*INDEX PAGE CHANGING PICTURE */
     /* In index.html this adds a class "change-picture" + an incremented number by + 1 to each element that has the same "add-class" class */
     $('.add-class').each(function(i) {
@@ -28,8 +28,8 @@ $(document).ready(function() {
     /*When the page loads show "change-picture0" straight away*/
     $('.change-picture0').show('fade', 500).delay(6000)
     $('.change-picture0').hide('fade', 500)
-    
-    
+
+
     /*When change-picture0 hides after the time delay, the change-picture1 time delay to show will happen*/
     /*After change-picture1 hides the count will increment by 1 starting the new 'changepicturei' class */
     var count = 1
@@ -37,7 +37,7 @@ $(document).ready(function() {
         $('.change-picture' + count).show('fade', 500).delay(6000)
         $('.change-picture' + count).hide('fade', 500)
 
-    /*Once the count gets to 4 reset the count to 0*/
+        /*Once the count gets to 4 reset the count to 0*/
         if (count == 4) {
             count = 0
         }
@@ -52,12 +52,12 @@ $(document).ready(function() {
     $(".delete-btn").click(function() {
         $(".comfirmation").show('fade', 500)
     });
-    
+
     /*SHOW POP UP FOR CHOICE TO REGISTER AFTER GUEST CLICKING EMPTY HEART*/
     $(".guest-heart").click(function() {
         $(".comfirmation").show('fade', 500)
     });
-    
+
     /*DELETE OR REGISTER CHOICE POP UP CLOSE ENABLE SCROLLING*/
     $(".comfirmation-no").click(function() {
         $(".comfirmation").hide('fade', 500)
@@ -153,16 +153,16 @@ $(document).ready(function() {
 
         var id_name = $(this).parent().children('input').attr("name");
 
-        if ($(this).attr('id') == 'firsta' || $(this).attr('id') == 'firstb' ) {
+        if ($(this).attr('id') == 'firsta' || $(this).attr('id') == 'firstb') {
             $(this).append().prev().before(
-                '<input type="text" name="' + id_name + '" class="margin-left-45 inline" placeholder=""/>' +
+                '<input type="text" name="' + id_name + '" placeholder="' + id_name + '" class="margin-left-45 inline" placeholder=""/>' +
                 ' <i class="material-icons inline duplicate pointer">add</i>' +
                 ' <i class="material-icons inline remove_duplicate pointer">remove</i><br>');
         }
 
         else {
             $(this).prev().append().before(
-                '<input type="text" name="' + id_name + '" class="margin-left-45 inline" placeholder=""/>' +
+                '<input type="text" name="' + id_name + '" placeholder="' + id_name + '" class="margin-left-45 inline" placeholder=""/>' +
                 ' <i class="inline material-icons duplicate pointer">add</i>' +
                 ' <i class="inline material-icons remove_duplicate pointer">remove</i><br>');
         }
