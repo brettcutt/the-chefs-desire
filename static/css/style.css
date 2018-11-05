@@ -117,7 +117,9 @@ h4 {
 }
 
 /* //////////////////////////////////////FORM, INPUTS AND BUTTONS*/
-
+legend {
+    text-align: center;
+}
 input[type=checkbox] {
     height: 17px;
     width: 17px;
