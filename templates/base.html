@@ -23,47 +23,7 @@
     document.getElementById('validation-message').innerHTML = "The passwords do not match.";
     return false;
 	 }
-	 }
-	 
-	 /*The code below for checkImageExist is from 
-	 https://stackoverflow.com/questions/24577534/javascript-how-to-check-if-a-typed-image-url-really-exists
-    written by eithed. 
-    This is used to validate the image address in the add and edit html pages.
-    Prevents form submission if the address is false*/
-
-    function checkImageExists() {
-         add_form.image.className = "valid"
-         document.getElementById('image-validation').innerHTML = "";
-        var file_path = add_form.image.value;
-    var img = document.createElement('img');
-    img.setAttribute('src', file_path);
-    img.onerror = function()
-    { 
-        
-        document.getElementById('image-validation').innerHTML = "The image address is incorrect.";
-        add_form.image.className = "notvalid"
-        return false
-    }
-}
-
-function valid_image() {
-    
-    if (add_form.image.className == "notvalid" ) {
-        document.getElementById('image-validation').innerHTML = "The image address is incorrect.";
-        return false
-    }else {
-        
-    }
-}
-    
-    
-        
-        // image url that want to check
-        
-        
-       
-        	 
-        	 
+	 }      	 
     </script>
 </head>
 
