@@ -11,20 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Josefin+Slab" rel="stylesheet">
     <title>The Chefs Desire</title>
-    <script>
-    /* verifiy if the requested username on the register form already exists in the database */
-    function validateusername() {
-    var usernames = `{{usernames}}`
-    if ( usernames.includes(registrationform.register_username.value)  ) {
-        document.getElementById('validation-message').innerHTML = "This Username already exists.";
-        return false;
-    	 }
-    else if (registrationform.register_password.value != registrationform.comfirm_password.value) {
-    document.getElementById('validation-message').innerHTML = "The passwords do not match.";
-    return false;
-	 }
-	 }      	 
-    </script>
+    
 </head>
 
 <body>
@@ -194,6 +181,20 @@
 
         </footer>
     </div>
+    <script>
+    /* verifiy if the requested username on the register form already exists in the database */
+    function validateusername() {
+    var usernames = `{{usernames}}`;
+    if ( usernames.includes(registrationform.register_username.value)  ) {
+        document.getElementById('validation-message').innerHTML = "This Username already exists.";
+        return false;
+    	 }
+    else if (registrationform.register_password.value != registrationform.comfirm_password.value) {
+    document.getElementById('validation-message').innerHTML = "The passwords do not match.";
+    return false;
+	 }
+	 }      	 
+    </script>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery-3.3.1.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery-ui.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery.js')}}"></script>

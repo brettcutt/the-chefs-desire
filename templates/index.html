@@ -7,7 +7,10 @@
             <p class="index-heading">The Chefs Desire</p> 
         </div>
     </div>
-    
+    {% if 'flash-message-not-allowed' in session %} {% with messages = get_flashed_messages()%} {% if messages %} {% for message in messages %}
+                    <p class=" center flash-message">{{ message }}</p>
+
+                    {% endfor %} {% endif %} {% endwith %} {% endif %}
 
     <div class="row center recipe-display index-image-row">
     {% for recipe in recipes %}

@@ -257,7 +257,10 @@ def my_recipes(username):
             recipe_count=recipe_count)
 
     else:
-        session.pop('user')
+        session['flash-message-not-allowed'] = True
+        flash("There was an error in the last action. Please sign in again.")
+        if 'user' in session:
+            session.pop('user')
         return redirect(url_for('index'))
         
 # ///////////////////////////////////////////////////// UPDATE THE RECIPE VIEWS
@@ -642,7 +645,10 @@ def update_recipe(recipe_id):
 
         return redirect(url_for('single_recipe', recipe_id=recipe_id))
     else:
-        session.pop('user')
+        session['flash-message-not-allowed'] = True
+        flash("There was an error in the last action. Please sign in again.")
+        if 'user' in session:
+            session.pop('user')
         return redirect(url_for('index'))
 
 # ///////////////////////////////////////////////////////// DELETE RECIPE
@@ -667,7 +673,10 @@ def delete_recipe(recipe_id):
         return redirect(url_for('my_recipes', username=username))
         
     else:
-        session.pop('user')
+        session['flash-message-not-allowed'] = True
+        flash("There was an error in the last action. Please sign in again.")
+        if 'user' in session:
+            session.pop('user')
         return redirect(url_for('index'))
 
 
