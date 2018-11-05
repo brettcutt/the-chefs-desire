@@ -38,8 +38,12 @@
                 <div class="name_box col-xs-12 center">
                     <p><b>{{ recipe.name }}</b></p>
                 </div>
+                <div class=" center allergen_box col-xs-12">
+                    
+                <p>{{ recipe.description |truncate(65) }}</p>
                 
-                <div class=" allergen_box col-xs-12">
+                </div>
+                <div class="allergen_box col-xs-12">
                     <div><b>Allergens</b></div>
                     
                 {% for item in recipe.allergens %}
