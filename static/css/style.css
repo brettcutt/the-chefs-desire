@@ -804,7 +804,7 @@ table {
 }
 
 .name_box {
-    height: 50px;
+    height: auto;
 }
 
 .name_box p {
@@ -821,9 +821,26 @@ table {
 }
 
 .found_image {
-    height: auto;
+    height: 240px;
     width: 100%;
     border-radius: 10px;
+    object-fit: cover;
+}
+@media (max-width: 767px) {
+    .found_image {
+    height: 280px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .found_image {
+    height: 196px;
+}
+}
+@media (min-width: 992px) and (max-width: 1201px) {
+    .found_image {
+    height: 180px;
+}
 }
 
 
@@ -937,7 +954,6 @@ ol li p {
     width: 100%;
     border-radius: 10px;
 }
-
 
 .view_and_like {
     margin: 5px 5px;
