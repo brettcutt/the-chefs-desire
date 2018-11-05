@@ -55,7 +55,7 @@
                 <div class="row">
                     <div class="col-xs-12 found_image_box">
                         <a href="{{ url_for('update_view_count', recipe_id=recipe._id)}}">
-                            <img class="found_image" src="{{ recipe.image }}" alt=" {{ recipe.name }}">
+                            <img class="found_image" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b1/Missing-image-232x150.png'" src="{{ recipe.image }}" alt=" {{ recipe.name }}">
                         </a>
                     </div>
 
