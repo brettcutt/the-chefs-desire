@@ -9,7 +9,7 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: 'Josefin Slab', serif;
+    font-family: 'Crimson Text', serif;
     font-size: 16.5px;
     background-image: url(../images/dish-background.jpg);
     background-size: cover;
@@ -794,7 +794,7 @@ table {
 .single-recipe-result {
     padding: 10px;
     display: flex;
-
+    
 }
 
 .inner_recipe_box {

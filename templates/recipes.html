@@ -31,21 +31,21 @@
                 </div>
                 
                 <div class=" name_box col-xs-12 center">
-                    <h4><b>{{ recipe.name }}</b></h4>
+                    <h3><b>{{ recipe.name }}</b></h3>
                 </div>
                 
                 <div class="center allergen_box col-xs-12">
                     
-                <p>{{ recipe.description |truncate(65) }}</p>
+                <p><b>{{ recipe.description |truncate(65) }}</b></p>
                 
                 </div>
                 
-                <div class=" allergen_box col-xs-12">
-                    <div><b>Allergens</b></div>
+                <div class=" allergen_box col-xs-12 center">
+                    <h4><b>Allergens</b></h4>
                     
                 {% for item in recipe.allergens %}
                 {% if loop.index == 0 or item == "" %}
-                <p>None</p>
+                <p><b>None</b></p>
                 {% else %}
                     <span>{{ item | title}}</span>
                 {% endif %}
@@ -53,11 +53,11 @@
                 
                 </div>
                 
-                <div class="cuisine_box col-xs-12">
-                    <div><b>Cuisine</b></div>
+                <div class="cuisine_box col-xs-12 center">
+                    <h4><b>Cuisine</b></h4>
                 {% for item in recipe.cuisine %}
                 {% if loop.index == 0 or item == "" %}
-                <p>None</p>
+                <p><b>None</b></p>
                 {% else %}
                     <span>{{ item |title}}</span>
                 {% endif %}
@@ -77,7 +77,7 @@
     </div>
 </div>
 
-<!--THE ROW FOR THE 4 MOST VIEWED RECIPES -->
+<!--THE ROW FOR THE 4 NEW RECIPES -->
 <div class="row found_recipe_row">
 {% for recipe in new_recipes %}
 
@@ -100,7 +100,7 @@
                 
                 </div>
                 
-                <div class=" allergen_box col-xs-12">
+                <div class=" allergen_box col-xs-12 center">
                     <div><b>Allergens</b></div>
                     
                 {% for item in recipe.allergens %}
@@ -113,7 +113,7 @@
                 
                 </div>
                 
-                <div class="cuisine_box col-xs-12">
+                <div class="cuisine_box col-xs-12 center">
                     <div><b>Cuisine</b></div>
                 {% for item in recipe.cuisine %}
                 {% if loop.index == 0 or item == "" %}
@@ -160,7 +160,7 @@
                 
                 </div>
                 
-                <div class=" allergen_box col-xs-12">
+                <div class=" allergen_box col-xs-12 center">
                     <div><b>Allergens</b></div>
                     
                 {% for item in recipe.allergens %}
@@ -173,7 +173,7 @@
                 
                 </div>
                 
-                <div class="cuisine_box col-xs-12">
+                <div class="cuisine_box col-xs-12 center">
                     <div><b>Cuisine</b></div>
                 {% for item in recipe.cuisine %}
                 {% if loop.index == 0 or item == "" %}
