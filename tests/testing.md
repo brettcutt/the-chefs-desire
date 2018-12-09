@@ -117,10 +117,10 @@ of the page and open the register form.
 |**H. vi**|     P|P|P|P|**F**|P|
 |**I. i**|      P|P|P|P|P|P|
 |**I. ii**|     P|P|P|P|P|P|
-|**I. i**|      P|P|P|P|P|P|
 |**I. ii**|     P|P|P|P|**F**|P|
-|**I. iii**|    P|P|P|P|P|P|
-|**I. iv**|     P|P|P|P|P|P|
+|**J. i**|      P|P|P|P|P|P|
+|**J. iii**|    P|P|P|P|P|P|
+|**J. iv**|     P|P|P|P|P|P|
 
 ##### Notes:
 - Safari:

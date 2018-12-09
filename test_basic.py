@@ -25,53 +25,52 @@ class finding_views(unittest.TestCase):
     # executed prior to each test
     def setUp(self):
         app = Flask(__name__)
-        app.app_context().push()
         app.config['SERVER_NAME'] 
         app.config['TESTING'] = True
         app.config['DEBUG'] = False
+        app.config['SECRET_KEY'] = 'secret'
         self.client = app.test_client()
-        print("set up")
+        
+        
         
         
     # executed after each test
     def tearDown(self):
-        print("tear down")
+        
         pass
  
     ###############
     #### tests ####
     ###############
     
-    # Ensure the index page can be reached
-    def test_index(self):
+    #Ensure the index page can be reached
+    def test_index_page(self):
         response = app.test_client(self).get('/', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"The Chefs Desire", response.data)
-        print("index found")
        
     # Ensure the single_reciepe page can be reached
-    def test_single_recipe(self):
+    def test_get_single_recipe_page(self):
         response = app.test_client(self).get('/single_recipe/5bd1642913092517e8e05064', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("single recipe found")
     
     
     # Ensure the add_recipe page can be reached
-    def test_add_recipe(self):
+    def test_get_add_recipe_page(self):
         response = app.test_client(self).get('/add_recipe', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("add recipe found//", "response location =", response.location) 
         
-    """ # NOT PASSING NEED TO IMPLEMENT USER SESSION
-    # Ensure the insert_recipe page can be reached
+     
+    # Ensure the a recipe can be created
+    """
     def test_insert_recipe(self):
         data=dict(
-            name= "recipe",
+            name= "the insert test recipe name",
         cuisine="british",
         allergens="wheat",
         description="test",
         ingredients="apple",
-        instructions="test",
+        instructions="This is the description for the test recipe",
         prep_time="test",
         cook_time="test",
         recipe_yield="test",
@@ -79,21 +78,28 @@ class finding_views(unittest.TestCase):
         image="test",
         user="test"
             )
-        response = app.test_client(self).post('/insert_recipe', content_type='multipart/form-data', data=data, follow_redirects=True)
-        self.assertEqual(response.status_code, 200)
-        print(response.location)
-        print("insert recipe found//", "response location =", response.location) """
+        with app.test_client(self) as client:
+            with client.session_transaction() as session:
+                session['user'] = 'test'
+            response = client.post('/insert_recipe', content_type='multipart/form-data', data=data)
+            print(dir(response))
+            print(response.data)
+            print(response.location)
+            
+            print(response.headers)
+            self.assertEqual(response.status_code, 302)
+            self.assertIn('http://localhost/single_recipe/', response.location)
+            """
         
     
     # Ensure the edit_recipe page can be reached
-    def test_edit_recipe(self):
+    def tes_get_edit_recipe_page(self):
         response = app.test_client(self).get('/edit_recipe/5bd1616413092517e8e05062', follow_redirects=True)
-        self.assertEqual(response.status_code, 200)
-        print("edit recipe found") 
+        self.assertEqual(response.status_code, 200) 
         
-    """ #NEED SESSION USER, REDIRECTED BACK TO THE INDEX PAGE INSTEAD OF THE SINGLE_RECIPE_PAGE BECAUSE OF NO USER SESSION
-    # Ensure the edit_recipe page can be reached
-    def test_update_recipe(self):
+    
+    # Ensure a recipe can be edited and be redirect to that recipes single recipe page.
+    def test_update_a_recipe(self):
         data=dict(
             name= "edited recipe",
         cuisine="Italian",
@@ -108,11 +114,13 @@ class finding_views(unittest.TestCase):
         image="https://www.themealdb.com/images/media/meals/rwuyqx1511383174.jpg",
         user="edited test user"
             )
-        response = app.test_client(self).post('/update_recipe/5be4c83213092512911f6d69', content_type='multipart/form-data', data=data, follow_redirects=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b"test recipe", response.data)
-        
-        print("update recipe found")"""
+        with app.test_client(self) as client:
+            with client.session_transaction() as session:
+                session['user'] = 'admin'
+                
+            response = client.post('/update_recipe/5c0cbfde13092515c9ecf1fa', content_type='multipart/form-data', data=data)
+            self.assertEqual(response.status_code, 302)
+            self.assertIn('single_recipe/5c0cbfde13092515c9ecf1fa', response.location)
     
     
     """ # PASSES BUT DON'T WANT TO CREATE A USER EACH TIME IF IT'S NOT NECESSARY 
@@ -130,11 +138,11 @@ class finding_views(unittest.TestCase):
         response = app.test_client(self).post('/register', content_type='multipart/form-data', data=data, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Hello testuserfirstname", response.data)
-        print("register found//", "response location =", response.location) """
+        """
         
     
     # Ensure the sign in page can be reached and that it sends the correct data.
-    def test_login(self):
+    def test_log_a_user_in(self):
         data=dict(
         signin_username="m155",
         signin_password="testpassword"
@@ -146,7 +154,7 @@ class finding_views(unittest.TestCase):
         
     
     # Ensure the user hasn't been signed in with an incorrect password. 
-    def test_login_wrong_password(self):
+    def test_login__with_wrong_password(self):
         data=dict(
         signin_username="m496",
         signin_password="wrongpassword"
@@ -154,37 +162,32 @@ class finding_views(unittest.TestCase):
         response = app.test_client(self).post('/signin', content_type='multipart/form-data', data=data, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertNotIn(b"Hello testuserfirstname", response.data)
-        print(response.location)
         
       
     # Ensure the recipes page can be reached.
-    def test_recipes(self):
+    def test_get_recipes_page(self):
         response = app.test_client(self).get('/recipes', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("recipes found")
     
     # Ensure the most popular recipes page can be reached.
-    def test_most_popular_recipes(self):
+    def test_get_most_popular_recipes_page(self):
         response = app.test_client(self).get('/most_popular_recipes', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("most popular recipes found")
     
     # Ensure the most viewed recipes page can be reached.    
-    def test_new_recipes(self):
+    def test_get_new_recipes_page(self):
         response = app.test_client(self).get('/new_recipes', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("most viewed recipes found")
         
     
     # Ensure the most all recipes page can be reached.
-    def test_all_recipes(self):
+    def test_get_all_recipes_page(self):
         response = app.test_client(self).get('/all_recipes', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        print("all recipes found") 
         
     
     # Ensure find ingredients can be reached and that it searches for the correct criteria.
-    def test_find_ingredient(self):
+    def test_get_find_ingredient_page(self):
         data=dict(
         ingredient_category="mushroom"
         )   
@@ -192,11 +195,10 @@ class finding_views(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Yaki Udon",response.data)
         self.assertNotIn(b"Dal fry",response.data)
-        print("find ingredient found")
         
     
     # Ensure find cuisine can be reached and that it searches for the correct criteria.
-    def test_find_cuisine(self):
+    def test_get_find_cuisine_page(self):
         data=dict(
         cuisine_category="american"
         )  
@@ -204,11 +206,10 @@ class finding_views(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Pumpkin Pie",response.data)
         self.assertNotIn(b"Rock Cakes",response.data)
-        print("find cuisine found") 
     
     
     # Ensure find allergens can be reached and that it searches for the correct criteria.
-    def test_find_allergen(self):
+    def test_get_find_allergen_page(self):
         data=dict(
         allergen_category="wheat"
         ) 
@@ -216,12 +217,10 @@ class finding_views(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Eton Mess",response.data)
         self.assertNotIn(b"Pancakes",response.data)
-        print("find allergen found") 
-        
-        
+
     
     # Ensure find multiple categories can be reached and that it searches for the correct criteria.
-    def test_find_multiple_categories(self):
+    def test_get_find_multiple_categories_page(self):
         data=dict(
         find_cuisine="british",
         find_ingredient="flour",
@@ -231,20 +230,17 @@ class finding_views(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Fish pie",response.data)
         self.assertNotIn(b"Carrot Cake",response.data)
-        print("find multiple categories found")
         
     
     # Ensure update view count can be reached.
     def test_update_view_count(self):
-        response = app.test_client(self).get('/update_view_count/5be4c83213092512911f6d69', follow_redirects=True)
-        self.assertEqual(response.status_code, 200)
-        print("update view found")
+        response = app.test_client(self).get('/update_view_count/5c0cbfde13092515c9ecf1fa')
+        self.assertEqual(response.status_code, 302)
     
     # Ensure update like count can be reached.
     def test_update_like(self):
-        response = app.test_client(self).get('/update_like/5be4c83213092512911f6d69', follow_redirects=True)
-        self.assertEqual(response.status_code, 200)
-        print("update like found") 
+        response = app.test_client(self).get('/update_like/5c0cbfde13092515c9ecf1fa')
+        self.assertEqual(response.status_code, 302)
  
 if __name__ == "__main__":
     
