@@ -1,7 +1,15 @@
 # The Chefs Desire
-This is the fourth milestone project for the Full-Stack software development course through Code Institute. I decided to base my project on the example brief given to the
-the students of this course, which is to create a cookbook. The module before the project focused on creating databases following CRUD operations in MySql and NoSql. I decided
-to use Mongodb(NoSql) as it had a more flexible and rich approach to storing and accessing key/ values.
+This is the fourth milestone project for the Full-Stack software development course through Code Institute. I decided to base my project on the example 
+brief given to the students of this course, which is to create a cookbook. The module before the project focused on creating databases following CRUD 
+operations in MySql and NoSql. I decided to use Mongodb(NoSql) as it had a more flexible and rich approach to storing and accessing key/ values.
+
+The project had to allow users to be able to:
+- store, access, edit and delete their own recipes. 
+- View other users recipes
+- search for recipes base on various criteria.
+- Show a complete detailed view of each recipe.
+
+It is optional to have user regitration.
 
 
 # Table of Contents
@@ -38,8 +46,8 @@ ___
 ### Strategy
 - As a user I would expect to be able to view various recipes based on different categories e.g.(cuisine, allergens, ingredient) 
 - As a user I would want to be able to create an account with my own unique username and password.
-- As an account holder I would be expect to have a personal page where they can add my own recipes, see the recipes, edit the recipes and delete them. 
-- As a user I would expect a recipe to display atleast a picture, its ingredients and instructions of how to make the recipe. 
+- As an account holder I would be expect to have a personal page where they can add their own recipes, see the recipes, edit the recipes and delete them. 
+- As a user I would expect a recipe to display at least a picture, its ingredients and instructions of how to make the recipe. 
 - As a user I would like to judge the quality of a recipe on other users decisions.
 
 ### Existing Features
@@ -61,7 +69,7 @@ If an account holder is in session, the register button won't be on the home scr
 
 ##### Recipes
 - There is a search bar that allows the user to define a search by cuisine, allergen, ingredient or by multiple options. This redirects to a new page on submission of the search results.
-- This features three sub category sections with four different recipes for those categories. Each section has a 'see all' button to by directed to a page that 
+- This features three sub category sections with four different recipes for those categories. Each section has a 'see all' button to be directed to a page that 
 has more of that type of sub category.
 
 ##### Single Recipe
@@ -77,21 +85,21 @@ has more of that type of sub category.
   - views and likes
 - The like button is clickable for account holders, and for non account holders a message displays stating they need to register to like the recipe. The message also contains
 a register button and a close button.
-- An account holder which is also the creator of the recipe will have additional delete and edit button.
+- An account holder which is also the creator of the recipe, will have additional delete and edit buttons.
 
 ##### My Recipes 
-- This section is for an account holder, where the user can add a recipes to contribute to the site.
+- This section is for an account holder, where the user can add a recipe to contribute to the site.
 - Any created recipes will be displayed on this page.
 
 ##### Add and Edit Recipe
 - These pages have the form inputs for the information of the recipe the user is adding or editing.
-- When adding a recipe, the users unique username is also added to the recipe document and this is how these recipes are accessed in the my recipes page.
+- When adding a recipe, the users unique username is also added to the recipe document and this is how these recipes are accessed in the 'my recipes' page.
 
 ##### Delete Recipe
-- A button is displayed on a recipe page if the user is also the page contributer. This will delete the recipe from the ddatabase collection.
+- A button is displayed on a recipe page if the user is also the page contributer. This will delete the recipe from the database collection.
 
 ### Features left to implement
-- Reicpe reviews, so a user can leave a comment at the bottom of the recipe page.
+- Recipe reviews, so a user can leave a comment at the bottom of the recipe page.
 
 ### Wire Frames
 - Click [here](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/wireframes/wireframes.md) for wireframe images.
@@ -152,13 +160,13 @@ ___
 
 #### Testing Issues
 - **jinja for loop problem:**
-I had the cuisine categories stored in mlab to access through a for loop within another forloop which accessed my 
+I had the cuisine categories stored in mlab to access through a 'for loop' within another 'for loop' which accessed my 
 recipes. All the select input fields were expected to show the cuisine categories, except only the first select input
 field showed all the categories and the one following it didn't. To fix this I
 added the cuisine category as a json format to a separate py file.
 
 - **Finding multiple categories:**
-   - In my find_multiple_categories view I originally had something like the following so users could do an advanced search
+   - In my 'find_multiple_categories' view I originally had something like the following example, so users could do an advanced search
 
  ```
  mongo.db.recipe.find( {
@@ -170,10 +178,10 @@ added the cuisine category as a json format to a separate py file.
 ```
 
    - After many different approaches and alterations to this code I just couldn't get it to work in a way that searched the different outcomes.
-The main problem I think was that the select tag was always giving a value, even if nothing was selected. To fix this I wrote if else
+The main problem I think was that the select tag was always giving a value, even if nothing was selected. To fix this, I wrote if else'
 statements to cover each outcome of the search possibilities.
 
-- **Broken image link poping session:**
+- **Broken image link popping user session:**
   - My mentor pointed out a security issue where a user could potentially change the endpoint username to access another users account.
   - My counter was that upon login a user `session['user']` starts based on the login username. If the endpoint doesn't match the `session['user']`
   pop the session.
@@ -183,10 +191,10 @@ statements to cover each outcome of the search possibilities.
   - My original solution was to add an `onerror` to all `img` tags and load a default 'missing image' picture. This didn't prevent the session from popping.
   - My next solution was to find a way to verify that the image address link exists. I achieved this by implementing some javascript found from
   https://stackoverflow.com/questions/24577534/javascript-how-to-check-if-a-typed-image-url-really-exists. 
-  - The next problem with this code was it has a sub function within the main function. On the submission of a form with a broken image address, I would
+  - The next problem with this code, was it had a sub function within the main function. On the submission of a form with a broken image address, I would
   receive an alert but the process of form submission was too far ahead of the sub function to stop it from sending.
   - To counter this if I added `oninput` on the image `input` to check as the users image address is valid. If it isn', the classname of the input would
-  change. Then on form submission a function would check the classname. If false cancel the form.
+  change. Then on form submission a function would check the classname. If `False`, cancel the form.
   - This works pretty well but still with its own issue. Checking the image address takes a second to verify, so its possible to send the form before
   the validation is complete but this the best solution so far.
 
@@ -194,10 +202,10 @@ statements to cover each outcome of the search possibilities.
 #### Validation
 - **HTML**
   - Checked with W3C validator. Only Jinja related errors due to the validation not programmed to read them. 
-- **css**
+- **CSS**
    - Checked with Jigsaw validator and received no errors.
-- **python**
-  - Formatted with autopep8 and checked with flake8. I still have lines that are too long but left them that way for my own readibility at the moment.   
+- **Python**
+  - Formatted with autopep8 and checked with flake8.  
   `sudo pip install --upgrade autopep8`   
   `autopep8 --in-place --aggressive --aggressive app.py`   
   `sudo pip install flake8`   
@@ -206,17 +214,17 @@ statements to cover each outcome of the search possibilities.
   ___
 
 ## Deployment
-- **In heroku**
+- **In Heroku**
    - Created a new app and called it `the-chefs-desire`
 - **In the terminal command line entered:**
    - `heroku login` Entered username and password.   
-   - `git init` to Intilised a git repository.
+   - `git init` to initialise a git repository.
    - `git remote add heroku https://the-chefs-desire.herokuapp.com/` to link the GitHub repository to the Heroku app.
    - `pip3 freeze --local > requirements.txt` Creates a .txt file which tells Heroku what dependencies the project is using.
    - `echo web: python run.py >procfile` Tells Heroku that this project is a web app and that "app.py" is going the run it.
    - `ps:scale web=1`
    
-- **In app.py set the app.config variables so heroku can find them.**
+- **In app.py set the app.config variables so Heroku can find them.**
    ```python
    app.secret_key = os.environ.get('SECRET_KEY')
    app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -228,7 +236,7 @@ statements to cover each outcome of the search possibilities.
   - `git commit -m "message"`
   - `git push -u heroku master` pushes the project to Heroku.
  
-- **In heroku:**
+- **In Heroku:**
    - Go to the project > setting > config vars
    ```
    IP = `0.0.0.0`
@@ -278,7 +286,7 @@ statements to cover each outcome of the search possibilities.
 ___
 
 ### Credits
-#### Bits and pieces of code that helped me along the way.
+#### Pages that helped along the way.
    
 - Mongo how to order a collection by a specific field.
    - https://docs.mongodb.com/manual/reference/operator/meta/orderby/
@@ -351,7 +359,4 @@ Javascript validation of the image address
         print(dir(response))
         ```
     
-- Slack Forum (Code Institute Student)
-   - Thanks to a discussion in the forum it allowed me to follow along to the idea of setting up my apps config variables
-   in a config.py file and import that into the app.py file.
 

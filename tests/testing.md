@@ -25,12 +25,12 @@ Table Of Contents
 
 - C. Sign In Form
   1. An incorrect username, password or both displays a flash message telling the user.
-  2. Successful input of a username and password redirect users to the 'my recipes' page.
+  2. Successful input of a username and password, redirects users to the 'my recipes' page.
   3. The close button closes the sign in form.
 
 - D. Search forms/ buttons
   1. Each search button opens the appropriate search form.
-  2. The same button becomes highlighted on click and unhighlight on form close or other button clicks.
+  2. When a button is clicked on, it becomes highlighted. When new button is clicked on, it becomes hightlighted and the previous button becomes unhighlighted.
   3. When criteria is searched, the page is redirected to the 'search results' page.
   4. The appropriate search criteria was found.
   5. The close button closes the search form.
@@ -42,11 +42,11 @@ Table Of Contents
   3. Signed in users have only the 'enter' button displaying under the tagline.
 
 - F. Recipes
-  1. Images that are clicked redirect to that recipes 'single recipe' page.
-  2. The 'See All' button redirect to more recipes of that sub category.
+  1. Images that are clicked on, redirect the user to that recipes 'single recipe' page.
+  2. The 'See All' button redirects to more recipes of that sub category.
 
 - G. My Recipes
-  1. If no recipes have been created, this page has text telling the user that.
+  1. If no recipes have been created, than it has text notifing the user of that.
   2. The 'add recipe' button redirects to the add recipes page.
   3. A user with added recipes can see them on this page and a number of how many recipes added is shown.
   4. Clicking on a recipe redirects to that recipes 'single recipe' page.
@@ -54,15 +54,15 @@ Table Of Contents
 - H. Single Recipe
   1. All the correct information is displayed.
   2. If the user is also the one who added the recipe, 'delete' and 'edit' buttons appear on the page.
-  3. Per session if the recipes is visited the view count increses by one.
-  4. A non account holder cannot like a recipe but will receive a message telling them that if they want to like a recipe, they need
-to register. Under the message is a 'register' and 'close' button. A click on the register button smooth scrolls to the top
-of the page and open the register form.
+  3. Per session, if the recipes is visited the view count increases by one.
+  4. A non account will be notified to register if they want to 'like' a recipe.
+  5. Under the message is a 'register' and 'close' button. A click on the register button, smooth scrolls to the top
+of the page and opens the register form.
   5. An account holder can only like a recipe once and if the recipe is liked, the heart is disabled and remains solid red.
   6. If the user is also the one who added the recipe, The like button is disabled and the view count remains the same.
 
 - I. Add Recipe
-  1. All information inputed into the form successfully gets sent to the database.
+  1. All information input into the form, successfully gets sent to the database.
   2. The user is redirected to their newly created recipe in 'single recipe'.
 
 - J. Edit Recipe
@@ -124,17 +124,17 @@ of the page and open the register form.
 
 ##### Notes:
 - Safari:
-  - I'm running safari on windows. The last version update was back in 2012. This would suggest that this version of browser doesn't support some css or jquery attributes the same as other browsers.   
-  - The jquery add and remove buttons in the add and edit pages didn't work. I couldn't add more input fields to the cuisine, ingredient and instruction categories. 
+  - I am running Safari on Windows. The lastest version update was back in 2012. This would suggest that this version of browser doesn't support some CSS or Jquery attributes the same as other browsers.   
+  - The Jquery 'add' and 'remove' buttons in the 'add' and 'edit' pages didn't work. I couldn't add more input fields to the cuisine, ingredient and instruction categories. 
   - The font-size was bigger than usual, which made the containers larger and out of place.
-  - The font awesome hearts also were not supported and didn't show.
+  - The font awesome 'heart icons' also were not supported and didn't show.
 
 ### Form Testing
 - Creating a user account.
 
 ![registration form](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/test-registration.jpeg?raw=true "registration form")
 
-- Checking that the data was sent to the database.
+- Checking the data was sent to the database.
 ![registration database data](https://github.com/brettcutt/the-chefs-desire/blob/master/static/images/user-details-database.jpeg?raw=true "registration database data")
 
 - Ensuring another user can't register an existing username.
