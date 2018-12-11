@@ -93,7 +93,7 @@ class finding_views(unittest.TestCase):
         
     
     # Ensure the edit_recipe page can be reached
-    def tes_get_edit_recipe_page(self):
+    def test_get_edit_recipe_page(self):
         response = app.test_client(self).get('/edit_recipe/5bd1616413092517e8e05062', follow_redirects=True)
         self.assertEqual(response.status_code, 200) 
         
